@@ -1,0 +1,4 @@
+WAKENATOR
+==========
+
+	DEBUG=* npm start
