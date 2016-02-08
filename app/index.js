@@ -12,7 +12,8 @@ app.on('ready', ()=> {
     debug('READY');
     // setTimeout(app.quit,1000);
     
-    app.dock.hide();
+    if (process.platform=='darwin')
+	    app.dock.hide()
 
     menu.initialize();
 });
