@@ -12,7 +12,7 @@ const dialog = electron.dialog;
 const launcher = require('./launcher');
 const path = require('path');
 
-const version = require('../package').version;
+const version = require('../../package').version;
 
 let tray = null;
 let c = 0;
@@ -38,11 +38,7 @@ var self = module.exports = {
     },
     
     update(){
-        let template = [];
-
-        template.push({
-            label : 'Opciones',
-            submenu : [
+        let template =  [
                 {
                     label : 'Cargar al inicio',
                     type:'checkbox',
@@ -56,8 +52,7 @@ var self = module.exports = {
                     label : 'Salir',
                     click : app.quit
                 }
-            ],
-        });
+            ]
 
         template.unshift({
             type : 'separator',
