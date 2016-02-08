@@ -29,8 +29,8 @@ var self = module.exports = {
         tray.setToolTip('Wakenator v'+version);
 
         if (process.platform=='darwin'){
-            tray.setImage(resPath+'/icon-black.png');
-            tray.setPressedImage(resPath+'/icon-white.png');
+            tray.setImage(resPath+'/iconTemplate.png');
+            tray.setPressedImage(resPath+'/iconHover.png');
         }
 
         tray.on('click',()=>
