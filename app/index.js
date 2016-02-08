@@ -11,6 +11,8 @@ const menu = require('./lib/menu');
 app.on('ready', ()=> {   
     debug('READY');
     // setTimeout(app.quit,1000);
+    
+    app.dock.hide();
 
     menu.initialize();
 });

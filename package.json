@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron app --enable-logging",
     "package-linux" : "electron-packager . Wakenator --platform=linux --arch=x64 --version=0.36.7 --overwrite --out=build",
-    "package-osx" : "electron-packager . Wakenator --platform=osx --arch=x64 --version=0.36.7 --overwrite --out=build",
+    "package-darwin" : "electron-packager . Wakenator --platform=darwin --arch=x64 --version=0.36.7 --overwrite --out=build",
     "package-windows" : "electron-packager . Wakenator --platform=windows --arch=x64 --version=0.36.7 --overwrite --out=build"
   },
   "author": "",

@@ -14,6 +14,8 @@ const path = require('path');
 
 const version = require('../../package').version;
 
+const resPath = path.resolve(__dirname,'..','res');
+
 let tray = null;
 let c = 0;
 
@@ -23,8 +25,13 @@ var self = module.exports = {
 
     initialize(){
 
-        tray = new Tray(path.resolve(__dirname,'..','res','icon-white.png'));
+        tray = new Tray(resPath+'/icon-white.png');
         tray.setToolTip('Wakenator v'+version);
+
+        if (process.platform=='darwin'){
+            tray.setImage(resPath+'/icon-black.png');
+            tray.setPressedImage(resPath+'/icon-white.png');
+        }
 
         tray.on('click',()=>
             tray.popUpContextMenu(menu)
@@ -38,21 +45,32 @@ var self = module.exports = {
     },
     
     update(){
-        let template =  [
-                {
-                    label : 'Cargar al inicio',
-                    type:'checkbox',
-                    checked : launcher.enabled,
-                    click(){
-                        launcher.toggle()
-                            .then(self.update,self.update)
-                    }
-                },
-                {
-                    label : 'Salir',
-                    click : app.quit
+        let template =  [];
+
+        var optionsMenu = [
+            {
+                label : 'Cargar al inicio',
+                type:'checkbox',
+                checked : launcher.enabled,
+                click(){
+                    launcher.toggle()
+                        .then(self.update,self.update)
                 }
-            ]
+            },
+            {
+                label : 'Cerrar',
+                click : app.quit
+            }
+        ]
+
+        if (process.platform == 'linux'){
+            template = template.concat(optionsMenu);
+        }else{
+            template.push({
+                label:'Opciones',
+                submenu : optionsMenu
+            })
+        }
 
         template.unshift({
             type : 'separator',
