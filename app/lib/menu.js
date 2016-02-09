@@ -88,13 +88,19 @@ var self = module.exports = {
             type : 'separator',
         })
 
-
-        people.forEach((person)=>{
+        if (!people.length){
             template.push({
-                label : person.name + ' ('+person.id.slice(0,4)+')',
-                click : ()=>self.wake(person)
+                label:'Nadie cerca',
+                enabled : false
             })
-        });
+        }else{
+            people.forEach((person)=>{
+                template.push({
+                    label : person.name + ' ('+person.id.slice(0,4)+')',
+                    click : ()=>self.wake(person)
+                })
+            });
+        }
 
         // template.unshift({
         //     label:'Open Baloon',

@@ -26,7 +26,13 @@ module.exports = class extends EventEmitter{
 
 		this.socket.on('people',(people)=>{
 			debug('people',people);
-			this.emit('people',people);
+			var list = [];
+			if (people && people.length)
+				people.forEach((person)=>{
+					if (person.id != this.socket.id)
+						list.push(person)
+				})
+			this.emit('people',list);
 		})
 
 	}
