@@ -27,7 +27,7 @@ app.on('ready', ()=> {
     	menu.setPeople(people)
     })
     area.on('wake-me',function(data){
-    	debug('wake-me',data);
+    	debug('wake-me!!!!!!!!!!!!!',data);
     })
 
     setTimeout(()=>{

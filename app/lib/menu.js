@@ -21,11 +21,12 @@ let c = 0;
 
 let menu = null;
 let people = [];
+let area;
 
 var self = module.exports = {
 
-    initialize(){
-
+    initialize(_area){
+        area = _area;
         tray = new Tray(resPath+'/icon-white.png');
         tray.setToolTip('Wakenator v'+version);
 
@@ -52,6 +53,7 @@ var self = module.exports = {
 
     wake(person){
         debug('WAKE',person)
+        area.socket.emit('wake',person);
     },
     
     update(){

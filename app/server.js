@@ -16,6 +16,7 @@ function broadcastPeople(){
 }
 
 io.on('connection',function(socket){
+	console.log('connected');
 	socket.on('person',function(person){
 		console.log('Person',person);
 		socket.person = person;
@@ -27,11 +28,10 @@ io.on('connection',function(socket){
 	});
 
 	socket.on('wake',function(data){
-		var other = getSocket(data.to);
-		if (!other || other.id == socket.to)
+		var other = getSocket(data.id);
+		if (!other || other.id == socket.id)
 			return false;
-		data.from = socket.person;
-		other.emit('send',data);		
+		other.emit('wake',socket.person);		
 	});
 
 });
