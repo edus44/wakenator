@@ -8,6 +8,11 @@ const app = electron.app;
 const menu = require('./lib/menu');
 const BroadcastingArea = require('./lib/areas/broadcasting');
 const SocketioArea = require('./lib/areas/socketio');
+const Positioner = require('electron-positioner')
+
+
+
+const BrowserWindow = require('electron').BrowserWindow;
 
 
 app.on('ready', ()=> {   
@@ -28,11 +33,50 @@ app.on('ready', ()=> {
     })
     area.on('wake-me',function(data){
     	debug('wake-me!!!!!!!!!!!!!',data);
+    	showWindow(data)
     })
 
-    setTimeout(()=>{
-    	area.destroy()
-    },3000);
+    createWindow();
 });
 
 
+let win;
+let positioner;
+
+app.on('will-quit',()=>{
+	win.destroy()
+	win=null
+})
+
+
+function createWindow() {
+    var winOpts = {
+        show: false,
+        frame: false,
+        width:400,
+        height:400,
+        center : true,
+        'always-on-top' : true,
+        'skip-taskbar' : true
+    }
+
+    win = new BrowserWindow(winOpts)
+    positioner = new Positioner(win)
+
+    win.setVisibleOnAllWorkspaces(true)
+
+    win.on('blur',()=>{
+    	win.hide();
+    })
+}
+
+function showWindow(data){
+
+	win.loadURL('file:///'+__dirname+'/view/wake.html?'+data.name)
+
+	positioner.move('center')
+	win.show()
+	win.focus()
+	// win.webContents.openDevTools()
+	debug('Window showed');
+}

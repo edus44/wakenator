@@ -1,0 +1,24 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hola</title>
+	<style>
+	body{
+		background-color: transparent;
+	}
+
+	</style>
+</head>
+<body>
+	<p>
+		<b><script>document.write(location.search.slice(1))</script></b> 
+		te llama
+	</p>
+	<script>
+	window.onkeydown = function(e){
+		if (e.keyCode==27)
+			require('remote').getCurrentWindow().hide();
+	}
+	</script>
+</body>
+</html>

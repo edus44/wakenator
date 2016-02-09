@@ -8,7 +8,9 @@ function getSocket(id){
 function broadcastPeople(){
 	var people = [];
 	for(var id in io.sockets.connected){
-		people.push(io.sockets.connected[id].person);
+		var person = io.sockets.connected[id].person;
+		if (person)
+			people.push(person);
 	}
 		
 	console.log('Connected:',people.length);
