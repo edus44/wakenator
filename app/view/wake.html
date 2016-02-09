@@ -2,24 +2,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Hola</title>
+	<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 	<style>
 	body{
-		background-color: transparent;
+		background-color: #DC3522;
+		color:#D9CB9E;
+		text-align: center;
+		margin-top: 200px;
+		font-size: 80px;
+		font-family: 'Lobster',sans-serif;
 	}
 
 	</style>
 </head>
 <body>
 	<p>
-		<b><script>document.write(location.search.slice(1))</script></b> 
-		te llama
+		<b>¡¡ <script>document.write(location.search.slice(1))</script></b> 
+		te llama !!
 	</p>
 	<script>
 	function close(){
 		require('remote').getCurrentWindow().hide();
 	}
 	window.onkeydown = function(e){
-		if (e.keyCode==27 || e.keyCode==27)
+		if (e.keyCode==27 || e.keyCode==13)
 			close()
 	}
 	window.onclick = close;

@@ -74,7 +74,8 @@ function showWindow(data){
 
 	win.loadURL('file:///'+__dirname+'/view/wake.html?'+data.name)
 
-	positioner.move('center')
+	// positioner.move('center')
+	win.maximize()
 	win.show()
 	win.focus()
 	// win.webContents.openDevTools()
