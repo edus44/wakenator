@@ -15,10 +15,14 @@
 		te llama
 	</p>
 	<script>
-	window.onkeydown = function(e){
-		if (e.keyCode==27)
-			require('remote').getCurrentWindow().hide();
+	function close(){
+		require('remote').getCurrentWindow().hide();
 	}
+	window.onkeydown = function(e){
+		if (e.keyCode==27 || e.keyCode==27)
+			close()
+	}
+	window.onclick = close;
 	</script>
 </body>
 </html>
