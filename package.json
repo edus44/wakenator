@@ -6,15 +6,17 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron app --enable-logging",
-    "package-linux" : "electron-packager . Wakenator --platform=linux --arch=x64 --version=0.36.7 --overwrite --out=build",
-    "package-darwin" : "electron-packager . Wakenator --platform=darwin --arch=x64 --version=0.36.7 --overwrite --out=build",
-    "package-windows" : "electron-packager . Wakenator --platform=windows --arch=x64 --version=0.36.7 --overwrite --out=build"
+    "package-linux": "electron-packager . Wakenator --platform=linux --arch=x64 --version=0.36.7 --overwrite --out=build",
+    "package-darwin": "electron-packager . Wakenator --platform=darwin --arch=x64 --version=0.36.7 --overwrite --out=build",
+    "package-win32": "electron-packager . Wakenator --platform=win32 --arch=x64 --version=0.36.7 --overwrite --out=build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "auto-launch": "^1.1.1",
     "debug": "^2.2.0",
-    "electron-prebuilt": "^0.36.7"
+    "electron-prebuilt": "^0.36.7",
+    "socket.io": "^1.4.5",
+    "socket.io-client": "^1.4.5"
   }
 }

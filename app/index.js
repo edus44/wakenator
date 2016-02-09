@@ -7,6 +7,7 @@ const app = electron.app;
 
 const menu = require('./lib/menu');
 const BroadcastingArea = require('./lib/areas/broadcasting');
+const SocketioArea = require('./lib/areas/socketio');
 
 
 app.on('ready', ()=> {   
@@ -16,12 +17,14 @@ app.on('ready', ()=> {
     if (process.platform=='darwin')
 	    app.dock.hide()
 
-    menu.initialize();
 
-    var area = new BroadcastingArea();
+    var area = new SocketioArea({
+        name : require('os').hostname()
+    });
+    menu.initialize(area);
 
-    area.on('people-list',function(people){
-    	debug('people list',arguments);
+    area.on('people',function(people){
+    	menu.setPeople(people)
     })
     area.on('wake-me',function(data){
     	debug('wake-me',data);

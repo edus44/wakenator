@@ -20,6 +20,7 @@ let tray = null;
 let c = 0;
 
 let menu = null;
+let people = [];
 
 var self = module.exports = {
 
@@ -42,6 +43,15 @@ var self = module.exports = {
         this.update();
         launcher.isEnabled().then(this.update,this.update)
 
+    },
+
+    setPeople(p){
+        people = p;
+        self.update();
+    },
+
+    wake(person){
+        debug('WAKE',person)
     },
     
     update(){
@@ -72,42 +82,50 @@ var self = module.exports = {
             })
         }
 
-        template.unshift({
+        template.push({
             type : 'separator',
         })
 
-        template.unshift({
-            label:'Open Baloon',
-            click(){
-                tray.displayBalloon({
-                    title : 'Alerta de prueba',
-                    content : 'Este es el mensaje'
-                });
-            }
-        })
 
-        template.unshift({
-            label:'Open Dialog',
-            click(){
-                dialog.showMessageBox({
-                    type:'none',
-                    title : 'Tiitulo',
-                    buttons : [],
-                    message : 'This is the message'
-                })
-            }
-        })
+        people.forEach((person)=>{
+            template.push({
+                label : person.name + ' ('+person.id.slice(0,4)+')',
+                click : ()=>self.wake(person)
+            })
+        });
 
-        template.unshift({
-            label:'Updates:'+(c++),
-            enabled : false
-        })
+        // template.unshift({
+        //     label:'Open Baloon',
+        //     click(){
+        //         tray.displayBalloon({
+        //             title : 'Alerta de prueba',
+        //             content : 'Este es el mensaje'
+        //         });
+        //     }
+        // })
+
+        // template.unshift({
+        //     label:'Open Dialog',
+        //     click(){
+        //         dialog.showMessageBox({
+        //             type:'none',
+        //             title : 'Tiitulo',
+        //             buttons : [],
+        //             message : 'This is the message'
+        //         })
+        //     }
+        // })
+
+        // template.unshift({
+        //     label:'Updates:'+(c++),
+        //     enabled : false
+        // })
 
 
-        template.unshift({
-            label:'Conectando...',
-            enabled : false
-        })
+        // template.unshift({
+        //     label:'Conectando...',
+        //     enabled : false
+        // })
 
         menu = Menu.buildFromTemplate(template);
 
