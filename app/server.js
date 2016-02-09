@@ -39,3 +39,17 @@ io.on('connection',function(socket){
 });
 
 
+//npm install express serve-index
+try {
+    var express = require('express');
+    var serveIndex = require('serve-index')
+
+    var app = express();
+    app.use('/',serveIndex(__dirname+'/../build', {'icons': true}));
+    app.use(express.static(__dirname+'/../build'));
+    app.listen(3003,function(){
+    	console.log('listening express 3003');
+    });
+} catch(e) {
+	console.log(e);
+}
