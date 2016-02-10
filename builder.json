@@ -17,5 +17,13 @@
     "comment" : "Wakenator",
     "executable" : "Wakenator",
     "maintainer": "ggg-ehidalgo"
+  },
+
+  "win" : {
+    "title" : "Wakenator",
+    "version" : "0.1.0",
+    "publisher": "ggg-ehidalgo",
+    "icon" : "icon.ico",
+    "verbosity": 1
   }
 }
