@@ -6,3 +6,6 @@ WAKENATOR
 
 
 `sudo apt-get install libappindicator1` is required in Ubuntu Desktop
+
+
+travis-test:1
