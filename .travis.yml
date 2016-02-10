@@ -6,10 +6,12 @@ before_install:
  - node --version
  - brew unlink node
  - brew install homebrew/versions/node4-lts
- - brew install wine makensis
+ # - brew install wine makensis
  - sudo gem install fpm
  - sudo npm install -g electron-builder electron-packager
 
 install:
  - npm install --no-spin
- - npm run dist:all
+ # - npm run dist:all
+ - npm run dist:osx
+ - npm run dist:linux
