@@ -13,7 +13,5 @@ before_install:
 install:
  - npm install --no-spin
  # - npm run dist:all
- - electron-packager . Wakenator --platform=darwin--arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'
- - electron-packager . Wakenator --platform=linux --arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'
- - electron-builder \"build/Wakenator-linux-x64\" --platform=linux --out=\"build\" --config=builder.json
- - electron-builder \"build/Wakenator-win32-x64\" --platform=win --out=\"build\" --config=builder.json
+ - npm run dist:osx
+ - npm run dist:linux

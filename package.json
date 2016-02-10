@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron app --enable-logging",
     "pack:linux": "electron-packager . Wakenator --platform=linux --arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'",
-    "pack:osx": "electron-packager . Wakenator --platform=darwin--arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'",
+    "pack:osx": "electron-packager . Wakenator --platform=darwin --arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'",
     "pack:win": "electron-packager . Wakenator --platform=win32 --arch=x64 --version=0.36.7 --overwrite --out=build --ignore='(psd|build)'",
 
     "build:osx" : "electron-builder \"build/Wakenator-darwin-x64/Wakenator.app\" --platform=osx --out=\"build\" --config=builder.json",
