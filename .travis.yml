@@ -10,4 +10,4 @@ before_install:
 
 install:
  - npm install --no-spin
- - npm dist:all
+ - npm run dist:all
