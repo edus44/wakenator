@@ -2,7 +2,7 @@ os: osx
 language: objective-c
 
 before_install:
- # - brew update
+ - brew update
  - node --version
  - brew unlink node
  - brew install homebrew/versions/node4-lts
