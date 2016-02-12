@@ -11,13 +11,20 @@ module.exports = class extends EventEmitter{
 		super();
 
 		this.name = options.name;
-		this.socket = io.connect('http://192.168.2.47:3002');
+		// this.socket = io.connect('http://dashboard-demo-1.s.orchextra.io/wakenator',{
+			// path : '/wakenator/socket.io'
+		// });
+		this.socket = io.connect('http://dashboard-demo-1.s.orchextra.io:3002');
+		// this.socket = io.connect('http://192.168.2.47:3002');
 
 
 		this.debugEvents();
 
 		this.socket.on('connect',()=>{
 			this.broadcastMyself()
+		})
+		this.socket.on('disconnect',()=>{
+			this.emit('people',null);
 		})
 
 		this.socket.on('wake',(person)=>{

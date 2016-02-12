@@ -20,7 +20,7 @@ let tray = null;
 let c = 0;
 
 let menu = null;
-let people = [];
+let people = null;
 let area;
 
 var self = module.exports = {
@@ -88,6 +88,12 @@ var self = module.exports = {
             type : 'separator',
         })
 
+        if (people===null){
+            template.push({
+                label:'Conectando...',
+                enabled : false
+            })
+        }else
         if (!people.length){
             template.push({
                 label:'Nadie cerca',

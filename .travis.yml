@@ -12,6 +12,7 @@ before_install:
 
 install:
  - npm install --no-spin
- # - npm run dist:all
+ 
+script: 
  - npm run dist:osx
  - npm run dist:linux
