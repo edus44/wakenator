@@ -84,8 +84,15 @@ var self = module.exports = {
             })
         }
 
+
         template.push({
             type : 'separator',
+        })
+
+        if (area.socket && area.socket.id)
+        template.push({
+            label : 'Yo: '+area.name+ ' ('+area.socket.id.slice(0,4)+')',
+            enabled:'false'
         })
 
         if (people===null){

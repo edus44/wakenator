@@ -11,11 +11,7 @@ module.exports = class extends EventEmitter{
 		super();
 
 		this.name = options.name;
-		// this.socket = io.connect('http://dashboard-demo-1.s.orchextra.io/wakenator',{
-			// path : '/wakenator/socket.io'
-		// });
-		this.socket = io.connect('http://dashboard-demo-1.s.orchextra.io:3002');
-		// this.socket = io.connect('http://192.168.2.47:3002');
+		this.socket = io.connect('http://172.20.2.126:3002');
 
 
 		this.debugEvents();
