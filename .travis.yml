@@ -3,16 +3,15 @@ language: objective-c
 
 before_install:
  - brew update
- - node --version
  - brew unlink node
  - brew install homebrew/versions/node4-lts
  # - brew install wine makensis
- - sudo gem install fpm
+ # - sudo gem install fpm
  - sudo npm install -g electron-builder electron-packager
 
 install:
  - npm install --no-spin
- 
+
 script: 
  - npm run dist:osx
- - npm run dist:linux
+ # - npm run dist:linux
