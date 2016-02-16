@@ -11,7 +11,7 @@ module.exports = class extends EventEmitter{
 		super();
 
 		this.name = options.name;
-		this.socket = io.connect('http://172.20.2.126:3002');
+		this.socket = io.connect('http://127.0.0.1:3000');
 
 
 		this.debugEvents();
@@ -48,8 +48,8 @@ module.exports = class extends EventEmitter{
 
 		this.socket.emit('person',{
 			id : this.socket.id,
-			name : this.name,
-			slackName : 'edu.hh'
+			host : this.name,
+			name : 'edu-'+this.socket.id.slice(0,2)
 		})
 	}
 

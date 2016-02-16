@@ -12,7 +12,7 @@ const dialog = electron.dialog;
 const launcher = require('./launcher');
 const path = require('path');
 
-const version = require('../../package').version;
+const version = require('../package').version;
 
 const resPath = path.resolve(__dirname,'..','res');
 
@@ -75,7 +75,7 @@ var self = module.exports = {
             }
         ]
 
-        if (process.platform == 'linux'){
+        if (true ||  process.platform == 'linux'){
             template = template.concat(optionsMenu);
         }else{
             template.push({

@@ -1,5 +1,7 @@
 {
   "node": true,
   "esnext": true,
-  "asi":true
+  "asi":true,
+  "newcap":false,
+  "strict" : true
 }
