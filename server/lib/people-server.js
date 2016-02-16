@@ -14,9 +14,14 @@ class Person{
 	}
 }
 
+
+
+
 class PeopleServer{
 
-
+	/**
+	 * @param  {httpServer} server 
+	 */
 	constructor(server){
 
 		this.io = new socketio(server);
@@ -79,7 +84,7 @@ class PeopleServer{
 
 		debug('waking with names',toSocket.person.toString(),'to',ofSocket.person.toString())
 		toSocket.emit('wake',ofSocket.person)
-		
+
 		return toSocket.person.toString()
 	}
 

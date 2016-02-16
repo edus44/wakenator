@@ -11,7 +11,10 @@ let app = express()
 let server = http.createServer(app)  
 
 let peopleServer = require('./lib/people-server')(server)
-let externalApi = require('./lib/external-api')(app,peopleServer,token)
+
+if (process.env.NO_EXTERNAL_API != 1){
+	require('./lib/external-api')(app,peopleServer,token)
+}
 
 server.listen(port,()=>
 	debug('listening on '+port
