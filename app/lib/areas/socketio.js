@@ -48,7 +48,8 @@ module.exports = class extends EventEmitter{
 
 		this.socket.emit('person',{
 			id : this.socket.id,
-			name : this.name
+			name : this.name,
+			slackName : 'edu.hh'
 		})
 	}
 
