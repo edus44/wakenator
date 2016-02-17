@@ -9,6 +9,7 @@ const Positioner = require('electron-positioner')
 const __basedir = require('path').dirname(require.main.filename);
 
 const ipc = electron.ipcMain;
+const resPath = require('path').resolve(__dirname,'..','res');
 
 class Options {
 
@@ -34,7 +35,7 @@ class Options {
         if (!this.win.isVisible())
             this.win.loadURL('file:///'+__basedir+'/view/options.html')
 
-        this.win.setSize(1200,400)
+        this.win.setSize(1000,400)
         this.win.positioner.move('center')
         // this.win.show()
         this.win.focus()
@@ -46,6 +47,8 @@ class Options {
         this.win = new BrowserWindow({
             show: false,
             frame: true,
+            title : 'Options - Wakenator',
+            icon : resPath+'/icon-white.png',
 
 
             resizable:false,

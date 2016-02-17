@@ -3,28 +3,67 @@
 <head>
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+    <title>Options - Wakenator</title>
+    <style>
+		.md-padding{
+			padding:32px;
+		}
+		.hint{
+			position: absolute;
+			left: 2px;
+			right: auto;
+			bottom: 7px;
+			font-size: 12px;
+			line-height: 14px;
+			color: #aaa;
+		}
+		md-checkbox{
+			font-size: 14px;
+		}
+		md-pagination-wrapper {
+			background-color: #f6f6f6;
+		}
+    </style>
 </head>
 
 <body ng-app="optionsApp" ng-controller="MainCtrl" ng-cloak>
-    <div layout="column">
-        <md-content class="md-block">
-            <md-checkbox ng-model="opts.startup">
-                Load at startup
-            </md-checkbox>
+    <md-content>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>
+    	          <span>Wakenator Options</span>
+    	        </h2>
+    	        <span flex></span>
+                <md-button ng-click="closeWindow()">
+                	Close
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Basics">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block">
+                        <label>Username</label>
+                        <input ng-model="opts.name">
+                        <div class="hint">It should match your Slack <i>@user_name</i></div>
+                    </md-input-container>
 
-            <md-input-container class="md-block">
-              <label>Name</label>
-              <input ng-model="opts.name">
-            </md-input-container>
-
-            <md-input-container class="md-block">
-              <label>Server</label>
-              <input ng-model="opts.server">
-            </md-input-container>
-
-        </md-content>
+                    <md-checkbox ng-model="opts.startup">
+                        Load app at startup
+                    </md-checkbox>
+                </md-content>
+            </md-tab>
+            <md-tab label="Server">
+                <md-content class="md-padding">
+                    <md-input-container class="md-block">
+                        <label>Server address</label>
+                        <input ng-model="opts.server">
+                    </md-input-container>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-content>
     </div>
-
     <!-- Angular Material requires Angular.js Libraries -->
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
@@ -32,11 +71,10 @@
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
     <!-- Angular Material Library -->
     <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-
     <script>
     'use strict';
 
-	var ipc = require('electron').ipcRenderer;
+    var ipc = require('electron').ipcRenderer;
     var remote = require('remote');
 
     var options = remote.require('./lib/options');
@@ -47,12 +85,16 @@
         .controller('MainCtrl', function($scope) {
             win.show()
 
-            $scope.opts = angular.extend({},options.data);
+            $scope.opts = angular.extend({}, options.data);
 
-            $scope.$watchGroup(['opts.startup','opts.name','opts.server'],function(){
-            	console.log($scope.opts);
-            	ipc.send('options-changed',$scope.opts)
+            $scope.$watchGroup(['opts.startup', 'opts.name', 'opts.server'], function() {
+                console.log($scope.opts);
+                ipc.send('options-changed', $scope.opts)
             })
+
+            $scope.closeWindow = function(){
+            	win.hide()
+            }
         })
     </script>
 </body>
