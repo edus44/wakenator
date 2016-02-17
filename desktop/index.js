@@ -20,7 +20,7 @@ app.on('ready', ()=> {
     let startup = require('./lib/startup')
     let options = require('./lib/options')
 
-    // options.show();
+    options.show();
 
     client.setName('testUserName')
 
