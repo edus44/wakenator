@@ -1,157 +1,149 @@
 'use strict';
 
-const debug = require('debug')('menu');
-const electron = require('electron');
-const app = electron.app;
+const debug = require('debug')('wakenator:menu');
 
-const Menu = electron.Menu;
-const MenuItem = electron.MenuItem;
-const Tray = electron.Tray;
-const dialog = electron.dialog;
-
-const launcher = require('./launcher');
 const path = require('path');
+const version = require('../package').version
+const EventEmitter = require('events').EventEmitter
 
-const version = require('../package').version;
+const electron = require('electron');
+const Menu = require('electron').Menu;
+const MenuItem = require('electron').MenuItem;
+const Tray = require('electron').Tray;
 
 const resPath = path.resolve(__dirname,'..','res');
+const client = require('./client');
 
-let tray = null;
-let c = 0;
+class WkMenu extends EventEmitter{
 
-let menu = null;
-let people = null;
-let area;
+    constructor(){
+        super();
 
-var self = module.exports = {
+        this.menu = null;
+        this.people = null;
+        this.startupEnabled = false;
 
-    initialize(_area){
-        area = _area;
-        tray = new Tray(resPath+'/icon-white.png');
-        tray.setToolTip('Wakenator v'+version);
+        this.tray = new Tray(resPath+'/icon-white.png');
+        this.tray.setToolTip('Wakenator v'+version);
 
+        //Template images for osx
         if (process.platform=='darwin'){
-            tray.setImage(resPath+'/iconTemplate.png');
-            tray.setPressedImage(resPath+'/iconHover.png');
+            this.tray.setImage(resPath+'/iconTemplate.png');
+            this.tray.setPressedImage(resPath+'/iconHover.png');
         }
 
-        tray.on('click',()=>
-            tray.popUpContextMenu(menu)
-        )
+        //Open on left-click
+        this.tray.on('click',()=>{
+            this.tray.popUpContextMenu(this.menu)
+            this.emit('click')
+        })
 
-        debug('Initialized');
+        debug('initialized');
 
-        this.update();
-        launcher.isEnabled().then(this.update,this.update)
+        this.render();
+    }
 
-    },
 
-    setPeople(p){
-        people = p;
-        self.update();
-    },
+    setPeople(people){
+        this.people = people
+        this.render()
+    }
+    setStartupEnabled(bool){
+        this.startupEnabled = bool;
+        this.render()
+    }
 
-    wake(person){
-        debug('WAKE',person)
-        area.socket.emit('wake',person);
-    },
-    
-    update(){
-        let template =  [];
 
-        var optionsMenu = [
+    render(){
+        if (!this.tray)
+            return;
+
+        let person = client.getPerson()
+
+        //Basics template
+        let basicsTpl = [
             {
-                label : 'Cargar al inicio',
+                label:person.name+'@'+person.host+' (me)',
+                enabled : false
+            },
+            {
+                type : 'separator'
+            },
+            // {
+            //     label : 'Options',
+            //     click : ()=>{
+            //         this.emit('options')
+            //     }
+            // },
+            {
+                label : 'Load at startup',
                 type:'checkbox',
-                checked : launcher.enabled,
-                click(){
-                    launcher.toggle()
-                        .then(self.update,self.update)
+                checked : this.startupEnabled,
+                click : ()=>{
+                    this.emit('startup')
                 }
             },
             {
-                label : 'Cerrar',
-                click : app.quit
+                label : 'Close',
+                click : ()=>{
+                    this.emit('close')
+                }
             }
-        ]
+        ];
 
-        if (true ||  process.platform == 'linux'){
-            template = template.concat(optionsMenu);
-        }else{
-            template.push({
-                label:'Opciones',
-                submenu : optionsMenu
+        //People template
+        let listTpl = [];
+
+        if (this.people === null){
+            listTpl.push({
+                label:'Connecting...',
+                enabled : false
             })
         }
 
-
-        template.push({
-            type : 'separator',
-        })
-
-        if (area.socket && area.socket.id)
-        template.push({
-            label : 'Yo: '+area.name+ ' ('+area.socket.id.slice(0,4)+')',
-            enabled:'false'
-        })
-
-        if (people===null){
-            template.push({
-                label:'Conectando...',
+        else if (!this.people.length){
+            listTpl.push({
+                label:'Nobody around',
                 enabled : false
             })
-        }else
-        if (!people.length){
-            template.push({
-                label:'Nadie cerca',
-                enabled : false
-            })
-        }else{
-            people.forEach((person)=>{
-                template.push({
-                    label : person.name + ' ('+person.id.slice(0,4)+')',
-                    click : ()=>self.wake(person)
+        }
+
+        else {
+            this.people.forEach((person)=>{
+                listTpl.push({
+                    label : person.name + '@'+person.host,
+                    click : ()=>{
+                        this.emit('wake-person',person)
+                    }
                 })
             });
         }
 
-        // template.unshift({
-        //     label:'Open Baloon',
-        //     click(){
-        //         tray.displayBalloon({
-        //             title : 'Alerta de prueba',
-        //             content : 'Este es el mensaje'
-        //         });
-        //     }
-        // })
 
-        // template.unshift({
-        //     label:'Open Dialog',
-        //     click(){
-        //         dialog.showMessageBox({
-        //             type:'none',
-        //             title : 'Tiitulo',
-        //             buttons : [],
-        //             message : 'This is the message'
-        //         })
-        //     }
-        // })
-
-        // template.unshift({
-        //     label:'Updates:'+(c++),
-        //     enabled : false
-        // })
+        //Final compositing
+        let template = []
+        if (process.platform == 'darwin'){
+            template = template.concat(basicsTpl.reverse())
+            template = template.concat(listTpl)
+        }
+        else{
+            template = template.concat(listTpl)
+            template = template.concat(basicsTpl)
+        }
 
 
-        // template.unshift({
-        //     label:'Conectando...',
-        //     enabled : false
-        // })
+        //Aplying to tray context menu
+        this.menu = Menu.buildFromTemplate(template);
+        this.tray.setContextMenu(this.menu);
 
-        menu = Menu.buildFromTemplate(template);
+        debug('rendered');
+    }
 
-        tray.setContextMenu(menu);
-
-        debug('Updated');
+    destroy(){
+        this.tray.destroy()
+        this.tray = null
+        debug('destroyed')
     }
 }
+
+module.exports = new WkMenu();

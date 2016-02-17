@@ -1,84 +1,62 @@
 'use strict';
 
-const debug = require('debug')('main');
+const debug = require('debug')('wakenator:main');
 
 const electron = require('electron');
 const app = electron.app;
 
-const menu = require('./lib/menu');
-const BroadcastingArea = require('./lib/areas/broadcasting');
-const SocketioArea = require('./lib/areas/socketio');
-const Positioner = require('electron-positioner')
-
-
-
-const BrowserWindow = require('electron').BrowserWindow;
-
-
 app.on('ready', ()=> {   
-    debug('READY');
+    debug('ready');
     // setTimeout(app.quit,1000);
     
+    //Hide the icon in osx dock
     if (process.platform=='darwin')
 	    app.dock.hide()
 
+    //Dependencies
+    let menu = require('./lib/menu')
+    let popup = require('./lib/popup')
+    let client = require('./lib/client')
+    let startup = require('./lib/startup')
 
-    var area = new SocketioArea({
-        name : require('os').hostname()
-    });
-    menu.initialize(area);
+    client.setName('testUserName')
 
-    area.on('people',function(people){
-    	menu.setPeople(people)
+
+
+    //Closing app
+    menu.on('close',()=>{
+        debug('closing')
+
+        menu.destroy()
+        client.destroy()
+        popup.destroy()
+
+        app.quit();
     })
-    area.on('wake-me',function(data){
-    	debug('wake-me!!!!!!!!!!!!!',data);
-    	showWindow(data)
+
+    //Startup handlers
+    startup.isEnabled().then((enabled)=>{
+        menu.setStartupEnabled(enabled);
+    })
+    menu.on('startup',()=>{
+        startup.toggle().then((enabled)=>{
+            menu.setStartupEnabled(enabled)
+        })
     })
 
-    createWindow();
-});
+    //Waking somebody else
+    menu.on('wake-person',(person)=>{
+        client.wakePerson(person)
+    })
 
+    //People aware
+    client.on('people',function(people){
+        menu.setPeople(people)
+    })
 
-let win;
-let positioner;
+    //Waking me
+    client.on('wake-up',(person)=>{
+        popup.show(person)
+    })
 
-app.on('will-quit',()=>{
-	win.destroy()
-	win=null
 })
-
-
-function createWindow() {
-    var winOpts = {
-        show: false,
-        frame: false,
-        width:400,
-        height:400,
-        center : true,
-        'always-on-top' : true,
-        'skip-taskbar' : true
-    }
-
-    win = new BrowserWindow(winOpts)
-    positioner = new Positioner(win)
-
-    win.setVisibleOnAllWorkspaces(true)
-
-    win.on('blur',()=>{
-    	win.hide();
-    })
-}
-
-function showWindow(data){
-
-	win.loadURL('file:///'+__dirname+'/view/wake.html?'+data.name)
-	
-	// positioner.move('center')
-	if (!win.isMaximized())
-		win.maximize()
-	win.show()
-	win.focus()
-	// win.webContents.openDevTools()
-	debug('Window showed');
-}

@@ -2,7 +2,7 @@
 
 
 const AutoLaunch = require('auto-launch');
-const debug = require('debug')('launcher');
+const debug = require('debug')('wakenator:startup');
 
 let launcher = new AutoLaunch({
     name: 'Wakenator app'
@@ -11,33 +11,30 @@ let launcher = new AutoLaunch({
 
 
 var self = module.exports = {
-	enabled : false,
 	isEnabled(){
-		debug('isEnabled');
+		debug('checking enabled');
 		return new Promise((resolve,reject)=>{
 			try{
 				launcher.isEnabled((enabled)=>{
-				    debug('isEnabled:',enabled);
-				    this.enabled = enabled;
+				    debug('status',enabled);
 				    resolve(enabled)
 				});
-			}catch(e){
-				debug('Error checking enabled',e);
-				resolve(false);
+			}catch(err){
+				debug('error checking enabled',err);
+				reject(err);
 			}
 		});
 	},
 	enable(){
-		debug('Enabling');
+		debug('enabling');
 		return new Promise((resolve,reject)=>{
 			launcher.enable((err)=>{
 			    if (err){
-			        debug('Error enabling',err)
+			        debug('error enabling',err)
 			        reject(err);
 			    }
 			    else{
-			        debug('Enabled');
-			        this.enabled = true;
+			        debug('enabled');
 			        resolve(true)
 			    }
 			})
@@ -45,16 +42,15 @@ var self = module.exports = {
 	},
 
 	disable(){
-		debug('Disabling');
+		debug('disabling');
 		return new Promise((resolve,reject)=>{
 			launcher.disable((err)=>{
 			    if (err){
-			        debug('Error disabling:'+err)
+			        debug('error disabling:'+err)
 			        reject(err);
 			    }
 			    else{
-			        debug('Disabled');
-			        this.enabled = false;
+			        debug('disabled');
 			        resolve(false)
 			    }
 			})
@@ -62,7 +58,7 @@ var self = module.exports = {
 	},
 
 	toggle(){
-		debug('Toggling');
+		debug('toggling');
 		return self.isEnabled().then((enabled)=>{
 	        if(enabled) {
 	           	return this.disable()

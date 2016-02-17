@@ -54,14 +54,14 @@ class PeopleServer{
 			this.broadcastPeople()
 		});
 
-		socket.on('wake',(data)=>{
+		socket.on('wake-person',(data)=>{
 			let toSocket = this.getSocketFromId(data.id)
 
 			if (!toSocket || !socket.person || !toSocket.person || toSocket.id == socket.id )
 				return false;
 			
-			debug('waking',toSocket.person.toString(),'to',socket.person.toString())
-			toSocket.emit('wake',socket.person)
+			debug('waking up',toSocket.person.toString(),'to',socket.person.toString())
+			toSocket.emit('wake-up',socket.person)
 		});
 
 	}
@@ -82,8 +82,8 @@ class PeopleServer{
 		if (!ofSocket || !toSocket || !ofSocket.person || !toSocket.person || ofSocket.id == toSocket.id)
 			return false;
 
-		debug('waking with names',toSocket.person.toString(),'to',ofSocket.person.toString())
-		toSocket.emit('wake',ofSocket.person)
+		debug('waking up with names',toSocket.person.toString(),'to',ofSocket.person.toString())
+		toSocket.emit('wake-up',ofSocket.person)
 
 		return toSocket.person.toString()
 	}
