@@ -1,74 +1,68 @@
 'use strict';
 
-const debug = require('debug')('wakenator:popup');
+const debug = require('debug')('wakenator:options');
 const electron = require('electron')
-
 const app = electron.app;
 
 const BrowserWindow = electron.BrowserWindow;
 const Positioner = require('electron-positioner')
+const __basedir = require('path').dirname(require.main.filename);
 
-var __basedir = require('path').dirname(require.main.filename);
-
-class Popup {
+class Options {
 
     constructor(){
         this.win = null;
     }
 
-
-    show(person){
+    show(){
         if (!this.win)
             this.create()
 
-        this.win.loadURL('file:///'+__basedir+'/view/wake.html?'+person.name)
-        
-        // positioner.move('center')
-        // if (!this.win.isMaximized())
-            // this.win.maximize()
+        debug('show')
 
+        if (!this.win.isVisible())
+            this.win.loadURL('file:///'+__basedir+'/view/options.html')
+
+        this.win.setSize(400,400)
+        this.win.positioner.move('center')
         this.win.show()
         this.win.focus()
-
-        // this.win.webContents.openDevTools()
-        debug('show',person);
     }
 
     create(){
+        debug('create')
+
         this.win = new BrowserWindow({
             show: false,
-            frame: false,
+            frame: true,
 
             resizable:false,
-            movable:false,
+            movable:true,
             minimizable:false,
             maximizable:false,
             fullscreenable:false,
 
+            backgroundColor:'#fff',
+
             alwaysOnTop : true,
-            skipTaskbar : true
+            skipTaskbar : false
         })
+
+        this.win.positioner = new Positioner(this.win)
 
         this.win.setVisibleOnAllWorkspaces(true)
+        this.win.setMenu(null)
 
-        this.win.on('blur',()=>{
-            debug('blur')
-            this.win.hide();
-        })
         this.win.on('close',(e)=>{
             if (app.closing)
                 return;
-            
 
             debug('close')
             this.win.hide();
             e.preventDefault()
         })
 
-        debug('initialized')
     }
-
-
 }
 
-module.exports = new Popup();
+module.exports = new Options();

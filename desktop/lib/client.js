@@ -15,7 +15,7 @@ class Client extends EventEmitter{
 			name : ''
 		}
 
-		this.socket = io.connect('http://127.0.0.1:3000');
+		this.socket = io.connect('http://192.168.2.47:3000');
 
 		this.debugEvents();
 

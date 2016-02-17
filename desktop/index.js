@@ -18,21 +18,16 @@ app.on('ready', ()=> {
     let popup = require('./lib/popup')
     let client = require('./lib/client')
     let startup = require('./lib/startup')
+    let options = require('./lib/options')
+
+    // options.show();
 
     client.setName('testUserName')
 
 
 
     //Closing app
-    menu.on('close',()=>{
-        debug('closing')
-
-        menu.destroy()
-        client.destroy()
-        popup.destroy()
-
-        app.quit();
-    })
+    menu.on('close',app.quit)
 
     //Startup handlers
     startup.isEnabled().then((enabled)=>{
@@ -42,6 +37,11 @@ app.on('ready', ()=> {
         startup.toggle().then((enabled)=>{
             menu.setStartupEnabled(enabled)
         })
+    })
+
+    //Open options view
+    menu.on('options',(e,bounds)=>{
+        options.show(bounds);
     })
 
     //Waking somebody else
@@ -59,4 +59,18 @@ app.on('ready', ()=> {
         popup.show(person)
     })
 
+    //Quit cleanup
+    app.on('before-quit',()=>{
+        debug('before-quit')
+        app.closing = true;
+
+        menu.destroy()
+        client.destroy()
+    })
 })
+
+
+
+process.on('exit', function (code) {
+    console.log('process exited with',code);
+});

@@ -1,0 +1,32 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hola</title>
+	<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	<style>
+	body{
+		background-color: #DC3522;
+		color:#D9CB9E;
+		text-align: center;
+		margin-top: 200px;
+		font-size: 80px;
+		font-family: 'Lobster',sans-serif;
+	}
+
+	</style>
+</head>
+<body>
+	options
+	<script>
+	function close(){
+		require('remote').getCurrentWindow().hide();
+	}
+	window.onkeydown = function(e){
+		if (e.keyCode==27)
+			close();
+	}
+	// window.onkeydown = close;
+	// window.onclick = close;
+	</script>
+</body>
+</html>

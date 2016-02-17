@@ -33,7 +33,7 @@ class WkMenu extends EventEmitter{
         }
 
         //Open on left-click
-        this.tray.on('click',()=>{
+        this.tray.on('click',(e,bounds)=>{
             this.tray.popUpContextMenu(this.menu)
             this.emit('click')
         })
@@ -69,12 +69,13 @@ class WkMenu extends EventEmitter{
             {
                 type : 'separator'
             },
-            // {
-            //     label : 'Options',
-            //     click : ()=>{
-            //         this.emit('options')
-            //     }
-            // },
+            {
+                label : 'Options',
+                click : (e,bounds)=>{
+                    console.log(arguments);
+                    this.emit('options',e,bounds)
+                }
+            },
             {
                 label : 'Load at startup',
                 type:'checkbox',
@@ -140,9 +141,9 @@ class WkMenu extends EventEmitter{
     }
 
     destroy(){
-        this.tray.destroy()
+        this.tray && this.tray.destroy()
         this.tray = null
-        debug('destroyed')
+        debug('tray destroyed')
     }
 }
 
