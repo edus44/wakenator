@@ -4,18 +4,49 @@ const io = require('socket.io-client');
 const EventEmitter = require('events').EventEmitter;
 const debug = require('debug')('wakenator:client');
 
+const ipc = require('electron').ipcMain;
 
+const options = require('./options');
+const hostname = require('os').hostname();
 
 class Client extends EventEmitter{
 	constructor(){
 		super()
+		this.people = null;
+
+		options.on('watch:server',(server)=>{
+			debug(server)
+			this.setServer(server)
+		})
+		options.on('watch:name',(name)=>{
+			this.setName(name)
+		})
+
+		this.start()
+	}
+
+	start(){
+
+		this.destroy();
+
+		let name = options.get('name')
+		let server = options.get('server')
+
 
 		this.person = {
-			host : require('os').hostname(),
-			name : ''
+			host : hostname,
+			name : name || 'user'
 		}
 
-		this.socket = io.connect('http://192.168.2.47:3000');
+		if (!server){
+			debug('no server addr specified')
+			return;
+		}
+
+
+		debug('connecting', server)
+
+		this.socket = io.connect(server);
 
 		this.debugEvents();
 
@@ -40,10 +71,14 @@ class Client extends EventEmitter{
 					if (person.id != this.socket.id)
 						list.push(person)
 				})
+
+			this.people = list;
+			ipc.emit('people',list);
 			this.emit('people',list);
 		})
 
 	}
+
 
 	getPerson(){
 		return this.person;
@@ -57,8 +92,13 @@ class Client extends EventEmitter{
 	}
 
 	setName(name){
-		this.person.name = name;
+		this.person.name = name.toString() || 'user';
 		this.broadcastMyself()
+	}
+
+	setServer(server){
+		this.server = server;
+		this.start()
 	}
 
 	broadcastMyself(){
@@ -76,7 +116,7 @@ class Client extends EventEmitter{
 		let eventNames = ['connect', 'error', 'disconnect', 'reconnect', 'reconnect_attempt', 'reconnecting', 'reconnect_error', 'reconnect_failed'];
 
 		eventNames.forEach((eventName)=>{
-			this.socket.on(eventName, ()=>debug(eventName, arguments))
+			this.socket.on(eventName, ()=>debug('io:'+eventName, arguments))
 		})
 
 	}

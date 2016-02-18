@@ -1,8 +1,11 @@
 'use strict';
 
 const debug = require('debug')('wakenator:options');
+const storage = require('electron-json-storage');
 const electron = require('electron')
 const app = electron.app;
+
+const EventEmitter = require('events').EventEmitter;
 
 const BrowserWindow = electron.BrowserWindow;
 const Positioner = require('electron-positioner')
@@ -11,19 +14,70 @@ const __basedir = require('path').dirname(require.main.filename);
 const ipc = electron.ipcMain;
 const resPath = require('path').resolve(__dirname,'..','res');
 
-class Options {
+const defaultOpts = {
+    // host: 'http://172.20.2.126:3002',
+    server: 'http://127.0.0.1:3000',
+    name : 'user',
+    startup : true
+}
+
+const storageKey = 'wakenatorOptions';
+
+class Options extends EventEmitter{
 
     constructor(){
-        this.win = null;
-        this.data = {startup:true,name:'hola',server:'http://12.214.41.13:3003'}
+        super();
 
-        ipc.on('options-changed',function(e,data){
-            debug('options-changed',data);
+        this.win = null;
+        this.data = defaultOpts;
+
+
+        this.recover().finally(()=>{
+            this.emit('initialized')
         })
+
+        
+        //Expose to remote ipc access
+        this.set = this.set;
+        this.get = this.get;
+        this.getAll = this.getAll;
     }
 
-    getData(){
-        return {caca:true}
+    recover(){
+        // storage.set('wakenatorOptions',this.data);
+        return storage.get(storageKey)
+            .then((data)=>{
+                debug('recovered',data)
+                Object.assign(this.data,data)
+                this.persist()
+            })
+            .catch((err)=>{
+                debug('error recovering',err);
+                this.persist()
+            });
+    }
+
+    persist(){
+        debug('persist',this.data)
+        storage.set(storageKey,this.data)
+            .then(()=>debug('persisted'))
+            .catch((err)=>debug('error persisiting',err))
+    }
+
+    get(key){
+        return this.data[key];
+    }
+
+    set(key,val){  
+        debug('changed',key,val);
+        var old = this.data[key];
+        this.data[key] = val;
+        this.persist()
+        this.emit('watch:'+key,val,old);
+    }
+
+    getAll(){
+        return this.data;
     }
 
     show(){
@@ -33,9 +87,9 @@ class Options {
         debug('show')
 
         if (!this.win.isVisible())
-            this.win.loadURL('file:///'+__basedir+'/view/options.html')
+            this.win.loadURL('file:///'+__basedir+'/view/options/index.html')
 
-        this.win.setSize(1000,400)
+        this.win.setSize(1000,600)
         this.win.positioner.move('center')
         // this.win.show()
         this.win.focus()
@@ -53,13 +107,13 @@ class Options {
 
             resizable:false,
             movable:true,
-            minimizable:false,
+            minimizable:true,
             maximizable:false,
             fullscreenable:false,
 
             backgroundColor:'#fff',
 
-            alwaysOnTop : true,
+            alwaysOnTop : false,
             skipTaskbar : false
         })
 

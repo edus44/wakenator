@@ -2,7 +2,6 @@
 
 const debug = require('debug')('wakenator:menu');
 
-const path = require('path');
 const version = require('../package').version
 const EventEmitter = require('events').EventEmitter
 
@@ -11,7 +10,7 @@ const Menu = require('electron').Menu;
 const MenuItem = require('electron').MenuItem;
 const Tray = require('electron').Tray;
 
-const resPath = path.resolve(__dirname,'..','res');
+const resPath = require('path').resolve(__dirname,'..','res');
 const client = require('./client');
 
 class WkMenu extends EventEmitter{
@@ -76,14 +75,14 @@ class WkMenu extends EventEmitter{
                     this.emit('options',e,bounds)
                 }
             },
-            {
-                label : 'Load at startup',
-                type:'checkbox',
-                checked : this.startupEnabled,
-                click : ()=>{
-                    this.emit('startup')
-                }
-            },
+            // {
+            //     label : 'Load at startup',
+            //     type:'checkbox',
+            //     checked : this.startupEnabled,
+            //     click : ()=>{
+            //         this.emit('startup')
+            //     }
+            // },
             {
                 label : 'Close',
                 click : ()=>{

@@ -8,7 +8,7 @@ let launcher = new AutoLaunch({
     name: 'Wakenator app'
 });
 
-
+let options = require('./options');
 
 var self = module.exports = {
 	isEnabled(){
@@ -66,5 +66,17 @@ var self = module.exports = {
 	           	return this.enable()
 	        }
 	    });
+	},
+
+	set(status){
+		if (status===true){
+			self.enable()
+		}else{
+			self.disable()
+		}
 	}
 };
+
+//Init set and watch for changes
+self.set( options.get('startup') )
+options.on('watch:startup',self.set)

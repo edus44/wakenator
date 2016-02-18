@@ -24,8 +24,8 @@ class Popup {
         this.win.loadURL('file:///'+__basedir+'/view/wake.html?'+person.name)
         
         // positioner.move('center')
-        // if (!this.win.isMaximized())
-            // this.win.maximize()
+        if (!this.win.isMaximized())
+            this.win.maximize()
 
         this.win.show()
         this.win.focus()

@@ -9,66 +9,19 @@ app.on('ready', ()=> {
     debug('ready');
     // setTimeout(app.quit,1000);
     
-    //Hide the icon in osx dock
+    
     if (process.platform=='darwin')
-	    app.dock.hide()
-
-    //Dependencies
-    let menu = require('./lib/menu')
-    let popup = require('./lib/popup')
-    let client = require('./lib/client')
-    let startup = require('./lib/startup')
-    let options = require('./lib/options')
-
-    options.show();
-
-    client.setName('testUserName')
+        app.dock.hide() //Hide the icon in osx dock
 
 
+    //Initialize options, then bootstrap the application
+    const options = require('./lib/options')
 
-    //Closing app
-    menu.on('close',app.quit)
-
-    //Startup handlers
-    startup.isEnabled().then((enabled)=>{
-        menu.setStartupEnabled(enabled);
-    })
-    menu.on('startup',()=>{
-        startup.toggle().then((enabled)=>{
-            menu.setStartupEnabled(enabled)
-        })
+    options.once('initialized',()=>{
+        require('./bootstrap')
     })
 
-    //Open options view
-    menu.on('options',(e,bounds)=>{
-        options.show(bounds);
-    })
-
-    //Waking somebody else
-    menu.on('wake-person',(person)=>{
-        client.wakePerson(person)
-    })
-
-    //People aware
-    client.on('people',function(people){
-        menu.setPeople(people)
-    })
-
-    //Waking me
-    client.on('wake-up',(person)=>{
-        popup.show(person)
-    })
-
-    //Quit cleanup
-    app.on('before-quit',()=>{
-        debug('before-quit')
-        app.closing = true;
-
-        menu.destroy()
-        client.destroy()
-    })
 })
-
 
 
 process.on('exit', function (code) {
