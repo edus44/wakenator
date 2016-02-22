@@ -27,8 +27,10 @@
 	window.onkeydown = close;
 	window.onclick = close;
 	window.onload = function(){
-		// win.show();
-		// win.focus();
+		if (!win.isMaximized())
+            win.maximize()
+		win.show();
+		win.focus();
 	};
 	</script>
 </body>

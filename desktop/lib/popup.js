@@ -25,11 +25,12 @@ class Popup {
         this.win.loadURL('file:///'+__basedir+'/view/wake.html?'+person.name+'@'+person.host)
         
         // positioner.move('center')
-        if (!this.win.isMaximized())
-            this.win.maximize()
 
         // this.win.show()
         // this.win.focus()
+
+        // if (!this.win.isMaximized())
+            // this.win.maximize()
 
         // this.win.webContents.openDevTools()
         debug('show',person);
@@ -40,10 +41,10 @@ class Popup {
             show: false,
             frame: false,
 
-            resizable:false,
+            // resizable:false,
             movable:false,
             minimizable:false,
-            maximizable:false,
+            // maximizable:true,
             fullscreenable:false,
 
             alwaysOnTop : true,
