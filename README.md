@@ -8,4 +8,8 @@ WAKENATOR [![Build Status](https://travis-ci.org/edus44/wakenator.svg?branch=mas
 `sudo apt-get install libappindicator1` is required in Ubuntu Desktop
 
 
-travis-test:1
+####TODO
+- Automate build process with grunt-gulp
+- Working travis.yml with realeases autoupload
+- Customizable wake message
+- Improve builder.json
