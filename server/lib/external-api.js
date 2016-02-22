@@ -37,7 +37,7 @@ module.exports = function(app,peopleServer,token){
 
 		//Sends the result
 		if (!result)
-			res.json({error:'Names not found'})
+			res.json({text:'User '+toName+' not found'})
 		else
 			res.json({text:'Sent to '+result})
 	})
