@@ -17,15 +17,19 @@
 </head>
 <body>
 	<p>
-		¡¡ <b> <script>document.write(location.search.slice(1))</script></b> 
-		te llama !!
+		¡¡ <b> <script>document.write(location.search.slice(1))</script></b> te llama !!
 	</p>
 	<script>
+	var win = require('remote').getCurrentWindow();
 	function close(){
-		require('remote').getCurrentWindow().hide();
+		win.hide();
 	}
 	window.onkeydown = close;
 	window.onclick = close;
+	window.onload = function(){
+		// win.show();
+		// win.focus();
+	};
 	</script>
 </body>
 </html>

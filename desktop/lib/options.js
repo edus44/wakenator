@@ -5,23 +5,27 @@ const storage = require('electron-json-storage');
 const electron = require('electron')
 const app = electron.app;
 
+const path = require('path');
+
 const EventEmitter = require('events').EventEmitter;
 
 const BrowserWindow = electron.BrowserWindow;
 const Positioner = require('electron-positioner')
-const __basedir = require('path').dirname(require.main.filename);
+const __basedir = path.dirname(require.main.filename);
 
-const ipc = electron.ipcMain;
-const resPath = require('path').resolve(__dirname,'..','res');
+const resPath = path.resolve(__dirname,'..','res');
 
 const defaultOpts = {
-    // host: 'http://172.20.2.126:3002',
-    server: 'http://127.0.0.1:3000',
+    server: 'http://172.20.2.126:3000',
+    // server: 'http://127.0.0.1:3000',
     name : 'user',
     startup : true
 }
 
+
 const storageKey = 'wakenatorOptions';
+
+debug('options-file',path.resolve(app.getPath('userData'),storageKey+'.json'));
 
 class Options extends EventEmitter{
 
@@ -84,6 +88,7 @@ class Options extends EventEmitter{
         debug('show')
 
         if (this.win){
+            this.win.restore();
             this.win.show();
             this.win.focus();
             return;

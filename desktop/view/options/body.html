@@ -15,11 +15,11 @@
             <md-content class="md-padding">
                 <md-input-container class="md-block">
                     <label>Username</label>
-                    <input ng-model="opts.name">
+                    <input ng-model="opts.name" ng-model-options="{ debounce: 500 }">
                     <div class="hint">It should match your Slack <i>@user_name</i></div>
                 </md-input-container>
 
-                <md-checkbox ng-model="opts.startup">
+                <md-checkbox ng-model="opts.startup" ng-model-options="{ debounce: 500 }">
                     Load app at startup
                 </md-checkbox>
             </md-content>
@@ -28,7 +28,7 @@
             <md-content class="md-padding">
                 <md-input-container class="md-block">
                     <label>Server address</label>
-                    <input ng-model="opts.server">
+                    <input ng-model="opts.server" ng-model-options="{ debounce: 500 }">
                     <div class="hint">Status: <b>{{people !== null ? 'Connected (' + people.length +' around)' : 'Connecting...' }}<b></div>
                 </md-input-container>
             </md-content>

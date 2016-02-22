@@ -8,7 +8,7 @@ const bodyParser = require('body-parser')
 
 
 module.exports = function(app,peopleServer,token){
-	debug('initialized',token)
+	debug('initialized','token='+token)
 
 	app.use(bodyParser.urlencoded({extended:false}))
 

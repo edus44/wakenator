@@ -28,8 +28,8 @@ class Popup {
         if (!this.win.isMaximized())
             this.win.maximize()
 
-        this.win.show()
-        this.win.focus()
+        // this.win.show()
+        // this.win.focus()
 
         // this.win.webContents.openDevTools()
         debug('show',person);
