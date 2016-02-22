@@ -81,22 +81,13 @@ class Options extends EventEmitter{
     }
 
     show(){
-        if (!this.win)
-            this.create()
-
         debug('show')
 
-        if (!this.win.isVisible())
-            this.win.loadURL('file:///'+__basedir+'/view/options/index.html')
-
-        this.win.setSize(1000,600)
-        this.win.positioner.move('center')
-        // this.win.show()
-        this.win.focus()
-    }
-
-    create(){
-        debug('create')
+        if (this.win){
+            this.win.show();
+            this.win.focus();
+            return;
+        }
 
         this.win = new BrowserWindow({
             show: false,
@@ -120,18 +111,25 @@ class Options extends EventEmitter{
         this.win.positioner = new Positioner(this.win)
 
         this.win.setVisibleOnAllWorkspaces(true)
-        // this.win.setMenu(null)
-        this.win.webContents.openDevTools()
+        this.win.setMenu(null)
+        this.win.setSize(400,400)
+
+        this.win.loadURL('file:///'+__basedir+'/view/options/index.html')
+
+        
+        this.win.positioner.move('center')
+
+        // this.win.setSize(1000,600)
+        // this.win.webContents.openDevTools()
+        // this.win.show()
+
+        this.win.focus()
+
 
         this.win.on('close',(e)=>{
-            if (app.closing)
-                return;
-
+            this.win = null;
             debug('close')
-            this.win.hide();
-            e.preventDefault()
         })
-
         this.win.on('will-navigate',(e)=>{
             e.preventDefault()
         })

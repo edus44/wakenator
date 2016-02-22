@@ -3,22 +3,19 @@
 (function() {
 	'use strict';
 
-	var ipc = require('electron').ipcRenderer;
-	var remote = require('remote');
-	var win = remote.getCurrentWindow();
-	var options = remote.require('./lib/options');
-	var client = remote.require('./lib/client');
-
-
-
 	angular.module('optionsApp', ['ngMaterial'])
 	    .controller('MainCtrl', function($scope) {
 
+	    	//Remote objects
+	    	var remote = require('remote');
+	    	var options = remote.require('./lib/options');
+	    	var client = remote.require('./lib/client');
 
-	        win.show()
 
+	    	//Fetch options
 	        $scope.opts = angular.extend({}, options.getAll());
 
+	        //Watch for changes
 	        $scope.$watch('opts.name',function(val){
 	        	options.set('name',val)
 	        });
@@ -29,18 +26,28 @@
 	        	options.set('server',val)
 	        });
 
-
+	        //Close window
 	        $scope.closeWindow = function(){
-	        	win.hide()
+	        	win.close()
 	        }
 
 
+	        //People listener
 	        $scope.people = client.people || null;
 
-	        ipc.on('people',function(){
-	        	console.log('people',arguments);
-		        $scope.people = client.people
+	        function peopleListener(val){
+		        $scope.people = val
 		        $scope.$apply();
+	        }
+	        client.on('people',peopleListener)
+
+	        //Window handler
+	        var win = remote.getCurrentWindow();
+	        win.show()
+
+	        //Free listeners
+	        win.on('close',function(e){
+	        	client.removeListener('people',peopleListener);
 	        })
 	    })
 

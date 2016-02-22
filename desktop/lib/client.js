@@ -4,8 +4,6 @@ const io = require('socket.io-client');
 const EventEmitter = require('events').EventEmitter;
 const debug = require('debug')('wakenator:client');
 
-const ipc = require('electron').ipcMain;
-
 const options = require('./options');
 const hostname = require('os').hostname();
 
@@ -73,7 +71,6 @@ class Client extends EventEmitter{
 				})
 
 			this.people = list;
-			ipc.emit('people',list);
 			this.emit('people',list);
 		})
 

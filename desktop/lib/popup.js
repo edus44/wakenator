@@ -14,6 +14,7 @@ class Popup {
 
     constructor(){
         this.win = null;
+        this.create()
     }
 
 
