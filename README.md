@@ -1,5 +1,7 @@
-WAKENATOR [![Build Status](https://travis-ci.org/edus44/wakenator.svg?branch=master)](https://travis-ci.org/edus44/wakenator)
+WAKENATOR 
 ==========
+[Download for Ubuntu, Windows & OSX](https://github.com/edus44/wakenator/releases)
+
 	
 	#For desktop app
 	cd desktop
