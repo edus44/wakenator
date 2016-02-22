@@ -22,7 +22,7 @@ class Popup {
         if (!this.win)
             this.create()
 
-        this.win.loadURL('file:///'+__basedir+'/view/wake.html?'+person.name)
+        this.win.loadURL('file:///'+__basedir+'/view/wake.html?'+person.name+'@'+person.host)
         
         // positioner.move('center')
         if (!this.win.isMaximized())
