@@ -12,7 +12,7 @@
   "linux" : {
     "arch" : 64,
     "target" : "deb",
-    "version" : "0.3.0",
+    "version" : "0.3.1",
     "title" : "Wakenator",
     "comment" : "Wakenator",
     "executable" : "Wakenator",
@@ -21,7 +21,7 @@
 
   "win" : {
     "title" : "Wakenator",
-    "version" : "0.3.0",
+    "version" : "0.3.1",
     "publisher": "ggg-ehidalgo",
     "icon" : "../resources/icon.ico",
     "verbosity": 1
