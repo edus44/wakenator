@@ -1,7 +1,7 @@
 {
   "osx" : {
     "title": "Wakenator",
-    "background": "app/res/icon-black.png",
+    "background": "../desktop/res/icon-black.png",
     "icon": "mount.icns",
     "icon-size": 80,
     "contents": [
@@ -12,7 +12,7 @@
   "linux" : {
     "arch" : 64,
     "target" : "deb",
-    "version" : "0.2.0",
+    "version" : "0.3.0",
     "title" : "Wakenator",
     "comment" : "Wakenator",
     "executable" : "Wakenator",
@@ -21,9 +21,9 @@
 
   "win" : {
     "title" : "Wakenator",
-    "version" : "0.2.0",
+    "version" : "0.3.0",
     "publisher": "ggg-ehidalgo",
-    "icon" : "icon.ico",
+    "icon" : "../resources/icon.ico",
     "verbosity": 1
   }
 }
