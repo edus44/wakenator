@@ -71,7 +71,6 @@ class WkMenu extends EventEmitter{
             {
                 label : 'Options',
                 click : (e,bounds)=>{
-                    console.log(arguments);
                     this.emit('options',e,bounds)
                 }
             },
