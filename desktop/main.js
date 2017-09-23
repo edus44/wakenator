@@ -68,8 +68,8 @@ function createWindow(){
         frame: false,
         fullscreenable: false,
         resizable: false,
-        transparent: true,
-        'node-integration': false
+        // transparent: true,
+        // 'node-integration': false
     })
 
     let windowPath
@@ -117,7 +117,7 @@ function showWindow(){
     const position = getWindowPosition()
     window.setPosition(position.x, position.y, false)
     window.show()
-    window.focus()
+    // window.focus()
 }
 
 ipcMain.on('show-window', () => {

@@ -29,13 +29,10 @@ body,html{
 body{
     display: flex;
     // background-color: #fc0;
-    padding: 6px;
 }
 div{
     flex:1;
     background-color: #ccc;
-    border-radius: 6px;
     text-align: center;
-    box-shadow: 0 0 6px 2px rgba(0,0,0,.2)
 }
 </style>
