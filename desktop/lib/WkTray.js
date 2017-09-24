@@ -30,7 +30,7 @@ module.exports = class WkTray extends EventEmitter{
         // ])
         // this.tray.setContextMenu(contextMenu)
 
-        // this.tray.on('right-click', this.click.bind(this))
+        this.tray.on('right-click', this.click.bind(this))
         this.tray.setToolTip('Wakenator')
     }
 

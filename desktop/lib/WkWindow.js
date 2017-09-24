@@ -47,6 +47,7 @@ module.exports = class WkWindow extends EventEmitter{
                     debug('dev-tool','Added Extension:',name)
                     // Open the DevTools
                     this.win.webContents.openDevTools({mode:'detach'})
+                    this.show()
                 })
                 .catch((err) => debug('dev-tool','An error occurred:', err))
         }
