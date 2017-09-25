@@ -2,16 +2,31 @@
     <div>
         {{ greet }}
         <div class="button">hola</div>
+        <div class="button">{{status}}</div>
     </div>
 </template>
 
 <script>
+import io from 'socket.io-client'
+import Debug from 'debug'
+
+Debug.enable('*')
+
 export default {
     data:()=>({
-        greet:'hello'
+        greet:'hello',
+        status:'none'
     }),
     created(){
-        console.log(this.greet)
+        let socket = this.socket = io.connect('http://127.0.0.1:3001')
+        // let socket = this.socket = io.connect('wss://wakenator-server.now.sh')
+
+        socket.on('connect',()=>{
+            this.status = 'connect'
+        })
+        socket.on('disconnect',()=>{
+            this.status = 'disconnect'
+        })
     }
 }
 </script>
