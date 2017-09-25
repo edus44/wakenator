@@ -6,11 +6,14 @@
   "scripts": {
     "dev": "cross-env DEBUG=wk* electron .",
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-app": "cd ../app && npm run build",
+    "pack": "build --dir"
   },
   "author": "edus44",
   "license": "ISC",
   "dependencies": {
+    "debug": "^3.0.1",
     "electron-positioner": "^3.0.0"
   },
   "devDependencies": {

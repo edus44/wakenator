@@ -33,7 +33,7 @@ module.exports = class WkWindow extends EventEmitter{
         if (debug.enabled){
             windowPath = `http://localhost:13371`
         }else{
-            let distPath = path.resolve(__dirname, '../../window/dist/index.html').replace(/\\/g,'/')
+            let distPath = path.resolve(__dirname, '../windowDist/index.html').replace(/\\/g,'/')
             windowPath = `file://${distPath}`
         }
 
