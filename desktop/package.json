@@ -1,16 +1,22 @@
 {
-  "name": "wakenator-desktop",
+  "name": "wakenator",
   "version": "1.0.0",
   "description": "Wake up your teammate with this simple tool",
   "main": "main.js",
+  "homepage": "https://github.com/edus44/wakenator",
   "scripts": {
     "dev": "cross-env DEBUG=wk* electron .",
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-app": "cd ../app && npm run build",
-    "pack": "build --dir"
+    "pack": "build --dir",
+    "build-all": "build -lwm",
+    "build": "build"
   },
-  "author": "edus44",
+  "author": {
+    "name":"edus44",
+    "email": "eduhhg@gmail.com"
+  },
   "license": "ISC",
   "dependencies": {
     "debug": "^3.0.1",
