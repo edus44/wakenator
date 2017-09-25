@@ -59,7 +59,7 @@ module.exports = class WkWindow extends EventEmitter{
         // Hide the window when it loses focus
         this.win.on('blur', this.hide.bind(this))  
         this.win.on('close',e=>{
-            e.preventDefault()
+            // e.preventDefault()
             this.hide()
         })  
 
