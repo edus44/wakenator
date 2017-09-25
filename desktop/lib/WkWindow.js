@@ -1,7 +1,6 @@
 'use strict'
 
 const { BrowserWindow } = require('electron')
-const devtoolsInstaller = require('electron-devtools-installer')
 
 const path = require('path')
 const Positioner = require('electron-positioner')
@@ -42,14 +41,19 @@ module.exports = class WkWindow extends EventEmitter{
 
         //Load vue devtools
         if (debug.enabled){
-            devtoolsInstaller.default(devtoolsInstaller.VUEJS_DEVTOOLS)
-                .then((name) => {
-                    debug('dev-tool','Added Extension:',name)
-                    // Open the DevTools
-                    this.win.webContents.openDevTools({mode:'detach'})
-                    this.show()
-                })
-                .catch((err) => debug('dev-tool','An error occurred:', err))
+            try{
+                const devtoolsInstaller = require('electron-devtools-installer')
+                devtoolsInstaller.default(devtoolsInstaller.VUEJS_DEVTOOLS)
+                    .then((name) => {
+                        debug('dev-tool','Added Extension:',name)
+                        // Open the DevTools
+                        this.win.webContents.openDevTools({mode:'detach'})
+                        this.show()
+                    })
+                    .catch((err) => debug('dev-tool','An error occurred:', err))
+            }catch(err){
+                debug('cannot-load-devtool',err.message)
+            }
         }
 
         // Hide the window when it loses focus
@@ -79,7 +83,8 @@ module.exports = class WkWindow extends EventEmitter{
 
     show(){
         debug('show')
-        const pos = this.positioner.calculate('trayBottomCenter', this.tray.getBounds())
+        // const pos = this.positioner.calculate('trayBottomCenter', this.tray.getBounds())
+        const pos = this.positioner.calculate('center', this.tray.getBounds())
         this.win.setPosition(pos.x, pos.y, false)
         this.win.show()
         this.win.focus()
