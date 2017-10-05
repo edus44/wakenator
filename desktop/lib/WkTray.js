@@ -4,6 +4,7 @@ const { Tray, Menu } = require('electron')
 const path = require('path')
 const {EventEmitter} = require('events')
 const debug = require('debug')('wk:tray')
+const {version} = require('../package')
 
 function getAsset(file){
     return path.resolve(__dirname, '../res',file)
@@ -30,7 +31,7 @@ module.exports = class WkTray extends EventEmitter{
         this.tray.setContextMenu(contextMenu)
 
         this.tray.on('right-click', this.click.bind(this))
-        this.tray.setToolTip('Wakenator')
+        this.tray.setToolTip('Wakenator v'+version)
     }
 
     click(e,bounds){

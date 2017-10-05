@@ -3,6 +3,8 @@ const path = require('path')
 const rootPath = path.resolve(__dirname,'../')
 const distPath = path.resolve(rootPath,'desktop/appDist' )
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const {DefinePlugin} = require('webpack')
+// const packageInfo = require('./package')
 
 module.exports = {
     html:{
@@ -17,7 +19,10 @@ module.exports = {
             publicPath:'./'
         },
         plugins:[
-            new CleanWebpackPlugin([distPath],{root:rootPath})
+            new CleanWebpackPlugin([distPath],{root:rootPath}),
+            new DefinePlugin({
+                // 'process.env.PACKAGE_VERSION': JSON.stringify(packageInfo.version)
+            }),
         ]
     }
 }

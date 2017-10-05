@@ -2,3 +2,20 @@
 @import "_variables";
 @import "~bulma";
 @import "_overrides";
+
+html{
+    overflow: hidden;
+    font-size: 10px;
+    cursor: default;
+}
+body{
+    font-size: 1.6rem;
+}
+*:not(input){
+    user-select:none;
+}
+
+@font-face {
+    font-family: ScriptMT;
+    src: url("../assets/ScriptMT.otf") format("opentype");
+}
