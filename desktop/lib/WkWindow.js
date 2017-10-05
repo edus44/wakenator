@@ -83,8 +83,8 @@ module.exports = class WkWindow extends EventEmitter{
 
     show(){
         debug('show')
-        // const pos = this.positioner.calculate('trayBottomCenter', this.tray.getBounds())
-        const pos = this.positioner.calculate('center', this.tray.getBounds())
+        const pos = this.positioner.calculate('trayBottomCenter', this.tray.getBounds())
+        // const pos = this.positioner.calculate('center', this.tray.getBounds())
         this.win.setPosition(pos.x, pos.y, false)
         this.win.show()
         this.win.focus()

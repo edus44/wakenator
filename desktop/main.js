@@ -42,7 +42,11 @@ function appReady(){
     tray = new WkTray()
     window = new WkWindow(tray.tray)
 
-    tray.on('click',(e,bounds)=>{
-        window.toggle(bounds)
+    tray.on('click',()=>{
+        window.toggle()
+    })
+
+    tray.on('quit',()=>{
+        app.quit()
     })
 }

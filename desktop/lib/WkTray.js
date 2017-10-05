@@ -22,13 +22,12 @@ module.exports = class WkTray extends EventEmitter{
             this.tray.setPressedImage(getAsset('iconHover.png'))
         }
 
-        // const contextMenu = Menu.buildFromTemplate([
-        //     {label: 'Item1', type: 'radio'},
-        //     {label: 'Item2', type: 'radio'},
-        //     {label: 'Item3', type: 'radio', checked: true},
-        //     {label: 'Item4', type: 'radio'}
-        // ])
-        // this.tray.setContextMenu(contextMenu)
+        const contextMenu = Menu.buildFromTemplate([
+            {label: 'Open',click:this.click.bind(this)},
+            {type: 'separator'},
+            {label: 'Quit',click:this.quit.bind(this)}
+        ])
+        this.tray.setContextMenu(contextMenu)
 
         this.tray.on('right-click', this.click.bind(this))
         this.tray.setToolTip('Wakenator')
@@ -36,6 +35,11 @@ module.exports = class WkTray extends EventEmitter{
 
     click(e,bounds){
         debug('clicked',bounds)
-        this.emit('click',e,bounds)
+        this.emit('click',e)
+    }
+
+    quit(e){
+        debug('quit')
+        this.emit('quit',e)
     }
 }
