@@ -3,31 +3,32 @@
         <div class="head">
             Wakenator
         </div>
-        <div class="body">body {{connected}}
+        <div class="body">
+            <People></People>
             
         </div>
         <div class="foot">
-            {{connected}}
+            <Footer></Footer>
         </div>
     </section>
 </template>
 
 <script>
-import {mapState,mapActions} from 'vuex'
+import {mapActions} from 'vuex'
+import Footer from './Footer'
+import People from './People'
 
 export default {
     data:()=>({
         
     }),
-    computed:{
-        ...mapState('people',['connected'])
-    },
     methods:{
         ...mapActions('people',['connect'])
     },
     created(){
         this.connect('http://127.0.0.1:13370')
-    }
+    },
+    components:{Footer,People}
 }
 </script>
 

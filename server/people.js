@@ -5,12 +5,12 @@ const debug = require('debug')('wk:people')
 
 
 class Person{
-    constructor(data){
-        Object.assign(this,data)
+    constructor(id,{host}){
+        this.id = id
+        this.host = host
     }
     toString(){
-        // return '@'+this.name + '['+this.host+']'
-        return this.name + '@'+this.host
+        return this.host
     }
 }
 
@@ -24,21 +24,18 @@ class PeopleServer{
 
         this.io = new SocketIO(server,{pingInterval:60000})
         this.io.on('connection',(socket)=>{
-            this.socketConnected(socket)
+            this.bind(socket)
         })
 
         debug('initialized')
     }
 
 
-    socketConnected(socket){
+    bind(socket){
         debug('new socket',socket.id)
 
-        socket.on('person',(personData)=>{
-            if (!personData.name || !personData.host)
-                return debug('bad person format',personData)
-
-            let person = new Person(personData)
+        socket.on('announce',(personData)=>{
+            let person = new Person(socket.id,personData)
 
             debug('new person',person.toString())
 

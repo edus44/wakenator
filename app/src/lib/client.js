@@ -1,7 +1,7 @@
 
 const io = require('socket.io-client')
 const EventEmitter = require('eventemitter3')
-const debug = require('debug')('wk:client');
+const debug = require('debug')('wk:client')
 
 
 class Client extends EventEmitter{
@@ -9,30 +9,37 @@ class Client extends EventEmitter{
         super()
         this.store = null
         this.socket = null
-        this.server = null
-    }
-
-    connect(server){
-        this.disconnect()
-        this.server = server
-        this.socket = io.connect(this.server)
-        this.debugEvents()
-
-        this.socket.on('connect',()=>{
-            this.store.commit('people/SET_CONNECTED')
-        })
-        this.socket.on('disconnect',()=>{
-            this.store.commit('people/SET_DISCONNECTED')
-        })
-
     }
 
     setStore(store){
         this.store = store
     }
+    
+    connect(server){
+        this.socket && this.socket.disconnect()
+        this.socket = io.connect(server)
+        this._bind()
+    }
 
+    announce(data){
+        this.socket.emit('announce',data)
+    }
 
-    debugEvents(){
+    _bind(){
+        this._debugEvents()
+
+        this.socket.on('connect',()=>{
+            this.store.dispatch('people/clientConnected')
+        })
+        this.socket.on('disconnect',()=>{
+            this.store.dispatch('people/clientDisconnected')
+        })
+        this.socket.on('people',(people)=>{
+            this.store.dispatch('people/clientPeople',people)
+        })
+    }
+
+    _debugEvents(){
 
         //Socket events
         let eventNames = ['connect', 'error', 'disconnect', 'reconnect', 'reconnect_attempt', 'reconnecting', 'reconnect_error', 'reconnect_failed']
@@ -41,10 +48,6 @@ class Client extends EventEmitter{
             this.socket.on(eventName, ()=>debug('io:'+eventName, args))
         })
 
-    }
-
-    disconnect(){
-        this.socket && this.socket.disconnect()
     }
 }
 
