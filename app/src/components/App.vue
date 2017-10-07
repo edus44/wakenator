@@ -3,34 +3,30 @@
         <div class="head">
             Wakenator
         </div>
-        <div class="body">body {{status}}
+        <div class="body">body {{connected}}
             
         </div>
-        <div class="foot">foot</div>
+        <div class="foot">
+            {{connected}}
+        </div>
     </section>
 </template>
 
 <script>
-import io from 'socket.io-client'
-import Debug from 'debug'
-
-Debug.enable('*')
+import {mapState,mapActions} from 'vuex'
 
 export default {
     data:()=>({
-        packageVersion: process.env.PACKAGE_VERSION,
-        status:'none'
+        
     }),
-    _created(){
-        let socket = this.socket = io.connect('http://127.0.0.1:3001')
-        // let socket = this.socket = io.connect('wss://wakenator-server.now.sh')
-
-        socket.on('connect',()=>{
-            this.status = 'connect'
-        })
-        socket.on('disconnect',()=>{
-            this.status = 'disconnect'
-        })
+    computed:{
+        ...mapState('people',['connected'])
+    },
+    methods:{
+        ...mapActions('people',['connect'])
+    },
+    created(){
+        this.connect('http://127.0.0.1:13370')
     }
 }
 </script>
