@@ -10,6 +10,18 @@ const state = {
 }
 
 const actions = {
+    init({dispatch}){
+        client.on('connect',()=>{
+            dispatch('clientConnected')
+        })
+        client.on('disconnect',()=>{
+            dispatch('clientDisconnected')
+        })
+        client.on('people',(people)=>{
+            dispatch('clientPeople',people)
+        })
+    },
+
     connect({commit},server){
         commit('SET_SERVER',server)
         client.connect(server)
@@ -20,6 +32,7 @@ const actions = {
         client.announce({
             host: state.host
         })
+
     },
 
     clientDisconnected({commit}){

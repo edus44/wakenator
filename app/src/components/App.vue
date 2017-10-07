@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 import Footer from './Footer'
 import People from './People'
 
@@ -22,11 +21,9 @@ export default {
     data:()=>({
         
     }),
-    methods:{
-        ...mapActions('people',['connect'])
-    },
     created(){
-        this.connect('http://127.0.0.1:13370')
+        this.$store.dispatch('people/init')
+        this.$store.dispatch('people/connect','http://127.0.0.1:13370')
     },
     components:{Footer,People}
 }

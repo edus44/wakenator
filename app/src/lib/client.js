@@ -7,14 +7,9 @@ const debug = require('debug')('wk:client')
 class Client extends EventEmitter{
     constructor(){
         super()
-        this.store = null
         this.socket = null
     }
 
-    setStore(store){
-        this.store = store
-    }
-    
     connect(server){
         this.socket && this.socket.disconnect()
         this.socket = io.connect(server)
@@ -29,13 +24,13 @@ class Client extends EventEmitter{
         this._debugEvents()
 
         this.socket.on('connect',()=>{
-            this.store.dispatch('people/clientConnected')
+            this.emit('connect')
         })
         this.socket.on('disconnect',()=>{
-            this.store.dispatch('people/clientDisconnected')
+            this.emit('disconnect')
         })
         this.socket.on('people',(people)=>{
-            this.store.dispatch('people/clientPeople',people)
+            this.emit('people',people)
         })
     }
 
@@ -50,23 +45,5 @@ class Client extends EventEmitter{
 
     }
 }
-
-
-module.exports = store => {
-    let socket = this.socket = io.connect('http://127.0.0.1:3001')
-    // let socket = this.socket = io.connect('wss://wakenator-server.now.sh')
-
-    socket.on('connect',()=>{
-        this.status = 'connect'
-        store.dispatch('people/CONNECTED')
-    })
-    socket.on('disconnect',()=>{
-        this.status = 'disconnect'
-        store.dispatch('people/DISCONNECTED')
-    })
-}
-
-
-
 
 module.exports = new Client()
