@@ -4,11 +4,7 @@
             Wakenator
         </div>
         <div class="body">body {{status}}
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quo nulla, enim error soluta tenetur inventore et nemo labore debitis, id tempore autem assumenda ipsum! Libero iure, nobis quam autem.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quo nulla, enim error soluta tenetur inventore et nemo labore debitis, id tempore autem assumenda ipsum! Libero iure, nobis quam autem.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quo nulla, enim error soluta tenetur inventore et nemo labore debitis, id tempore autem assumenda ipsum! Libero iure, nobis quam autem.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quo nulla, enim error soluta tenetur inventore et nemo labore debitis, id tempore autem assumenda ipsum! Libero iure, nobis quam autem.
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto quo nulla, enim error soluta tenetur inventore et nemo labore debitis, id tempore autem assumenda ipsum! Libero iure, nobis quam autem.
+            
         </div>
         <div class="foot">foot</div>
     </section>

@@ -22,9 +22,7 @@ module.exports = class WkWindow extends EventEmitter{
             show: false,
             frame: false,
             fullscreenable: false,
-            // resizable: false,
-            // transparent: true,
-            // 'node-integration': false
+            resizable: false,
         })
 
         // Load url 

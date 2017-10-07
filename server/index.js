@@ -1,19 +1,22 @@
 'use strict'
 
-const app = require('express')()
-const server = require('http').Server(app)
-const io = require('socket.io')(server,{pingInterval:60000})
+// Enable debug in in development mode
+if (process.env.NODE_ENV == 'development')
+    require('debug').enable('wk*')
 
-app.get('/',(req,res)=>{
-    res.send('working ok')
-})  
+const debug = require('debug')('wk:main')
+debug('init')
 
-server.listen(3001,()=>{
-    console.log('node_env',process.env.NODE_ENV)
-    console.log('listening 3001')
+// Get server deps
+const http = require('http')
+const people = require('./people')
+const api = require('./api')
+
+// Load server
+const server = http.Server(api())
+people(server)
+
+// Start listening
+server.listen(13370,()=>{
+    debug('listening 13370')
 })
-
-
-io.on('connection', function (socket) {
-    console.log('connected')
-});
