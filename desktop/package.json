@@ -7,11 +7,12 @@
   "scripts": {
     "dev": "cross-env DEBUG=wk* electron .",
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build-app": "cd ../app && npm run build",
     "pack": "build --dir",
     "build-all": "build -lwm",
-    "build": "build"
+    "build": "build",
+    "lint": "eslint --ext .js,.vue lib main.js",
+    "pretty": "prettier --write **/*.{js,json}"
   },
   "author": {
     "name": "edus44",
@@ -19,15 +20,24 @@
   },
   "license": "ISC",
   "dependencies": {
-    "debug": "^3.0.1",
+    "debug": "^3.1.0",
+    "electron-menubar": "^1.0.1",
     "electron-positioner": "^3.0.0"
   },
   "devDependencies": {
-    "electron": "^1.7.6",
-    "electron-devtools-installer": "^2.2.0",
-    "cross-env": "^5.0.5",
-    "electron-builder": "^19.30.1",
-    "eslint": "^4.7.2",
-    "eslint-config-gigigo": "^2.0.2"
+    "cross-env": "^5.1.6",
+    "electron": "^2.0.2",
+    "electron-builder": "^20.15.1",
+    "electron-devtools-installer": "^2.2.4",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "prettier": "^1.13.4"
   }
 }

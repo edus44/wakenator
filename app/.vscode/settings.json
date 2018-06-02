@@ -1,0 +1,21 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    },
+    {
+      "language": "html",
+      "autoFix": true
+    }
+  ],
+  "eslint.autoFixOnSave": true,
+  "vetur.validation.template": false,
+  "html.format.enable": false,
+  "jest.autoEnable": false,
+  "jest.enableCodeLens": false
+}
