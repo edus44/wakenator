@@ -5,7 +5,7 @@
         <div class="bg-space"/>
       </wired-card>
     </div>
-    <div class="content">
+    <div ref="content" class="content">
       <People/>
     </div>
   </div>
@@ -13,10 +13,15 @@
 
 <script>
 import People from '@/components/layout/People'
+import PerfectScrollbar from 'perfect-scrollbar'
 
 export default {
   components: { People },
   data: () => ({}),
+  mounted() {
+    const ps = new PerfectScrollbar(this.$refs.content, {})
+    console.log(ps)
+  },
 }
 </script>
 
