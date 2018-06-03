@@ -1,4 +1,5 @@
 // @import '~vuetify/dist/vuetify.min.css';
+@import './constants.scss';
 
 body,
 html {
@@ -7,4 +8,19 @@ html {
   width: 100%;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+body {
+  color: white;
+  font-family: 'Gloria Hallelujah', cursive;
+  background-color: $black;
+  overflow: hidden;
+  font-size: 14px;
+  cursor: default;
+}
+
+*,
+:after,
+:before {
+  box-sizing: inherit;
 }
