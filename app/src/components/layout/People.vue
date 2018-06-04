@@ -7,7 +7,7 @@
         :person="person"
         :key="person.name"
       />
-      <BaseRough
+      <Rough
         v-if="idx < people.length-1"
         :key="person.name+'line'"
         :width="200"
@@ -21,10 +21,10 @@
 
 <script>
 import Person from '@/components/layout/Person'
-import BaseRough from '@/components/ui/BaseRough'
+import Rough from '@/components/ui/Rough'
 
 export default {
-  components: { Person, BaseRough },
+  components: { Person, Rough },
   data: () => ({
     people: [
       { name: 'pepe' },

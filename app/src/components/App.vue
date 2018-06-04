@@ -1,10 +1,11 @@
 <template>
   <div class="wrapper">
-    <div class="bg">
-      <wired-card>
-        <div class="bg-space"/>
-      </wired-card>
-    </div>
+    <Rough
+      :width="400"
+      :height="400"
+      :render="rc => rc.rectangle(5, 5, 390, 390, { stroke: 'white' })"
+      class="bg"
+    />
     <div ref="content" class="content">
       <People/>
     </div>
@@ -13,10 +14,11 @@
 
 <script>
 import People from '@/components/layout/People'
+import Rough from '@/components/ui/Rough'
 import PerfectScrollbar from 'perfect-scrollbar'
 
 export default {
-  components: { People },
+  components: { People, Rough },
   data: () => ({}),
   mounted() {
     const ps = new PerfectScrollbar(this.$refs.content, {})
@@ -29,14 +31,12 @@ export default {
 $w: 400px;
 $h: 400px;
 .wrapper {
+  position: relative;
   > .bg {
     position: absolute;
-    top: 5px;
-    left: 5px;
-    .bg-space {
-      width: $w - 20;
-      height: $h - 20;
-    }
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
   > .content {
     position: absolute;

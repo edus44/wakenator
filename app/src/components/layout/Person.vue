@@ -7,10 +7,11 @@
   >
     {{ person.name }}
 
-    <BaseRough
+    <Rough
       v-if="hovered"
       :width="372"
       :height="40"
+      :interval="200"
       :render="renderBg"
       class="bg"
     />
@@ -19,10 +20,10 @@
 </template>
 
 <script>
-import BaseRough from '@/components/ui/BaseRough'
+import Rough from '@/components/ui/Rough'
 
 export default {
-  components: { BaseRough },
+  components: { Rough },
   props: {
     person: {
       type: Object,
@@ -32,11 +33,6 @@ export default {
   data: () => ({
     hovered: false,
   }),
-  watch: {
-    hovered() {
-      clearTimeout(this.timer)
-    },
-  },
   methods: {
     renderBg(rc) {
       rc.rectangle(10, 2, 352, 36, {
@@ -46,10 +42,6 @@ export default {
         hachureGap: 5,
         roughness: 1.4,
       })
-      this.timer = setTimeout(() => {
-        rc.ctx.clearRect(0, 0, rc.canvas.width, rc.canvas.height)
-        this.renderBg(rc)
-      }, 200)
     },
   },
 }
