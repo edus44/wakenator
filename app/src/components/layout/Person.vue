@@ -5,7 +5,7 @@
     @mouseover="hovered=true"
     @mouseleave="hovered=false"
   >
-    {{ person.name }}
+    <span>{{ person.name }}</span>
 
     <Rough
       v-if="hovered"
@@ -58,12 +58,33 @@ export default {
   position: relative;
 
   &.hovered {
-    font-weight: bold;
+    span {
+      font-weight: bold;
+      display: inline-block;
+      animation-duration: 0.3s;
+      animation-fill-mode: both;
+      animation-iteration-count: infinite;
+      animation-name: pulse;
+    }
   }
   .bg {
     position: absolute;
     left: 0;
     z-index: -1;
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.03, 1.03, 1.03);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
   }
 }
 </style>
