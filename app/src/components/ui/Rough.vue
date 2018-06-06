@@ -28,13 +28,20 @@ export default {
       default: 0,
     },
   },
+  watch: {
+    interval(interval) {
+      this.refresh()
+      clearTimeout(this.timer)
+      if (interval) this.loop()
+    },
+  },
   mounted() {
     this.rc = rough.canvas(this.$refs.canvas)
     this.render(this.rc)
     this.loop()
   },
   destroyed() {
-    clearInterval(this.timer)
+    clearTimeout(this.timer)
   },
   methods: {
     refresh() {

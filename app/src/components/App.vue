@@ -3,9 +3,12 @@
     <Rough
       :width="400"
       :height="400"
-      :render="rc => rc.rectangle(5, 5, 390, 390, { stroke: 'white' })"
+      :render="rc =>{
+        rc.rectangle(5, 5, 390, 390, { stroke: 'white' })
+      }"
       class="bg"
     />
+    <Menu/>
     <div ref="content" class="content">
       <People/>
     </div>
@@ -14,11 +17,12 @@
 
 <script>
 import People from '@/components/layout/People'
+import Menu from '@/components/layout/Menu'
 import Rough from '@/components/ui/Rough'
 import PerfectScrollbar from 'perfect-scrollbar'
 
 export default {
-  components: { People, Rough },
+  components: { People, Rough, Menu },
   data: () => ({}),
   mounted() {
     const ps = new PerfectScrollbar(this.$refs.content, {})
@@ -34,7 +38,7 @@ $h: 400px;
   position: relative;
   > .bg {
     position: absolute;
-    top: 0;
+    top: 5;
     left: 0;
     z-index: -1;
   }
