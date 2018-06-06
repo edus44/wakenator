@@ -24,9 +24,8 @@ export default {
   methods: {
     renderMenu(rc) {
       const stroke = this.hovered ? '#df4418' : 'white'
-      rc.line(17, 24, 42, 24, { stroke })
-      rc.line(17, 17, 42, 17, { stroke })
-      rc.line(17, 31, 42, 31, { stroke })
+      rc.line(38, 15, 17, 25, { stroke })
+      rc.line(17, 25, 38, 35, { stroke })
     },
   },
 }

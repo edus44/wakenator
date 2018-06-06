@@ -1,32 +1,39 @@
 <template>
   <div class="wrapper">
     <Rough
+      ref="bg"
       :width="400"
       :height="400"
-      :render="rc =>{
-        rc.rectangle(5, 5, 390, 390, { stroke: 'white' })
-      }"
+      :render="rc => rc.rectangle(5, 5, 390, 390, { stroke: 'white' })"
       class="bg"
     />
-    <Menu/>
     <div ref="content" class="content">
-      <People/>
+      <Home v-if="view=='home'"/>
+      <Config v-if="view=='config'"/>
     </div>
   </div>
 </template>
 
 <script>
-import People from '@/components/layout/People'
-import Menu from '@/components/layout/Menu'
+import Home from '@/components/views/Home'
+import Config from '@/components/views/Config'
 import Rough from '@/components/ui/Rough'
 import PerfectScrollbar from 'perfect-scrollbar'
+import { mapState } from 'vuex'
 
 export default {
-  components: { People, Rough, Menu },
-  data: () => ({}),
+  components: { Home, Config, Rough },
+  computed: {
+    ...mapState('root', ['view']),
+  },
+  watch: {
+    view() {
+      this.$refs.bg.refresh()
+    },
+  },
   mounted() {
-    const ps = new PerfectScrollbar(this.$refs.content, {})
-    console.log(ps)
+    /* eslint-disable no-new */
+    new PerfectScrollbar(this.$refs.content, {})
   },
 }
 </script>

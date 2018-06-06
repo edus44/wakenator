@@ -1,8 +1,14 @@
-const state = {}
+const state = {
+  view: 'config',
+}
 
 const actions = {}
 
-const mutations = {}
+const mutations = {
+  changeView(state, view) {
+    state.view = view
+  },
+}
 
 const getters = {}
 

@@ -39,7 +39,7 @@ export default {
         fill: '#df4418',
         fillWeight: 0.8,
         stroke: 'transparent',
-        hachureGap: 5,
+        hachureGap: 6,
         roughness: 1.4,
       })
     },
@@ -58,14 +58,15 @@ export default {
   position: relative;
 
   &.hovered {
-    span {
-      font-weight: bold;
-      display: inline-block;
-      animation-duration: 0.3s;
-      animation-fill-mode: both;
-      animation-iteration-count: infinite;
-      animation-name: pulse;
-    }
+    font-weight: bold;
+    // span {
+    //   font-weight: bold;
+    //   display: inline-block;
+    //   animation-duration: 0.3s;
+    //   animation-fill-mode: both;
+    //   animation-iteration-count: infinite;
+    //   animation-name: pulse;
+    // }
   }
   .bg {
     position: absolute;
