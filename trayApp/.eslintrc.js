@@ -6,6 +6,9 @@ module.exports = {
     'prettier',
     'prettier/standard',
   ],
+  parserOptions: {
+    parser: 'babel-eslint',
+  },
   rules: {
     'no-var': 1,
     'prefer-const': 1,

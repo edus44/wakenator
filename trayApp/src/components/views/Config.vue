@@ -7,7 +7,7 @@
       v-model.trim="channel"
       :value="channel"
       label="channel:"
-      @input="setChannel"
+      @input="v=>channel=cleanChannel(v)"
     />
     <BaseInput
       :prepend="'@'"
@@ -23,7 +23,8 @@
 import Rough from '@/components/ui/Rough'
 import Back from '@/components/layout/Back'
 import BaseInput from '@/components/ui/BaseInput'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions } from 'vuex'
+import debounce from 'lodash/debounce'
 
 export default {
   components: { Rough, Back, BaseInput },
@@ -31,10 +32,23 @@ export default {
     channel: '',
     name: '',
   }),
+  watch: {
+    channel: debounce(function() {
+      this.changeChannel(this.channel)
+    }, 500),
+    name: debounce(function() {
+      this.changeName(this.name)
+    }, 500),
+  },
+  created() {
+    this.channel = this.$store.state.auth.channel
+    this.name = this.$store.state.auth.name
+  },
   methods: {
     ...mapMutations('root', ['changeView']),
-    setChannel(channel) {
-      this.channel = channel.toLowerCase().replace(/[^\w-]/g, '')
+    ...mapActions('auth', ['changeName', 'changeChannel']),
+    cleanChannel(channel) {
+      return channel.toLowerCase().replace(/[^\w-]/g, '')
     },
   },
 }

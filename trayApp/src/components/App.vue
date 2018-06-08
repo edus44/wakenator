@@ -35,6 +35,9 @@ export default {
   mounted() {
     this.ps = new PerfectScrollbar(this.$refs.content, {})
   },
+  created() {
+    this.$store.dispatch('auth/init')
+  },
 }
 </script>
 
