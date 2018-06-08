@@ -21,7 +21,7 @@ let index
 if (debug.enabled) {
   index = `http://localhost:13371`
 } else {
-  const distPath = resolve(__dirname, '../app/dist/index.html').replace(/\\/g, '/')
+  const distPath = resolve(__dirname, '../trayApp/dist/index.html').replace(/\\/g, '/')
   index = `file://${distPath}`
 }
 
