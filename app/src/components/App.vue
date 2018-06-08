@@ -29,11 +29,11 @@ export default {
   watch: {
     view() {
       this.$refs.bg.refresh()
+      setTimeout(() => this.ps.update())
     },
   },
   mounted() {
-    /* eslint-disable no-new */
-    new PerfectScrollbar(this.$refs.content, {})
+    this.ps = new PerfectScrollbar(this.$refs.content, {})
   },
 }
 </script>
