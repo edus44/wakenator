@@ -29,10 +29,14 @@ export default {
     },
   },
   watch: {
-    interval(interval) {
-      this.refresh()
-      clearTimeout(this.timer)
-      if (interval) this.loop()
+    $props: {
+      deep: true,
+      handler() {
+        console.log('changed')
+        this.refresh()
+        clearTimeout(this.timer)
+        if (this.interval) this.loop()
+      },
     },
   },
   mounted() {
