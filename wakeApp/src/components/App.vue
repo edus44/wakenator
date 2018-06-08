@@ -8,7 +8,7 @@
         fill: '#1a1814',         
         fillWeight: 10,
         hachureGap: 40,
-        hachureAngle: -10,
+        hachureAngle: -5,
       })"
       class="fixed"
     />
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     close() {
-      console.log('close')
+      // console.log('close')
     },
   },
 }
