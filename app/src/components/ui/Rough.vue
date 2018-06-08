@@ -32,7 +32,6 @@ export default {
     $props: {
       deep: true,
       handler() {
-        console.log('changed')
         this.refresh()
         clearTimeout(this.timer)
         if (this.interval) this.loop()
