@@ -70,7 +70,7 @@ function getHostData() {
   } else {
     return {
       host: 'browser',
-      user: 'u',
+      user: 'user',
     }
   }
 }

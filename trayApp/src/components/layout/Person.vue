@@ -5,12 +5,13 @@
     @mouseover="hovered=true"
     @mouseleave="hovered=false"
   >
-    <span>{{ person.name }}</span>
+    <div class="name">{{ person.name }}</div>
+    <div class="host">{{ person.user }}@{{ person.host }}</div>
 
     <Rough
       v-if="hovered"
       :width="372"
-      :height="40"
+      :height="50"
       :interval="200"
       :render="renderBg"
       class="bg"
@@ -35,7 +36,7 @@ export default {
   }),
   methods: {
     renderBg(rc) {
-      rc.rectangle(10, 2, 352, 36, {
+      rc.rectangle(10, 2, 352, 46, {
         fill: '#df4418',
         fillWeight: 0.8,
         stroke: 'transparent',
@@ -51,8 +52,7 @@ export default {
 @import '~@/assets/style/constants.scss';
 
 .person {
-  font-size: 20px;
-  height: 40px;
+  height: 50px;
   margin: 4px 0;
   cursor: pointer;
   position: relative;
@@ -68,9 +68,24 @@ export default {
     //   animation-name: pulse;
     // }
   }
+  .name {
+    font-size: 20px;
+    line-height: 24px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+  .host {
+    font-size: 14px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #aaa;
+  }
   .bg {
     position: absolute;
     left: 0;
+    top: 0;
     z-index: -1;
   }
 }
