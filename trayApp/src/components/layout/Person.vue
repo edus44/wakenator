@@ -68,18 +68,19 @@ export default {
     //   animation-name: pulse;
     // }
   }
+  .host,
   .name {
-    font-size: 20px;
     line-height: 24px;
     position: absolute;
-    top: 0;
     width: 100%;
   }
+  .name {
+    top: 0;
+    font-size: 20px;
+  }
   .host {
-    font-size: 14px;
-    position: absolute;
     bottom: 0;
-    width: 100%;
+    font-size: 14px;
     color: #aaa;
   }
   .bg {
