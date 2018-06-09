@@ -4,6 +4,7 @@
     class="person" 
     @mouseover="hovered=true"
     @mouseleave="hovered=false"
+    @click="wakePerson(person)"
   >
     <div class="name">{{ person.name }}</div>
     <div class="host">{{ person.user }}@{{ person.host }}</div>
@@ -22,6 +23,7 @@
 
 <script>
 import Rough from '@/components/ui/Rough'
+import { mapActions } from 'vuex'
 
 export default {
   components: { Rough },
@@ -35,6 +37,7 @@ export default {
     hovered: false,
   }),
   methods: {
+    ...mapActions('user', ['wakePerson']),
     renderBg(rc) {
       rc.rectangle(10, 2, 352, 46, {
         fill: '#df4418',

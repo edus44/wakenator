@@ -19,6 +19,9 @@ export default class User {
   getChannelRef() {
     return database.ref(`/channel/${this.channel}/list`)
   }
+  getWakesRef() {
+    return database.ref(`/channel/${this.channel}/wakes/${this.uid}`)
+  }
   async enter() {
     debug('enter', this.uid, this.channel, this.name)
     await this.exit()
@@ -57,6 +60,14 @@ export default class User {
     if (!this.ref) return
     await this.ref.remove()
     await this.ref.onDisconnect().cancel()
+  }
+  async wakePerson(person) {
+    const ref = database.ref(`/channel/${this.channel}/wakes/${person.uid}`)
+    await ref.push().set({
+      uid: this.uid,
+      name: this.name,
+      ...getHostData(),
+    })
   }
 }
 

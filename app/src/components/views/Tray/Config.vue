@@ -41,12 +41,12 @@ export default {
     }, 500),
   },
   created() {
-    this.channel = this.$store.state.auth.channel
-    this.name = this.$store.state.auth.name
+    this.channel = this.$store.state.user.channel
+    this.name = this.$store.state.user.name
   },
   methods: {
     ...mapMutations('root', ['changeView']),
-    ...mapActions('auth', ['changeName', 'changeChannel']),
+    ...mapActions('user', ['changeName', 'changeChannel']),
     cleanChannel(channel) {
       return channel.toLowerCase().replace(/[^\w-]/g, '')
     },

@@ -34,6 +34,7 @@ import Rough from '@/components/ui/Rough'
 import Close from './Wake/Close'
 import GlobalEvents from 'vue-global-events'
 import { maximize, minimize } from '@/lib/win'
+import { mapGetters } from 'vuex'
 
 export default {
   components: { Rough, Close, GlobalEvents },
@@ -43,6 +44,7 @@ export default {
     closeHovered: false,
   }),
   computed: {
+    ...mapGetters('user', ['wakesRef']),
     path() {
       const o = 50
       const r = 200
@@ -51,6 +53,20 @@ export default {
       // return 'M 50 100 L 400 100 Q 400 200 500 200 L 500 400 L 50 400 L 50 100'
       return `M ${o} ${o} L ${w - o - r} ${o} Q ${w - o - r} ${o + r} ${w - o} ${o + r} L ${w -
         o} ${h - o} L ${o} ${h - o} L ${o} ${o} `
+    },
+  },
+
+  watch: {
+    wakesRef: {
+      immediate: true,
+      handler(ref, prevRef) {
+        if (!ref) return
+        if (prevRef) prevRef.off('child_added')
+        ref.on('child_added', doc => {
+          console.log(doc.val())
+          doc.ref.remove()
+        })
+      },
     },
   },
   created() {

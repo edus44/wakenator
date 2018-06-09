@@ -36,6 +36,9 @@ const actions = {
     await user.setName(name)
     commit('setName', name)
   },
+  async wakePerson(store, person) {
+    await user.wakePerson(person)
+  },
 }
 
 const mutations = {
@@ -53,6 +56,9 @@ const mutations = {
 const getters = {
   channelRef(state) {
     return state.channel && state.uid && user.getChannelRef()
+  },
+  wakesRef(state) {
+    return state.channel && state.uid && user.getWakesRef()
   },
 }
 

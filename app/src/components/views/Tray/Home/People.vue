@@ -29,8 +29,8 @@ export default {
     users: null,
   }),
   computed: {
-    ...mapState('auth', ['uid']),
-    ...mapGetters('auth', ['channelRef']),
+    ...mapState('user', ['uid']),
+    ...mapGetters('user', ['channelRef']),
     people() {
       return (
         this.users &&

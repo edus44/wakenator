@@ -2,7 +2,7 @@
   <div>
 
     <Tray v-show="section=='tray'"/>
-    <Wake v-if="section=='wake'"/>
+    <Wake v-show="section=='wake'"/>
 
     <GlobalEvents
       @keyup.t="toggle"
@@ -21,7 +21,7 @@ export default {
     section: 'tray',
   }),
   created() {
-    this.$store.dispatch('auth/init')
+    this.$store.dispatch('user/init')
   },
   methods: {
     toggle() {
