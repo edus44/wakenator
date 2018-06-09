@@ -1,5 +1,5 @@
 const state = {
-  view: 'config',
+  view: 'home',
 }
 
 const actions = {}

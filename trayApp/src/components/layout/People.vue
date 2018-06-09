@@ -5,7 +5,7 @@
     >
       <Person 
         :person="person"
-        :key="person.name"
+        :key="person.uid"
       />
       <Rough
         v-if="idx < people.length-1"
@@ -22,25 +22,39 @@
 <script>
 import Person from '@/components/layout/Person'
 import Rough from '@/components/ui/Rough'
-
+import { mapGetters } from 'vuex'
 export default {
   components: { Person, Rough },
   data: () => ({
-    people: [
-      { name: 'pepe' },
-      { name: 'lt-eduardo-hidalgo' },
-      { name: 'natasha' },
-      { name: 'pepitodsf' },
-      { name: 'somebody' },
-      { name: 'ber' },
-      { name: 'no' },
-      { name: 'pepitodsdfsf' },
-      { name: 'pesdspe' },
-      { name: 'lt-edsauardo-hidalgo' },
-      { name: 'natashasdfa' },
-      { name: 'pepitoasd' },
-    ],
+    users: null,
   }),
+  computed: {
+    ...mapGetters('auth', ['channelRef']),
+    people() {
+      return (
+        this.users &&
+        Object.keys(this.users)
+          .filter(x => x !== '.key')
+          .map(uid => ({
+            uid,
+            ...this.users[uid],
+          }))
+      )
+    },
+  },
+  watch: {
+    channelRef: {
+      immediate: true,
+      handler(ref) {
+        if (!ref) return
+
+        if (this.$firebaseRefs && this.$firebaseRefs.users) {
+          this.$unbind('users')
+        }
+        this.$bindAsObject('users', ref)
+      },
+    },
+  },
 }
 </script>
 

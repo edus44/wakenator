@@ -50,7 +50,11 @@ const mutations = {
   },
 }
 
-const getters = {}
+const getters = {
+  channelRef(state) {
+    return state.channel && state.uid && user.getChannelRef()
+  },
+}
 
 export default {
   namespaced: true,

@@ -16,6 +16,9 @@ export default class User {
     this.name = name
     return this.update()
   }
+  getChannelRef() {
+    return database.ref(`/channel/${this.channel}`)
+  }
   async enter() {
     debug('enter', this.uid, this.channel, this.name)
     await this.exit()
