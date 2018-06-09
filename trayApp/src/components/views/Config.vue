@@ -2,18 +2,18 @@
   <div class="config">
     <Back @click.native="changeView('home')"/>
     <BaseInput
+      :prepend="'@'"
+      :placeholder="'eg. Bob'"
+      v-model.trim="name"
+      label="your name:"
+    />
+    <BaseInput
       :prepend="'#'"
       :placeholder="'eg. gigigo'"
       v-model.trim="channel"
       :value="channel"
       label="channel:"
       @input="v=>channel=cleanChannel(v)"
-    />
-    <BaseInput
-      :prepend="'@'"
-      :placeholder="'eg. Bob'"
-      v-model.trim="name"
-      label="your name:"
     />
     <button class="back" @click="changeView('home')">Back</button>
   </div>

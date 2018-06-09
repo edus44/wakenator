@@ -22,13 +22,14 @@
 <script>
 import Person from '@/components/layout/Person'
 import Rough from '@/components/ui/Rough'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapState } from 'vuex'
 export default {
   components: { Person, Rough },
   data: () => ({
     users: null,
   }),
   computed: {
+    ...mapState('auth', ['uid']),
     ...mapGetters('auth', ['channelRef']),
     people() {
       return (
@@ -39,6 +40,7 @@ export default {
             uid,
             ...this.users[uid],
           }))
+          .filter(user => user.uid !== this.uid)
       )
     },
   },
