@@ -29,11 +29,17 @@ export default {
   watch: {
     view() {
       this.$refs.bg.refresh()
-      setTimeout(() => this.ps.update())
+      this.refreshScrollbar()
     },
   },
   mounted() {
     this.ps = new PerfectScrollbar(this.$refs.content, {})
+    this.$root.$on('refresh-scrollbar', () => this.refreshScrollbar())
+  },
+  methods: {
+    refreshScrollbar() {
+      setTimeout(() => this.ps.update())
+    },
   },
 }
 </script>

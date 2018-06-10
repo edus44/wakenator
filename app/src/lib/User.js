@@ -10,7 +10,6 @@ export default class User {
   }
   async setChannel(channel) {
     this.channel = channel
-    return this.enter()
   }
   async setName(name) {
     this.name = name
@@ -22,28 +21,24 @@ export default class User {
   getWakesRef() {
     return database.ref(`/channel/${this.channel}/wakes/${this.uid}`)
   }
+
   async enter() {
     debug('enter', this.uid, this.channel, this.name)
     await this.exit()
 
     this.ref = database.ref(`/channel/${this.channel}/list/${this.uid}`)
 
-    return new Promise((resolve, reject) => {
-      database.ref('.info/connected').on('value', async snapshot => {
-        debug('on-connected', snapshot.val())
-        if (!snapshot.val()) {
-          return
-        }
-        try {
-          await this.ref.onDisconnect().remove()
-          await this.update()
-          resolve()
-        } catch (err) {
-          reject(err)
-        }
-      })
-    })
+    const onValue = async snapshot => {
+      if (!snapshot.val()) {
+        return
+      }
+      database.ref('.info/connected').off('value', onValue)
+      await this.ref.onDisconnect().remove()
+      await this.update()
+    }
+    database.ref('.info/connected').on('value', onValue)
   }
+
   async update() {
     if (!this.ref) return
     const obj = {
@@ -55,7 +50,6 @@ export default class User {
   }
   async exit() {
     debug('exit')
-    database.ref('.info/connected').off('value')
     if (!this.ref) return
     await this.ref.remove()
     await this.ref.onDisconnect().cancel()
