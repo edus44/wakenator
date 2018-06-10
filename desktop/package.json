@@ -7,11 +7,11 @@
   "scripts": {
     "dev": "cross-env DEBUG=wk* electron .",
     "start": "electron .",
-    "build-app": "cd ../app && npm run build",
+    "build-app": "cd ../app && yarn build",
     "pack": "build --dir",
     "build-all": "build -lwm",
     "build": "build",
-    "release": "yarn build-app && build",
+    "release": "build",
     "lint": "eslint --ext .js,.vue lib main.js",
     "pretty": "prettier --write **/*.{js,json}"
   },
