@@ -1,5 +1,5 @@
 <template>
-  <div v-if="false" class="wake">
+  <div v-if="waker" class="wake">
     <Rough
       :width="width"
       :height="height"
@@ -21,10 +21,12 @@
       })"
       class="layer"
     />
-    <Close @click.native="close"/>
+    <Close @click.native="hide"/>
+
+    {{ waker }}
 
     <GlobalEvents
-      @keyup.escape="close"
+      @keyup.escape="hide"
     />
   </div>
 </template>
@@ -33,7 +35,7 @@
 import Rough from '@/components/ui/Rough'
 import Close from './Wake/Close'
 import GlobalEvents from 'vue-global-events'
-import { maximize, minimize } from '@/lib/win'
+// import { maximize, minimize } from '@/lib/win'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -41,6 +43,7 @@ export default {
   data: () => ({
     width: 0,
     height: 0,
+    waker: null,
   }),
   computed: {
     ...mapGetters('user', ['wakesRef']),
@@ -62,19 +65,14 @@ export default {
         if (!ref) return
         if (prevRef) prevRef.off('child_added')
         ref.on('child_added', doc => {
-          // console.log(doc.val())
+          this.show(doc.val())
           doc.ref.remove()
         })
       },
     },
   },
   created() {
-    maximize()
-    this.updateSize()
     window.addEventListener('resize', this.updateSize)
-  },
-  destroyed() {
-    minimize()
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.updateSize)
@@ -84,8 +82,12 @@ export default {
       this.width = window.innerWidth
       this.height = window.innerHeight
     },
-    close() {
-      // console.log('close')
+    show(waker) {
+      this.waker = waker
+      this.updateSize()
+    },
+    hide() {
+      this.waker = null
     },
   },
 }
