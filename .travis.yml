@@ -29,7 +29,7 @@ before_install:
 
 before_script:
   - git lfs pull
-  - cd app
+  - cd desktop
 
 script:
   - |
