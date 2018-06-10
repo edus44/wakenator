@@ -4,6 +4,7 @@ const debug = require('debug')('wk:utils')
 module.exports = {
   loadDevTool,
   getIndex,
+  getAsset,
 }
 
 /**
@@ -26,4 +27,8 @@ function getIndex() {
     const distPath = resolve(__dirname, '../../app/dist/index.html').replace(/\\/g, '/')
     return `file://${distPath}`
   }
+}
+
+function getAsset(file) {
+  return resolve(__dirname, '../res', file)
 }

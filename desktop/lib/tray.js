@@ -1,9 +1,8 @@
 'use strict'
 
 const { Menubar } = require('electron-menubar')
-const { resolve } = require('path')
 const { version } = require('../package')
-const { loadDevTool, getIndex } = require('./utils')
+const { loadDevTool, getIndex, getAsset } = require('./utils')
 const debug = require('debug')('wk:tray')
 const { ipcMain } = require('electron')
 
@@ -13,7 +12,7 @@ function init() {
   // Create menubar
   const menubar = new Menubar({
     index: getIndex(),
-    icon: resolve(__dirname, '../res/icon-white.png'),
+    icon: getAsset('icon-white.png'),
     preloadWindow: true,
     tooltip: 'Wakenator v' + version,
     window: {
@@ -43,6 +42,10 @@ async function menubarReady(menubar) {
     })
     // menubar.show()
     // menubar.window.webContents.openDevTools({ mode: 'detach' })
+  }
+
+  if (process.platform === 'darwin') {
+    menubar.tray.setImage(getAsset('iconTemplate.png'))
   }
 
   menubar.on('after-hide', () => {
