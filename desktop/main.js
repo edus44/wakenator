@@ -4,7 +4,7 @@ const tray = require('./lib/tray')
 const { app } = require('electron')
 const debug = require('debug')('wk:main')
 const AutoLaunch = require('auto-launch')
-
+const { autoUpdater } = require('electron-updater')
 debug('init')
 
 // Event logs
@@ -19,3 +19,7 @@ app.on('window-all-closed', () => {
 tray.init()
 
 new AutoLaunch({ name: 'Wakenator' }).enable()
+
+autoUpdater.checkForUpdatesAndNotify()
+autoUpdater.logger = require('electron-log')
+autoUpdater.logger.transports.file.level = 'debug'

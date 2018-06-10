@@ -1,7 +1,7 @@
 {
   "name": "wakenator",
   "version": "1.0.0",
-  "description": "Wake up your teammate with this simple tool",
+  "description": "Wake up your teammates",
   "main": "main.js",
   "homepage": "https://github.com/edus44/wakenator",
   "scripts": {
@@ -11,6 +11,7 @@
     "pack": "build --dir",
     "build-all": "build -lwm",
     "build": "build",
+    "release": "yarn build-app && build",
     "lint": "eslint --ext .js,.vue lib main.js",
     "pretty": "prettier --write **/*.{js,json}"
   },
@@ -22,8 +23,9 @@
   "dependencies": {
     "auto-launch": "^5.0.5",
     "debug": "^3.1.0",
+    "electron-log": "^2.2.14",
     "electron-menubar": "^1.0.1",
-    "electron-positioner": "^3.0.0"
+    "electron-updater": "^2.21.10"
   },
   "devDependencies": {
     "cross-env": "^5.1.6",
