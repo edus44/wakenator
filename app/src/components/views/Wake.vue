@@ -66,7 +66,7 @@ export default {
         if (prevRef) prevRef.off('child_added')
         ref.on('child_added', doc => {
           this.show(doc.val())
-          // doc.ref.remove()
+          doc.ref.remove()
         })
       },
     },
