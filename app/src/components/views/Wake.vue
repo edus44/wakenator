@@ -23,8 +23,7 @@
     />
     <Close @click.native="hide"/>
 
-    {{ waker }}
-
+    <Message :person="waker"/>
     <GlobalEvents
       @keyup.escape="hide"
     />
@@ -34,12 +33,13 @@
 <script>
 import Rough from '@/components/ui/Rough'
 import Close from './Wake/Close'
+import Message from './Wake/Message'
 import GlobalEvents from 'vue-global-events'
 import { maximize, minimize } from '@/lib/win'
 import { mapGetters } from 'vuex'
 
 export default {
-  components: { Rough, Close, GlobalEvents },
+  components: { Rough, Close, Message, GlobalEvents },
   data: () => ({
     width: 0,
     height: 0,
@@ -66,7 +66,7 @@ export default {
         if (prevRef) prevRef.off('child_added')
         ref.on('child_added', doc => {
           this.show(doc.val())
-          doc.ref.remove()
+          // doc.ref.remove()
         })
       },
     },
@@ -83,9 +83,12 @@ export default {
       this.height = window.innerHeight
     },
     show(waker) {
-      this.waker = waker
-      this.updateSize()
-      maximize()
+      this.waker = null
+      this.$nextTick(() => {
+        this.waker = waker
+        this.updateSize()
+        maximize()
+      })
     },
     hide() {
       minimize()

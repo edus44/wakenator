@@ -30,7 +30,7 @@ export default {
   position: fixed;
   right: 10px;
   top: 10px;
-  z-index: 99;
+  z-index: 102;
   cursor: pointer;
   canvas {
     display: block;
