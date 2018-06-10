@@ -14,7 +14,13 @@
       :width="372"
       :height="50"
       :interval="200"
-      :render="renderBg"
+      :render="rc=>rc.rectangle(10, 2, 352, 46, {
+        fill: '#df4418',
+        fillWeight: 0.8,
+        stroke: 'transparent',
+        hachureGap: 6,
+        roughness: 1.4,
+      })"
       class="bg"
     />
 
@@ -38,15 +44,6 @@ export default {
   }),
   methods: {
     ...mapActions('user', ['wakePerson']),
-    renderBg(rc) {
-      rc.rectangle(10, 2, 352, 46, {
-        fill: '#df4418',
-        fillWeight: 0.8,
-        stroke: 'transparent',
-        hachureGap: 6,
-        roughness: 1.4,
-      })
-    },
   },
 }
 </script>
@@ -94,17 +91,17 @@ export default {
   }
 }
 
-@keyframes pulse {
-  from {
-    transform: scale3d(1, 1, 1);
-  }
+// @keyframes pulse {
+//   from {
+//     transform: scale3d(1, 1, 1);
+//   }
 
-  50% {
-    transform: scale3d(1.03, 1.03, 1.03);
-  }
+//   50% {
+//     transform: scale3d(1.03, 1.03, 1.03);
+//   }
 
-  to {
-    transform: scale3d(1, 1, 1);
-  }
-}
+//   to {
+//     transform: scale3d(1, 1, 1);
+//   }
+// }
 </style>

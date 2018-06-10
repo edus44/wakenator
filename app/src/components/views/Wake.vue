@@ -39,9 +39,8 @@ import { mapGetters } from 'vuex'
 export default {
   components: { Rough, Close, GlobalEvents },
   data: () => ({
-    width: window.innerWidth,
-    height: window.innerHeight,
-    closeHovered: false,
+    width: 0,
+    height: 0,
   }),
   computed: {
     ...mapGetters('user', ['wakesRef']),
@@ -63,7 +62,7 @@ export default {
         if (!ref) return
         if (prevRef) prevRef.off('child_added')
         ref.on('child_added', doc => {
-          console.log(doc.val())
+          // console.log(doc.val())
           doc.ref.remove()
         })
       },
@@ -71,6 +70,7 @@ export default {
   },
   created() {
     maximize()
+    this.updateSize()
     window.addEventListener('resize', this.updateSize)
   },
   destroyed() {

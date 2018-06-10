@@ -1,12 +1,7 @@
 <template>
   <div class="people">
-    <template
-      v-for="(person,idx) in people"
-    >
-      <Person 
-        :person="person"
-        :key="person.uid"
-      />
+    <template v-for="(person,idx) in people" >
+      <Person :person="person" :key="person.uid" />
       <Rough
         v-if="idx < people.length-1"
         :key="person.name+'line'"
@@ -35,12 +30,11 @@ export default {
       return (
         this.users &&
         Object.keys(this.users)
-          .filter(x => x !== '.key')
+          .filter(uid => uid !== '.key' && uid !== this.uid)
           .map(uid => ({
             uid,
             ...this.users[uid],
           }))
-          .filter(user => user.uid !== this.uid)
       )
     },
   },
