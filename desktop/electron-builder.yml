@@ -1,0 +1,3 @@
+linux:
+  target: 
+    - target: AppImage
