@@ -3,6 +3,7 @@
 const tray = require('./lib/tray')
 const { app } = require('electron')
 const debug = require('debug')('wk:main')
+const AutoLaunch = require('auto-launch')
 
 debug('init')
 
@@ -16,3 +17,5 @@ app.on('window-all-closed', () => {
 })
 
 tray.init()
+
+new AutoLaunch({ name: 'Wakenator' }).enable()
