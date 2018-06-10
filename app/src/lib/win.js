@@ -5,6 +5,7 @@ export function maximize() {
   win.setResizable(true)
   win.setFullScreen(true)
   win.setAlwaysOnTop(true)
+  win.show()
 }
 export function minimize() {
   const win = getWin()
@@ -13,6 +14,13 @@ export function minimize() {
   win.setFullScreenable(false)
   win.setAlwaysOnTop(false)
   win.setResizable(false)
+  win.hide()
+}
+
+export function hide() {
+  const win = getWin()
+  if (!win) return
+  win.hide()
 }
 
 function getWin() {

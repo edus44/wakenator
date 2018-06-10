@@ -35,7 +35,7 @@
 import Rough from '@/components/ui/Rough'
 import Close from './Wake/Close'
 import GlobalEvents from 'vue-global-events'
-// import { maximize, minimize } from '@/lib/win'
+import { maximize, minimize } from '@/lib/win'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -85,8 +85,10 @@ export default {
     show(waker) {
       this.waker = waker
       this.updateSize()
+      maximize()
     },
     hide() {
+      minimize()
       this.waker = null
     },
   },

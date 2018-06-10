@@ -55,7 +55,7 @@ async function menubarReady() {
   if (debug.enabled) {
     await loadDevTool()
     menubar.on('after-show', () => {
-      menubar.window.setAlwaysOnTop(true)
+      // menubar.window.setAlwaysOnTop(true)
     })
     menubar.show()
     menubar.window.webContents.openDevTools({ mode: 'detach' })
