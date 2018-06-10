@@ -24,7 +24,7 @@ function getIndex() {
   if (debug.enabled) {
     return `http://localhost:13371`
   } else {
-    const distPath = resolve(__dirname, '../../app/dist/index.html').replace(/\\/g, '/')
+    const distPath = resolve(__dirname, '../appDist/index.html').replace(/\\/g, '/')
     return `file://${distPath}`
   }
 }

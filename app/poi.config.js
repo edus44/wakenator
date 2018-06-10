@@ -5,6 +5,7 @@ module.exports = options => ({
   },
   entry: './src/main.js',
   homepage: './',
+  dist: '../desktop/appDist',
   presets: [
     require('poi-preset-eslint')({ mode: '*' }),
     require('poi-preset-yaml')(),
