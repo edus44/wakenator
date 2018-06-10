@@ -188,39 +188,6 @@
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@firebase/webchannel-wrapper/-/webchannel-wrapper-0.2.8.tgz#38a936b60b898a1ad0f3719543ff1a1031f60f8b"
 
-"@material/mwc-base@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@material/mwc-base/-/mwc-base-0.1.0.tgz#507e8c8f31979fdb9d1d2c6f8ba3363e21982ef9"
-  dependencies:
-    "@polymer/lit-element" "^0.4.0"
-
-"@material/mwc-icon@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@material/mwc-icon/-/mwc-icon-0.1.1.tgz#9a97a3bdd7a1c42c4951b7ceb955259e9c457bf9"
-  dependencies:
-    "@material/mwc-base" "^0.1.0"
-    "@polymer/lit-element" "^0.4.0"
-
-"@polymer/lit-element@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@polymer/lit-element/-/lit-element-0.4.0.tgz#d10d99646270a45daf08ed0d936cdd25cdca4fa1"
-  dependencies:
-    "@polymer/polymer" "^3.0.0-pre.13"
-    lit-html "^0.9.0"
-
-"@polymer/lit-element@^0.5.1":
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/@polymer/lit-element/-/lit-element-0.5.1.tgz#ab1b21391787082023852e95e65e60015dfdaa00"
-  dependencies:
-    "@polymer/polymer" "^3.0.0-pre.13"
-    lit-html "^0.10.0"
-
-"@polymer/polymer@^3.0.0-pre.13", "@polymer/polymer@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@polymer/polymer/-/polymer-3.0.2.tgz#626e6f9fae9716b0962ce0211e21df242153eab2"
-  dependencies:
-    "@webcomponents/shadycss" "^1.2.0"
-
 "@types/node@*":
   version "10.3.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.0.tgz#078516315a84d56216b5d4fed8f75d59d3b16cac"
@@ -262,10 +229,6 @@
     "@types/tapable" "^0"
     "@types/uglify-js" "*"
     source-map "^0.6.0"
-
-"@webcomponents/shadycss@^1.2.0":
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadycss/-/shadycss-1.2.1.tgz#6e4a88534657807c8398b4bc196d0ca492182d54"
 
 abbrev@1:
   version "1.1.1"
@@ -4167,14 +4130,6 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
-lit-html@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-0.10.0.tgz#1c56efc7513faa8e12d0a5564dc3c67ee28fd617"
-
-lit-html@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/lit-html/-/lit-html-0.9.0.tgz#a445ecbb3da7d8b17690e6ade6c872c89385092a"
-
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -7055,10 +7010,6 @@ vue-loader@^13.0.0:
     vue-style-loader "^3.0.0"
     vue-template-es2015-compiler "^1.6.0"
 
-vue-router@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.1.tgz#d9b05ad9c7420ba0f626d6500d693e60092cc1e9"
-
 vue-style-loader@^3.0.0:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/vue-style-loader/-/vue-style-loader-3.1.2.tgz#6b66ad34998fc9520c2f1e4d5fa4091641c1597a"
@@ -7085,20 +7036,12 @@ vuefire@^1.4.5:
   version "1.4.5"
   resolved "https://registry.yarnpkg.com/vuefire/-/vuefire-1.4.5.tgz#2f31028b18f25e0f581bb68fb94b88302d62ebf8"
 
-vuetify@^1.0.18:
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-1.0.18.tgz#56289ba7c6e5eee3d4ee4dacd5e7dded4aee4c08"
-
 vuex-persistedstate@^2.5.4:
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/vuex-persistedstate/-/vuex-persistedstate-2.5.4.tgz#a19710ad7f9a08cea4e65fc585924d9fdac7384a"
   dependencies:
     deepmerge "^2.1.0"
     shvl "^1.3.0"
-
-vuex-router-sync@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/vuex-router-sync/-/vuex-router-sync-5.0.0.tgz#1a225c17a1dd9e2f74af0a1b2c62072e9492b305"
 
 vuex@^3.0.1:
   version "3.0.1"
@@ -7269,140 +7212,6 @@ window-size@0.1.0:
 window-size@^0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.4.tgz#f8e1aa1ee5a53ec5bf151ffa09742a6ad7697876"
-
-wired-button@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-button/-/wired-button-0.5.2.tgz#afc17c322481a8df368f3235f5bab4ca204a649b"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-card@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-card/-/wired-card-0.5.2.tgz#f39f8a676b268f876f89306535fe36c2acf1bb72"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-checkbox@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-checkbox/-/wired-checkbox-0.5.1.tgz#d33d7a7abc092a8e1f8ecc40ee4db135a8914834"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-combo@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-combo/-/wired-combo-0.5.2.tgz#68b5e74d0b9b4895e533b2b9fa92252b50fa2f97"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-card "^0.5.2"
-    wired-item "^0.5.0"
-    wired-lib "^0.5.1"
-
-wired-elements@^0.5.8:
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/wired-elements/-/wired-elements-0.5.8.tgz#bce3dcd43f4b7b8943907f3d2612dc82bef60b25"
-  dependencies:
-    wired-button "^0.5.2"
-    wired-card "^0.5.2"
-    wired-checkbox "^0.5.1"
-    wired-combo "^0.5.2"
-    wired-icon-button "^0.5.2"
-    wired-input "^0.5.2"
-    wired-item "^0.5.0"
-    wired-lib "^0.5.1"
-    wired-listbox "^0.5.1"
-    wired-progress "^0.5.1"
-    wired-radio "^0.5.2"
-    wired-radio-group "^0.5.0"
-    wired-slider "^0.5.6"
-    wired-textarea "^0.5.2"
-    wired-toggle "^0.5.1"
-    wired-tooltip "^0.5.1"
-
-wired-icon-button@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-icon-button/-/wired-icon-button-0.5.2.tgz#ed81675223be2c9628369731ab48ce3bc4956c63"
-  dependencies:
-    "@material/mwc-icon" "^0.1.1"
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-input@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-input/-/wired-input-0.5.2.tgz#eda79230bbcb64bfdf0d225e3cc98a0ae6c25e97"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-item@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/wired-item/-/wired-item-0.5.0.tgz#4d2fc9a78aeef742494216ddb51881f71cb29e16"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-
-wired-lib@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-lib/-/wired-lib-0.5.1.tgz#c575737046ec5ad827d155d37b963a36187b83b4"
-
-wired-listbox@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-listbox/-/wired-listbox-0.5.1.tgz#918f775251e739bf591b5ffd594bb6dafd00e34c"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-item "^0.5.0"
-    wired-lib "^0.5.1"
-
-wired-progress@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-progress/-/wired-progress-0.5.1.tgz#9e325e16e24aa62e67567225a9c52b51a905ef8d"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-radio-group@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/wired-radio-group/-/wired-radio-group-0.5.0.tgz#373fd2d1543232709bc2ee7501fafdcdf0bf8eaf"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-radio@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/wired-radio/-/wired-radio-0.5.2.tgz#0c2d00228a735906e0153445a26a8d65fc48126c"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-slider@^0.5.6:
-  version "0.5.6"
-  resolved "https://registry.yarnpkg.com/wired-slider/-/wired-slider-0.5.6.tgz#aaf15fadc1a17f1117af2e386846e3ae861cf383"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    "@polymer/polymer" "^3.0.2"
-    wired-lib "^0.5.1"
-
-wired-textarea@^0.5.2:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/wired-textarea/-/wired-textarea-0.5.3.tgz#ed1dfe7c79e13d4edb52e92dc34ae69aced4fc7b"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-toggle@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-toggle/-/wired-toggle-0.5.1.tgz#eee13a9be7e4720d9b2d904ff1e64d45fcdfe503"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
-
-wired-tooltip@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/wired-tooltip/-/wired-tooltip-0.5.1.tgz#9781cbc3c9dd016f0e3a5da63f20ff722c37519f"
-  dependencies:
-    "@polymer/lit-element" "^0.5.1"
-    wired-lib "^0.5.1"
 
 wordwrap@0.0.2:
   version "0.0.2"

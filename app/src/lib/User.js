@@ -26,7 +26,6 @@ export default class User {
     debug('enter', this.uid, this.channel, this.name)
     await this.exit()
 
-    // User reference
     this.ref = database.ref(`/channel/${this.channel}/list/${this.uid}`)
 
     return new Promise((resolve, reject) => {
