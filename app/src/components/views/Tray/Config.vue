@@ -20,14 +20,13 @@
 </template>
 
 <script>
-import Rough from '@/components/ui/Rough'
 import Back from './Config/Back'
 import BaseInput from '@/components/ui/BaseInput'
 import { mapMutations, mapActions } from 'vuex'
 import debounce from 'lodash/debounce'
 
 export default {
-  components: { Rough, Back, BaseInput },
+  components: { Back, BaseInput },
   data: () => ({
     channel: '',
     name: '',

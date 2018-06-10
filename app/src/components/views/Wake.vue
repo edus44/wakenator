@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div v-if="false" class="wake">
     <Rough
       :width="width"
       :height="height"
@@ -10,7 +10,7 @@
         hachureGap: 40,
         hachureAngle: -5,
       })"
-      class="fixed"
+      class="layer"
     />
     <Rough
       :width="width"
@@ -19,9 +19,9 @@
         stroke: 'white', 
         strokeWidth:2
       })"
-      class="fixed"
+      class="layer"
     />
-    <Close @hovered-change="v=>closeHovered=v" @click.native="close"/>
+    <Close @click.native="close"/>
 
     <GlobalEvents
       @keyup.escape="close"
@@ -92,9 +92,19 @@ export default {
 </script>
 
 <style lang="scss">
-.fixed {
-  position: fixed;
+@import '~@/assets/style/constants.scss';
+
+.wake {
+  background: $black;
+  position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+
+  .layer {
+    position: absolute;
+  }
 }
 </style>

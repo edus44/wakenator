@@ -17,4 +17,3 @@ const vm = new Vue({
 
 if (process.env.NODE_ENV === 'development') window.vm = vm
 Vue.config.productionTip = false
-Vue.config.ignoredElements = [/^wired-/]

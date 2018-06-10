@@ -1,29 +1,21 @@
 <template>
-  <div
-    class="close"
-    @mouseenter="hovered=true"
-    @mouseleave="hovered=false"
-  >
-    <Rough
-      :width="200"
-      :height="200"
-      :interval="hovered ? 150 : 0"
-      :render="renderMenu"
-    />
-  </div>
+  <BaseIcon
+    :width="200"
+    :height="200"
+    :hover-interval="150"
+    :render="renderMenu"
+    class="close-icon"
+  />
 </template>
 
 <script>
-import Rough from '@/components/ui/Rough'
+import BaseIcon from '@/components/ui/BaseIcon'
 
 export default {
-  components: { Rough },
-  data: () => ({
-    hovered: false,
-  }),
+  components: { BaseIcon },
   methods: {
-    renderMenu(rc) {
-      const stroke = this.hovered ? '#df4418' : 'white'
+    renderMenu(rc, hovered) {
+      const stroke = hovered ? '#df4418' : 'white'
       const s = 100
       const o = 50
       rc.line(o, o, s + o, s + o, { stroke, roughness: 2, strokeWidth: 3 })
@@ -34,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss">
-.close {
+.close-icon {
   position: fixed;
   right: 10px;
   top: 10px;

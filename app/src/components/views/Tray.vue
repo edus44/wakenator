@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div class="tray">
     <Rough
       ref="bg"
       :width="400"
@@ -41,7 +41,7 @@ export default {
 <style lang="scss">
 $w: 400px;
 $h: 400px;
-.wrapper {
+.tray {
   position: relative;
   > .bg {
     position: absolute;

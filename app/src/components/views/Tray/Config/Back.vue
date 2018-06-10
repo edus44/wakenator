@@ -1,29 +1,21 @@
 <template>
-  <div
-    class="menu"
-    @mouseenter="hovered=true"
-    @mouseleave="hovered=false"
-  >
-    <Rough
-      :width="60"
-      :height="50"
-      :interval="hovered ? 150 : 0"
-      :render="renderMenu"
-    />
-  </div>
+  <BaseIcon
+    :width="60"
+    :height="50"
+    :hover-interval="150"
+    :render="renderBack"
+    class="back-icon"
+  />
 </template>
 
 <script>
-import Rough from '@/components/ui/Rough'
+import BaseIcon from '@/components/ui/BaseIcon'
 
 export default {
-  components: { Rough },
-  data: () => ({
-    hovered: false,
-  }),
+  components: { BaseIcon },
   methods: {
-    renderMenu(rc) {
-      const stroke = this.hovered ? '#df4418' : 'white'
+    renderBack(rc, hovered) {
+      const stroke = hovered ? '#df4418' : 'white'
       rc.line(38, 15, 17, 25, { stroke })
       rc.line(17, 25, 38, 35, { stroke })
     },
@@ -32,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-.menu {
+.back-icon {
   position: fixed;
   top: 10px;
   left: 10px;
