@@ -57,6 +57,7 @@ export default {
       top: -20px;
       left: 0;
       display: block;
+      white-space: nowrap;
     }
   }
   .action {
