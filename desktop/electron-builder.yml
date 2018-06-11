@@ -1,3 +1,5 @@
+productName: Wakenator
+artifactName: "${productName}.${ext}"
 linux:
   target: 
     - target: AppImage
