@@ -3,3 +3,4 @@ artifactName: "${productName}-${os}-${version}.${ext}"
 linux:
   target: 
     - target: AppImage
+    - target: deb
