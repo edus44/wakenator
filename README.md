@@ -10,6 +10,7 @@
   <a href="https://github.com/edus44/wakenator/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/edus44/wakenator.svg?style=flat-square" alt="license">
   </a>
+  <img src="https://img.shields.io/badge/productivity at work-high-red.svg?longCache=true&style=flat-square" alt="license">
 </p>
 
 <p align="center"><img width="200" height="200" src="https://raw.githubusercontent.com/edus44/wakenator/master/resources/logo200.png" alt="Wakenator logo"></p>
