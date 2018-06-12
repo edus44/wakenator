@@ -7,7 +7,7 @@
 
 ![Wakenator Logo](./resources/logo200.png)
 
-# WAKENATOR 
+# Wakenator 
 
 > Wake up your teammates
 
