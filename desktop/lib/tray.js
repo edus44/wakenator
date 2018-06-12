@@ -12,7 +12,7 @@ function init() {
   // Create menubar
   const menubar = new Menubar({
     index: getIndex(),
-    icon: getAsset('icon-white.png'),
+    icon: getAsset('tray-white.png'),
     preloadWindow: true,
     tooltip: 'Wakenator v' + version,
     window: {
@@ -45,7 +45,7 @@ async function menubarReady(menubar) {
   }
 
   if (process.platform === 'darwin') {
-    menubar.tray.setImage(getAsset('iconTemplate.png'))
+    menubar.tray.setImage(getAsset('tray-mac.png'))
   }
 
   menubar.on('after-hide', () => {
