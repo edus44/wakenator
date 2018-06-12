@@ -10,7 +10,7 @@
     "pretty": "prettier --write **/*.{js,json,scss,vue}"
   },
   "author": "",
-  "license": "ISC",
+  "license": "GPLv3",
   "devDependencies": {
     "babel-eslint": "^8.2.3",
     "eslint": "^4.19.1",
