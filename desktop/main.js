@@ -1,17 +1,15 @@
-'use strict'
-
 require('./lib/autoUpdate')
+require('./lib/autoLaunch')
 
 const tray = require('./lib/tray')
 const { app } = require('electron')
 const debug = require('debug')('wk:main')
-const AutoLaunch = require('auto-launch')
 debug('init')
 
 // Event logs
 process.on('exit', code => {
   debug('process exited with', code)
-  process.kill(process.pid, 'SIGKILL')
+  process.kill(process.pid, 'SIGKILL') // AppImage update hang process exiting
 })
 app.on('ready', () => debug('app-ready'))
 app.on('quit', () => debug('quit'))
@@ -21,5 +19,3 @@ app.on('window-all-closed', () => {
 })
 
 tray.init()
-
-new AutoLaunch({ name: 'Wakenator' }).enable()

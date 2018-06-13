@@ -1,6 +1,5 @@
 productName: Wakenator
-artifactName: "${productName}-${os}-${version}.${ext}"
+artifactName: "${productName}-${version}-${os}.${ext}"
 linux:
   target: 
     - target: AppImage
-    - target: deb
