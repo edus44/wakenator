@@ -1,10 +1,10 @@
 <template>
   <div 
-    :class="{hovered}" 
+    :class="{hovered,waking}" 
     class="person" 
-    @mouseover="hovered=true"
+    @mouseover="!waking? hovered=true: null"
     @mouseleave="hovered=false"
-    @click="wakePerson(person)"
+    @click="wake"
   >
     <div class="name">{{ person.name }}</div>
     <div class="host">{{ person.user }}@{{ person.host }}</div>
@@ -41,9 +41,17 @@ export default {
   },
   data: () => ({
     hovered: false,
+    waking: false,
   }),
   methods: {
     ...mapActions('user', ['wakePerson']),
+    wake() {
+      if (this.waking) return
+      this.waking = true
+      this.hovered = false
+      this.wakePerson(this.person)
+      setTimeout(() => (this.waking = false), 4000)
+    },
   },
 }
 </script>
@@ -54,20 +62,20 @@ export default {
 .person {
   height: 50px;
   margin: 4px 0;
-  cursor: pointer;
   position: relative;
 
   &.hovered {
     font-weight: bold;
-    // span {
-    //   font-weight: bold;
-    //   display: inline-block;
-    //   animation-duration: 0.3s;
-    //   animation-fill-mode: both;
-    //   animation-iteration-count: infinite;
-    //   animation-name: pulse;
-    // }
+    cursor: pointer;
   }
+
+  &.waking {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-iteration-count: infinite;
+    animation-name: rubberBand;
+  }
+
   .host,
   .name {
     line-height: 24px;
@@ -91,17 +99,33 @@ export default {
   }
 }
 
-// @keyframes pulse {
-//   from {
-//     transform: scale3d(1, 1, 1);
-//   }
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
 
-//   50% {
-//     transform: scale3d(1.03, 1.03, 1.03);
-//   }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
 
-//   to {
-//     transform: scale3d(1, 1, 1);
-//   }
-// }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
 </style>
