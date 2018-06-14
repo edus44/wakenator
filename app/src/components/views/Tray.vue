@@ -19,12 +19,13 @@ import Home from './Tray/Home'
 import Config from './Tray/Config'
 import Rough from '@/components/ui/Rough'
 import PerfectScrollbar from 'perfect-scrollbar'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
   components: { Home, Config, Rough },
   computed: {
     ...mapState('root', ['view']),
+    ...mapGetters('user', ['validConfig']),
   },
   watch: {
     view() {
@@ -35,6 +36,9 @@ export default {
   mounted() {
     this.ps = new PerfectScrollbar(this.$refs.content, {})
     this.$root.$on('refresh-scrollbar', () => this.refreshScrollbar())
+    if (!this.validConfig) {
+      this.$store.commit('root/changeView', 'config')
+    }
   },
   methods: {
     refreshScrollbar() {

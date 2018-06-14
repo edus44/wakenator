@@ -1,13 +1,15 @@
 <template>
   <div class="config">
-    <Back @click.native="changeView('home')"/>
+    <Back @click.native="goBack"/>
     <BaseInput
+      ref="name"
       :prepend="'@'"
       :placeholder="'like... Bob'"
       v-model.trim="name"
       label="your name"
     />
     <BaseInput
+      ref="channel"
       :prepend="'#'"
       :placeholder="'like... gigigo'"
       v-model.trim="channel"
@@ -15,7 +17,7 @@
       label="people channel"
       @input="v=>channel=cleanChannel(v)"
     />
-    <button class="back" @click="changeView('home')">Back</button>
+    <button class="back" @click="goBack">Back</button>
   </div>
 </template>
 
@@ -43,11 +45,22 @@ export default {
     this.channel = this.$store.state.user.channel
     this.name = this.$store.state.user.name
   },
+  mounted() {
+    this.focus()
+  },
   methods: {
     ...mapMutations('root', ['changeView']),
     ...mapActions('user', ['changeName', 'changeChannel']),
     cleanChannel(channel) {
       return channel.toLowerCase().replace(/[^\w-]/g, '')
+    },
+    goBack() {
+      if (!this.name || !this.channel) return this.focus()
+      this.changeView('home')
+    },
+    focus() {
+      if (!this.name) return this.$refs.name.focus()
+      if (!this.channel) return this.$refs.channel.focus()
     },
   },
 }

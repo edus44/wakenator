@@ -68,6 +68,9 @@ const getters = {
   wakesRef(state) {
     return state.connected && state.channel && state.uid && user.getWakesRef()
   },
+  validConfig(state) {
+    return !!(state.channel && state.name)
+  },
 }
 
 export default {

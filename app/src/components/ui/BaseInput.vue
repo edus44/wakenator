@@ -6,6 +6,7 @@
     <label>{{ label }}</label>
     <span class="prepend">{{ prepend }}</span>
     <input
+      ref="input"
       :value="value"
       :placeholder="placeholder"
       @input="e=>$emit('input',e.target.value)"
@@ -58,6 +59,9 @@ export default {
     renderLine(rc) {
       const stroke = this.focused ? '#df4418' : 'white'
       rc.line(10, 5, 240, 5, { stroke, roughness: 1 })
+    },
+    focus() {
+      this.$refs.input && this.$refs.input.focus()
     },
   },
 }
