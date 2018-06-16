@@ -45,7 +45,7 @@ async function menubarReady(menubar) {
   }
 
   if (process.platform === 'darwin') {
-    menubar.tray.setImage(getAsset('tray-mac.png'))
+    menubar.tray.setImage(getAsset('trayTemplate.png'))
   }
 
   menubar.on('after-hide', () => {
