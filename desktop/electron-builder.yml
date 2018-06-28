@@ -1,5 +1,8 @@
 productName: Wakenator
 artifactName: "${productName}-${version}-${os}.${ext}"
+publish:
+  provider: github
+  publishAutoUpdate: false
 mac:
   target: 
     - target: dmg
