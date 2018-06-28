@@ -8,7 +8,7 @@
     <img src="https://img.shields.io/travis/edus44/wakenator.svg?style=flat-square" alt="Travis">
   </a>
   <a href="https://github.com/edus44/wakenator/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/edus44/wakenator.svg?style=flat-square" alt="license">
+    <img src="https://img.shields.io/github/license/edus44/wakenator.svg?longCache=true&style=flat-square" alt="license">
   </a>
   <img src="https://img.shields.io/badge/productivity at work-high-red.svg?longCache=true&style=flat-square" alt="license">
 </p>

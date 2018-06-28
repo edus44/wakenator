@@ -1,5 +1,12 @@
 productName: Wakenator
 artifactName: "${productName}-${version}-${os}.${ext}"
+mac:
+  target: 
+    - target: dmg
+win:
+  target: 
+    - target: nsis
 linux:
   target: 
+    - target: deb
     - target: AppImage

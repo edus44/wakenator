@@ -1,4 +1,3 @@
-require('./lib/autoUpdate')
 require('./lib/autoLaunch')
 
 const tray = require('./lib/tray')
@@ -9,7 +8,6 @@ debug('init')
 // Event logs
 process.on('exit', code => {
   debug('process exited with', code)
-  process.kill(process.pid, 'SIGKILL') // AppImage update hang process exiting
 })
 app.on('ready', () => debug('app-ready'))
 app.on('quit', () => debug('quit'))
