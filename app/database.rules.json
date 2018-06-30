@@ -1,0 +1,24 @@
+{
+  "rules": {
+    "channel": {
+      "$channel": {
+        "list": {
+          ".read": true,
+          "$uid": {
+            ".write": "$uid === auth.uid",
+            ".validate": "newData.child('name').isString()"
+          }
+        },
+        "wakes": {
+          "$uid": {
+            ".read": "$uid === auth.uid",
+            "$id": {
+              ".write": "$uid === auth.uid || newData.child('uid').val() === auth.uid",
+              ".validate": "newData.child('name').isString()"
+            }
+          }
+        }
+      }
+    }
+  }
+}
