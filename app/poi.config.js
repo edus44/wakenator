@@ -11,4 +11,7 @@ module.exports = options => ({
     require('poi-preset-yaml')(),
     require('poi-preset-uglifyjs')(),
   ],
+  env: {
+    DESKTOP_VERSION: require('../desktop/package.json').version,
+  },
 })

@@ -18,6 +18,11 @@
       @input="v=>channel=cleanChannel(v)"
     />
     <button class="back" @click="goBack">Back</button>
+    <footer>
+      <a @click="openURL('https://github.com/edus44/wakenator/releases/latest')">Wakenator v{{ DESKTOP_VERSION }}</a>
+      &bull;
+      <a @click="close">Close app</a>
+    </footer>
   </div>
 </template>
 
@@ -26,12 +31,14 @@ import Back from './Config/Back'
 import BaseInput from '@/components/ui/BaseInput'
 import { mapMutations, mapActions } from 'vuex'
 import debounce from 'lodash/debounce'
+import { close, openURL } from '@/lib/win'
 
 export default {
   components: { Back, BaseInput },
   data: () => ({
     channel: '',
     name: '',
+    DESKTOP_VERSION: process.env.DESKTOP_VERSION,
   }),
   watch: {
     channel: debounce(function() {
@@ -62,6 +69,8 @@ export default {
       if (!this.name) return this.$refs.name.focus()
       if (!this.channel) return this.$refs.channel.focus()
     },
+    close,
+    openURL,
   },
 }
 </script>
@@ -86,6 +95,22 @@ export default {
     &:focus {
       color: $red;
       outline: none;
+    }
+  }
+  footer {
+    font-weight: lighter;
+    font-size: 12px;
+    color: #666;
+    margin-top: 12px;
+    a {
+      color: #666;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: $red;
+        text-decoration: underline;
+      }
     }
   }
 }

@@ -4,7 +4,7 @@ const { Menubar } = require('electron-menubar')
 const { version } = require('../package')
 const { loadDevTool, getIndex, getAsset } = require('./utils')
 const debug = require('debug')('wk:tray')
-const { ipcMain } = require('electron')
+const { ipcMain, shell } = require('electron')
 
 module.exports = { init }
 
@@ -62,5 +62,13 @@ async function menubarReady(menubar) {
 
   ipcMain.on('minimize', () => {
     menubar.hide()
+  })
+
+  ipcMain.on('close', () => {
+    win.close()
+  })
+
+  ipcMain.on('openURL', (e, url) => {
+    shell.openExternal(url)
   })
 }
