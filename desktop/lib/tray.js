@@ -1,6 +1,6 @@
 'use strict'
 
-const { Menubar } = require('electron-menubar')
+const { Menubar } = require('./electron-menubar')
 const { version } = require('../package')
 const { loadDevTool, getIndex, getAsset } = require('./utils')
 const debug = require('debug')('wk:tray')
