@@ -5,7 +5,7 @@ const electron = require('electron')
  *
  * @return {Display} - the display closest to the current cursor position
  */
-function getDisplay () {
+function getDisplay() {
   const screen = electron.screen
   return screen.getDisplayNearestPoint(screen.getCursorScreenPoint())
 }
@@ -15,7 +15,7 @@ function getDisplay () {
  *
  * @return {Point} - the position of the cursor
  */
-function getCursorPosition () {
+function getCursorPosition() {
   return electron.screen.getCursorScreenPoint()
 }
 
@@ -28,7 +28,7 @@ function getCursorPosition () {
  *
  * @return {integer} - calculated x position
  */
-function calculateXAlign (windowBounds, trayBounds, align) {
+function calculateXAlign(windowBounds, trayBounds, align) {
   const display = getDisplay()
   let x
 
@@ -41,7 +41,7 @@ function calculateXAlign (windowBounds, trayBounds, align) {
       break
     case 'center':
     default:
-      x = Math.round(trayBounds.x + (trayBounds.width / 2) - (windowBounds.width / 2))
+      x = Math.round(trayBounds.x + trayBounds.width / 2 - windowBounds.width / 2)
   }
 
   if (x + windowBounds.width > display.bounds.width && align !== 'left') {
@@ -64,7 +64,7 @@ function calculateXAlign (windowBounds, trayBounds, align) {
  *
  * @return {integer} - calculated y position
  */
-function calculateYAlign (windowBounds, trayBounds, align) {
+function calculateYAlign(windowBounds, trayBounds, align) {
   const display = getDisplay()
   let y
 
@@ -77,7 +77,7 @@ function calculateYAlign (windowBounds, trayBounds, align) {
       break
     case 'center':
     default:
-      y = Math.round((trayBounds.y + (trayBounds.height / 2)) - (windowBounds.height / 2))
+      y = Math.round(trayBounds.y + trayBounds.height / 2 - windowBounds.height / 2)
       break
   }
 
@@ -100,7 +100,7 @@ function calculateYAlign (windowBounds, trayBounds, align) {
  *
  * @return {Point} - Calculated point {x, y} where the window should be positioned
  */
-function calculateByCursorPosition (windowBounds, display, cursor) {
+function calculateByCursorPosition(windowBounds, display, cursor) {
   let x = cursor.x
   let y = cursor.y
 
@@ -116,7 +116,7 @@ function calculateByCursorPosition (windowBounds, display, cursor) {
 
   return {
     x: x,
-    y: y
+    y: y,
   }
 }
 
@@ -133,8 +133,8 @@ class Positioner {
       default: down
    * @return {Point} - Calculated point {x, y} where the window should be positioned
    */
-  static calculate (windowBounds, trayBounds, alignment) {
-    if (process.platform === 'linux') {
+  static calculate(windowBounds, trayBounds, alignment) {
+    if (process.platform !== 'win') {
       const cursor = getCursorPosition()
       return calculateByCursorPosition(windowBounds, getDisplay(), cursor)
     }
@@ -166,7 +166,7 @@ class Positioner {
 
     return {
       x,
-      y
+      y,
     }
   }
 
@@ -183,7 +183,7 @@ class Positioner {
    *
    * @return {Void}
    */
-  static position (window, trayBounds, alignment) {
+  static position(window, trayBounds, alignment) {
     const position = this.calculate(window.getBounds(), trayBounds, alignment)
     window.setPosition(position.x, position.y, false)
   }
@@ -193,7 +193,7 @@ class Positioner {
    *
    * @return {string} - the position of the taskbar (top|right|bottom|left)
    */
-  static getTaskbarPosition () {
+  static getTaskbarPosition() {
     const display = getDisplay()
 
     if (display.workArea.y > 0) {
