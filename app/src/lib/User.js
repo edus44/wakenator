@@ -12,7 +12,7 @@ export default class User {
     this.channel = channel
   }
   async setName(name) {
-    this.name = name
+    this.name = name.trim() || '-'
     return this.update()
   }
   getChannelRef() {
@@ -25,6 +25,8 @@ export default class User {
   async enter() {
     debug('enter', this.uid, this.channel, this.name)
     await this.exit()
+
+    if (!this.channel) return
 
     this.ref = database.ref(`/channel/${this.channel}/list/${this.uid}`)
 
@@ -43,6 +45,7 @@ export default class User {
     if (!this.ref) return
     const obj = {
       name: this.name,
+      connectedAt: new Date().toISOString(),
       ...getHostData(),
     }
     debug('update', obj)
@@ -53,6 +56,7 @@ export default class User {
     if (!this.ref) return
     await this.ref.remove()
     await this.ref.onDisconnect().cancel()
+    this.ref = null
   }
   async wakePerson(person) {
     const ref = database.ref(`/channel/${this.channel}/wakes/${person.uid}`)

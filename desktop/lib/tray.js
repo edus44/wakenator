@@ -9,12 +9,14 @@ const { ipcMain, shell } = require('electron')
 module.exports = { init }
 
 function init() {
+  let tooltip = 'Wakenator v' + version
+  if (process.platform === 'linux') tooltip = 'Open Wakenator'
   // Create menubar
   const menubar = new Menubar({
     index: getIndex(),
     icon: getAsset('tray-white.png'),
     preloadWindow: true,
-    tooltip: 'Wakenator v' + version,
+    tooltip,
     window: {
       fullscreenable: false,
       movable: false,
