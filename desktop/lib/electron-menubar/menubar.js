@@ -1,9 +1,9 @@
 const path = require('path')
 const Positioner = require('./positioner')
 const merge = require('lodash.merge')
-const {EventEmitter} = require('events')
+const { EventEmitter } = require('events')
 const electron = require('electron')
-const {app, Tray, BrowserWindow} = electron
+const { app, Tray, BrowserWindow } = electron
 
 const defaults = {
   preloadWindow: false,
@@ -15,15 +15,15 @@ const defaults = {
     width: 400,
     height: 400,
     show: false,
-    frame: false
-  }
+    frame: false,
+  },
 }
 
 /**
  * Class Menubar.
  */
 class Menubar extends EventEmitter {
-  constructor (opts) {
+  constructor(opts) {
     super()
 
     if (typeof opts !== 'object') {
@@ -57,12 +57,12 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  _appReady () {
+  _appReady() {
     if (app.dock && !this.opts.showDockIcon) {
       app.dock.hide()
     }
 
-    let clickEvent = this.opts.showOnRightClick ? 'right-click' : 'click'
+    const clickEvent = this.opts.showOnRightClick ? 'right-click' : 'click'
 
     this.tray = new Tray(this.opts.icon)
     this.tray.on(clickEvent, this._clicked.bind(this))
@@ -83,7 +83,7 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  _createWindow () {
+  _createWindow() {
     this.emit('create-window')
 
     this.window = new BrowserWindow(this.opts.window)
@@ -112,7 +112,7 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  _clicked (event, bounds) {
+  _clicked(event, bounds) {
     // Hide the window if clicking with ALT/SHIFT/CTRL or Meta keys.
     if (event.altKey || event.shiftKey || event.ctrlKey || event.metaKey) {
       return this.hide()
@@ -132,7 +132,7 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  isReady () {
+  isReady() {
     return this.ready
   }
 
@@ -141,7 +141,7 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  hide () {
+  hide() {
     this.tray.setHighlightMode('never')
     if (!this.window) return
     this.emit('hide')
@@ -154,7 +154,7 @@ class Menubar extends EventEmitter {
    *
    * @returns {void}
    */
-  show () {
+  show() {
     this.tray.setHighlightMode('always')
     if (!this.window) {
       this._createWindow()
@@ -166,9 +166,9 @@ class Menubar extends EventEmitter {
       this.cachedBounds = this.tray.getBounds()
     }
 
-    let pos = Positioner.calculate(this.window.getBounds(), this.cachedBounds)
-    pos.x = (this.opts.window.x !== undefined) ? this.opts.window.x : pos.x
-    pos.y = (this.opts.window.y !== undefined) ? this.opts.window.y : pos.y
+    const pos = Positioner.calculate(this.window.getBounds(), this.cachedBounds)
+    pos.x = this.opts.window.x !== undefined ? this.opts.window.x : pos.x
+    pos.y = this.opts.window.y !== undefined ? this.opts.window.y : pos.y
 
     this.window.setPosition(pos.x, pos.y)
     this.window.show()

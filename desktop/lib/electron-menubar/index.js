@@ -3,5 +3,5 @@ const Positioner = require('./positioner')
 
 module.exports = {
   Menubar: Menubar,
-  Positioner: Positioner
+  Positioner: Positioner,
 }

@@ -23,23 +23,23 @@
   "license": "GPLv3",
   "dependencies": {
     "auto-launch": "^5.0.5",
-    "debug": "^3.1.0",
-    "electron-menubar": "^1.0.1"
+    "debug": "^4.1.1",
+    "electron-menubar": "^1.0.2"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
-    "electron": "^2.0.3",
-    "electron-builder": "20.17.1",
+    "electron": "^4.0.8",
+    "electron-builder": "20.39.0",
     "electron-devtools-installer": "^2.2.4",
-    "eslint": "^5.0.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jest": "^21.17.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "prettier": "^1.13.6"
+    "eslint": "^5.15.1",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.3.1",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^5.2.2",
+    "prettier": "^1.16.4"
   }
 }
