@@ -55,9 +55,14 @@ async function menubarReady(menubar) {
 
   ipcMain.on('maximize', () => {
     menubar.hide()
-    win.maximize()
-    win.show()
-    win.focus()
+    setTimeout(() => {
+      win.maximize()
+      win.show()
+      win.focus()
+      menubar.once('after-hide', () => {
+        win.webContents.send('tray-hide')
+      })
+    }, 100)
   })
 
   ipcMain.on('minimize', () => {

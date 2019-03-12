@@ -42,6 +42,8 @@ import GlobalEvents from 'vue-global-events'
 import { maximize, minimize } from '@/lib/win'
 import { mapGetters } from 'vuex'
 
+const ipcRenderer = window.require && window.require('electron').ipcRenderer
+
 export default {
   components: { Rough, Close, Message, GlobalEvents },
   data: () => ({
@@ -77,9 +79,11 @@ export default {
   },
   created() {
     window.addEventListener('resize', this.updateSize)
+    ipcRenderer && ipcRenderer.on('tray-hide', this.hide)
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.updateSize)
+    ipcRenderer && ipcRenderer.off('tray-hide', this.hide)
   },
   methods: {
     updateSize() {
@@ -95,6 +99,7 @@ export default {
       })
     },
     hide() {
+      if (this.waker === null) return
       minimize()
       this.waker = null
     },

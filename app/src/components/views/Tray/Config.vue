@@ -1,23 +1,25 @@
 <template>
   <div class="config">
     <Back @click.native="goBack" />
-    <BaseInput
-      ref="name"
-      v-model.trim="name"
-      :prepend="'@'"
-      :placeholder="'like... Bob'"
-      label="your name"
-    />
-    <BaseInput
-      ref="channel"
-      v-model.trim="channel"
-      :prepend="'#'"
-      :placeholder="'like... gigigo'"
-      :value="channel"
-      label="people channel"
-      @input="v => (channel = cleanChannel(v))"
-    />
-    <button class="back" @click="goBack">Back</button>
+    <form @submit.prevent="goBack">
+      <BaseInput
+        ref="name"
+        v-model.trim="name"
+        :prepend="'@'"
+        :placeholder="'like... Bob'"
+        label="your name"
+      />
+      <BaseInput
+        ref="channel"
+        v-model.trim="channel"
+        :prepend="'#'"
+        :placeholder="'like... gigigo'"
+        :value="channel"
+        label="people channel"
+        @input="v => (channel = cleanChannel(v))"
+      />
+      <button class="back" type="submit">Back</button>
+    </form>
     <footer>
       <a @click="openURL('https://github.com/edus44/wakenator/releases/latest')">
         Wakenator v{{ DESKTOP_VERSION }}
@@ -85,7 +87,7 @@ export default {
   .base-input {
     margin-top: 30px;
   }
-  > .back {
+  > form .back {
     display: inline-block;
     margin-top: 40px;
     font-size: 20px;

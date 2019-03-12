@@ -1,3 +1,9 @@
+const ipcRenderer = window.require && window.require('electron').ipcRenderer
+
+function send(...args) {
+  ipcRenderer && ipcRenderer.send(...args)
+}
+
 export function maximize() {
   send('maximize')
 }
@@ -9,10 +15,4 @@ export function close() {
 }
 export function openURL(url) {
   send('openURL', url)
-}
-
-function send(...args) {
-  if (!window.require) return
-  const { ipcRenderer } = window.require('electron')
-  ipcRenderer.send(...args)
 }
