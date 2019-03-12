@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import rough from 'roughjs'
+import rough from 'roughjs/bin/wrappers/rough'
 
 export default {
   props: {
