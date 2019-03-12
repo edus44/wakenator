@@ -14,8 +14,5 @@
     }
   ],
   "eslint.autoFixOnSave": true,
-  "vetur.validation.template": false,
-  "html.format.enable": false,
-  "jest.autoEnable": false,
-  "jest.enableCodeLens": false
+  "vetur.format.defaultFormatter.html": "prettier"
 }

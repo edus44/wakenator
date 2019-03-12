@@ -2,9 +2,9 @@
   <div class="who">
     <div class="host">{{ person.user }}@{{ person.host }}</div>
     <div class="message">
-      <span class="name"> {{ person.name }} </span>
+      <span class="name">{{ person.name }}</span>
       <div class="action">{{ action }}</div>
-      <MessageImage/>
+      <MessageImage />
     </div>
   </div>
 </template>

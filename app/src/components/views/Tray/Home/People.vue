@@ -3,17 +3,14 @@
     <div v-if="status" class="status">
       {{ status }}
     </div>
-    <template 
-      v-for="(person,idx) in people"
-      v-else 
-    >
-      <Person :person="person" :key="person.uid" />
+    <template v-for="(person, idx) in people" v-else>
+      <Person :key="person.uid" :person="person" />
       <Rough
-        v-if="idx < people.length-1"
-        :key="person.name+'line'"
+        v-if="idx < people.length - 1"
+        :key="person.name + 'line'"
         :width="200"
         :height="10"
-        :render="rc=>rc.line(10, 5, 190, 5, { stroke: 'white', roughness: 1 })"
+        :render="rc => rc.line(10, 5, 190, 5, { stroke: 'white', roughness: 1 })"
         class="line"
       />
     </template>
@@ -36,6 +33,7 @@ export default {
       if (!this.connected) return 'Connecting...'
       if (!this.people) return 'Entering...'
       if (this.people && !this.people.length) return `Nobody at ${this.channel} channel`
+      return ''
     },
     people() {
       return (

@@ -1,23 +1,20 @@
 <template>
-  <div 
-    :class="{focused}"
-    class="base-input"
-  >
+  <div :class="{ focused }" class="base-input">
     <label>{{ label }}</label>
     <span class="prepend">{{ prepend }}</span>
     <input
       ref="input"
       :value="value"
       :placeholder="placeholder"
-      @input="e=>$emit('input',e.target.value)"
-      @focus="focused=true" 
-      @blur="focused=false"
-    >
+      @input="e => $emit('input', e.target.value)"
+      @focus="focused = true"
+      @blur="focused = false"
+    />
     <Rough
       ref="line"
       :width="250"
       :height="10"
-      :interval="focused?200:0"
+      :interval="focused ? 200 : 0"
       :render="renderLine"
       class="line"
     />

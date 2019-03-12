@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Menu @click.native="changeView('config')"/>
-    <People/>
+    <Menu @click.native="changeView('config')" />
+    <People />
   </div>
 </template>
 

@@ -1,11 +1,5 @@
 <template>
-  <BaseIcon
-    :width="60"
-    :height="50"
-    :hover-interval="150"
-    :render="renderBack"
-    class="back-icon"
-  />
+  <BaseIcon :width="60" :height="50" :hover-interval="150" :render="renderBack" class="back-icon" />
 </template>
 
 <script>

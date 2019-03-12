@@ -17,26 +17,6 @@
         "isDefault": true
       },
       "problemMatcher": []
-    },
-    {
-      "label": "Tests watch",
-      "type": "npm",
-      "script": "test-dev",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      }
-    },
-    {
-      "label": "Tests",
-      "type": "npm",
-      "script": "test",
-      "group": "test"
-    },
-    {
-      "label": "Lint",
-      "type": "npm",
-      "script": "lint"
     }
   ]
 }

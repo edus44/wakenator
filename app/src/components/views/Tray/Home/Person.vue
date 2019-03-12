@@ -1,9 +1,9 @@
 <template>
-  <div 
-    :class="{hovered,waking}" 
-    class="person" 
-    @mouseover="!waking? hovered=true: null"
-    @mouseleave="hovered=false"
+  <div
+    :class="{ hovered, waking }"
+    class="person"
+    @mouseover="!waking ? (hovered = true) : null"
+    @mouseleave="hovered = false"
     @click="wake"
   >
     <div class="name">{{ person.name }}</div>
@@ -14,16 +14,18 @@
       :width="372"
       :height="50"
       :interval="200"
-      :render="rc=>rc.rectangle(10, 2, 352, 46, {
-        fill: '#df4418',
-        fillWeight: 0.8,
-        stroke: 'transparent',
-        hachureGap: 6,
-        roughness: 1.4,
-      })"
+      :render="
+        rc =>
+          rc.rectangle(10, 2, 352, 46, {
+            fill: '#df4418',
+            fillWeight: 0.8,
+            stroke: 'transparent',
+            hachureGap: 6,
+            roughness: 1.4,
+          })
+      "
       class="bg"
     />
-
   </div>
 </template>
 

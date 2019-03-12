@@ -1,17 +1,20 @@
 <template>
   <div class="message-image">
-    <img v-if="image" :src="image">
-    <Rough 
+    <img v-if="image" :src="image" />
+    <Rough
       :width="300"
       :height="300"
-      :render="rc=>rc.rectangle(10,10,280,280,{
-        stroke: 'transparent', 
-        fill:'white',
-        fillWeight: .2,
-        hachureGap: 8,
-        hachureAngle: 90,
-        roughness:2,
-      })"
+      :render="
+        rc =>
+          rc.rectangle(10, 10, 280, 280, {
+            stroke: 'transparent',
+            fill: 'white',
+            fillWeight: 0.2,
+            hachureGap: 8,
+            hachureAngle: 90,
+            roughness: 2,
+          })
+      "
     />
   </div>
 </template>

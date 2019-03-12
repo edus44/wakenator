@@ -1,9 +1,5 @@
 <template>
-  <canvas 
-    ref="canvas"
-    :width="width"
-    :height="height"
-  />
+  <canvas ref="canvas" :width="width" :height="height" />
 </template>
 
 <script>
@@ -63,5 +59,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

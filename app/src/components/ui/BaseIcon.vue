@@ -1,13 +1,6 @@
 <template>
-  <div
-    @mouseenter="hovered=true"
-    @mouseleave="hovered=false"
-  >
-    <Rough
-      v-bind="$attrs"
-      :interval="hovered ? 150 : 0"
-      :render="proxyRender"
-    />
+  <div @mouseenter="hovered = true" @mouseleave="hovered = false">
+    <Rough v-bind="$attrs" :interval="hovered ? 150 : 0" :render="proxyRender" />
   </div>
 </template>
 

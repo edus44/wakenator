@@ -1,11 +1,9 @@
 <template>
   <div>
-    <Tray/>
-    <Wake/>
+    <Tray />
+    <Wake />
 
-    <GlobalEvents
-      @keyup.escape="minimize"
-    />
+    <GlobalEvents @keyup.escape="minimize" />
   </div>
 </template>
 

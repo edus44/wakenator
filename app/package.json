@@ -1,34 +1,26 @@
 {
   "name": "wakenator-app",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "poi",
-    "build": "poi build",
-    "lint": "eslint --ext .js,.vue src",
-    "pretty": "prettier --write **/*.{js,json,scss,vue}"
+    "dev": "vue-cli-service serve --open --copy",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "pretty": "prettier --write **/*.{js,json,scss,vue,yml,md}"
   },
-  "author": "",
-  "license": "GPLv3",
   "devDependencies": {
-    "babel-eslint": "^8.2.3",
-    "eslint": "^4.19.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.12.0",
-    "eslint-plugin-node": "^6.0.1",
-    "eslint-plugin-promise": "^3.8.0",
-    "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "node-sass": "^4.9.0",
-    "poi": "9.6.13",
-    "poi-preset-eslint": "^9.1.1",
-    "poi-preset-uglifyjs": "^1.0.1",
-    "poi-preset-yaml": "^1.0.1",
-    "prettier": "^1.13.4",
-    "sass-loader": "^7.0.2",
-    "vue-template-compiler": "^2.5.16"
+    "@vue/cli-plugin-babel": "^3.5.1",
+    "@vue/cli-plugin-eslint": "^3.5.1",
+    "@vue/cli-service": "^3.5.1",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/eslint-config-standard": "^4.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.15.1",
+    "eslint-plugin-vue": "^5.2.2",
+    "fibers": "^3.1.1",
+    "lint-staged": "^8.1.5",
+    "sass": "^1.17.2",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.6.8"
   },
   "dependencies": {
     "debug": "^3.1.0",
@@ -41,5 +33,8 @@
     "vuefire": "^1.4.5",
     "vuex": "^3.0.1",
     "vuex-persistedstate": "^2.5.4"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   }
 }

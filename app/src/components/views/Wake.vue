@@ -3,30 +3,34 @@
     <Rough
       :width="width"
       :height="height"
-      :render="rc => rc.rectangle(0,0,width,height, { 
-        stroke: 'transparent', 
-        fill: '#1a1814',         
-        fillWeight: 10,
-        hachureGap: 40,
-        hachureAngle: -5,
-      })"
+      :render="
+        rc =>
+          rc.rectangle(0, 0, width, height, {
+            stroke: 'transparent',
+            fill: '#1a1814',
+            fillWeight: 10,
+            hachureGap: 40,
+            hachureAngle: -5,
+          })
+      "
       class="layer"
     />
     <Rough
       :width="width"
       :height="height"
-      :render="rc => rc.path(path, { 
-        stroke: 'white', 
-        strokeWidth:2
-      })"
+      :render="
+        rc =>
+          rc.path(path, {
+            stroke: 'white',
+            strokeWidth: 2,
+          })
+      "
       class="layer"
     />
-    <Close @click.native="hide"/>
+    <Close @click.native="hide" />
 
-    <Message :person="waker"/>
-    <GlobalEvents
-      @keyup.escape="hide"
-    />
+    <Message :person="waker" />
+    <GlobalEvents @keyup.escape="hide" />
   </div>
 </template>
 

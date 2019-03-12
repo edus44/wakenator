@@ -2,14 +2,14 @@
   <div class="tray">
     <Rough
       ref="bg"
-      :width="400" 
-      :height="400" 
-      :render="rc => rc.rectangle(5, 5, 390, 390, { stroke: 'white' })" 
+      :width="400"
+      :height="400"
+      :render="rc => rc.rectangle(5, 5, 390, 390, { stroke: 'white' })"
       class="bg"
     />
     <div ref="content" class="content">
-      <Home v-show="view=='home'"/> 
-      <Config v-if="view=='config'"/> 
+      <Home v-show="view == 'home'" />
+      <Config v-if="view == 'config'" />
     </div>
   </div>
 </template>

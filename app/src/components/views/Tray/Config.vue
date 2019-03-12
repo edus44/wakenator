@@ -1,25 +1,27 @@
 <template>
   <div class="config">
-    <Back @click.native="goBack"/>
+    <Back @click.native="goBack" />
     <BaseInput
       ref="name"
+      v-model.trim="name"
       :prepend="'@'"
       :placeholder="'like... Bob'"
-      v-model.trim="name"
       label="your name"
     />
     <BaseInput
       ref="channel"
+      v-model.trim="channel"
       :prepend="'#'"
       :placeholder="'like... gigigo'"
-      v-model.trim="channel"
       :value="channel"
       label="people channel"
-      @input="v=>channel=cleanChannel(v)"
+      @input="v => (channel = cleanChannel(v))"
     />
     <button class="back" @click="goBack">Back</button>
     <footer>
-      <a @click="openURL('https://github.com/edus44/wakenator/releases/latest')">Wakenator v{{ DESKTOP_VERSION }}</a>
+      <a @click="openURL('https://github.com/edus44/wakenator/releases/latest')">
+        Wakenator v{{ DESKTOP_VERSION }}
+      </a>
       &bull;
       <a @click="close">Close app</a>
     </footer>
@@ -38,7 +40,7 @@ export default {
   data: () => ({
     channel: '',
     name: '',
-    DESKTOP_VERSION: process.env.DESKTOP_VERSION,
+    DESKTOP_VERSION: process.env.VUE_APP_DESKTOP_VERSION,
   }),
   watch: {
     channel: debounce(function() {
