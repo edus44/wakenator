@@ -4,7 +4,7 @@
       {{ status }}
     </div>
     <template v-else>
-      <Search @click.native="startSearching()" />
+      <Search :active="searching" @click.native="toggleSearching" />
       <div v-if="searching" class="search">
         <BaseInput ref="search" v-model="query" :prepend="''" light :placeholder="'find someone'" />
       </div>
@@ -33,6 +33,9 @@
     <GlobalEvents @keydown.down="moveDir(1)" />
     <GlobalEvents @keydown.up="moveDir(-1)" />
     <GlobalEvents @keydown.enter="select" />
+    <GlobalEvents @keydown.escape="stopSearching" />
+    <GlobalEvents @keydown.ctrl.f="toggleSearching" />
+    <GlobalEvents @keydown.meta.f="toggleSearching" />
   </div>
 </template>
 
@@ -49,16 +52,12 @@ import GlobalEvents from 'vue-global-events'
 
 export default {
   components: { Person, Rough, BaseInput, Search, GlobalEvents },
-
-  directives: {
-    scrollChild,
-  },
   data: () => ({
     users: null,
     searching: false,
     query: '',
     isKey: false,
-    selected: 0,
+    selected: -1,
   }),
   computed: {
     ...mapState('user', ['uid', 'channel', 'connected']),
@@ -114,19 +113,33 @@ export default {
     },
     query() {
       this.selected = 0
+      this.isKey = true
+      this.updateScroll()
+    },
+    selected() {
+      this.updateScroll()
     },
   },
   methods: {
-    startSearching() {
+    toggleSearching(e) {
       if (this.searching) {
-        this.searching = false
-        this.query = ''
+        this.stopSearching(e)
       } else {
-        this.searching = true
-        this.$nextTick(() => {
-          this.$refs.search.focus()
-        })
+        this.startSearching(e)
       }
+    },
+    startSearching(e) {
+      this.searching = true
+      this.isKey = true
+      this.selected = 0
+      this.$nextTick(() => {
+        this.$refs.search.focus()
+      })
+    },
+    stopSearching(e) {
+      this.searching = false
+      this.query = ''
+      this.selected = -1
     },
     moveDir(dir) {
       this.isKey = true
@@ -139,6 +152,9 @@ export default {
     select() {
       this.$refs['person' + this.selected][0].wake()
       this.selected = false
+    },
+    updateScroll() {
+      if (this.isKey) setTimeout(() => scrollChild(this.selected))
     },
   },
 }

@@ -1,34 +1,38 @@
-export default {
-  update(el, binding) {
-    if (!binding.value.enabled) return
+export default function(idx) {
+  if (idx === -1) return
 
-    // Child index
-    const idx = Math.max(0, binding.value.index)
+  // Find elements
+  const el = document.querySelector('.tray .content')
+  const person = document.querySelectorAll('.person')[idx]
 
-    // Get parent and child bounding info
-    const parent = el.getBoundingClientRect()
-    const child = el.children[idx].getBoundingClientRect()
+  if (idx === 0) {
+    el.scrollTop = 0
+    return
+  }
 
-    // Calc parent top and bottom limits
-    const parentTop = el.scrollTop
-    const parentBottom = parentTop + parent.height
+  // Get parent and child bounding info
+  const parent = el.getBoundingClientRect()
+  const child = person.getBoundingClientRect()
 
-    // Calc child top and bottom limits
-    let childTop = child.top - parent.top + parentTop
-    let childBottom = childTop + child.height
+  // Calc parent top and bottom limits
+  const parentTop = el.scrollTop
+  const parentBottom = parentTop + parent.height
 
-    // Apply offsets
-    childTop -= 60
-    childBottom += 60
+  // Calc child top and bottom limits
+  let childTop = child.top - parent.top + parentTop
+  let childBottom = childTop + child.height
 
-    // Scroll top
-    if (childTop < parentTop) {
-      el.scrollTop = childTop
-    }
+  // Apply offsets
+  childTop -= 60
+  childBottom += 60
 
-    // Scroll bottom
-    else if (childBottom > parentBottom) {
-      el.scrollTop = childBottom - parent.height
-    }
-  },
+  // Scroll top
+  if (childTop < parentTop) {
+    el.scrollTop = childTop
+  }
+
+  // Scroll bottom
+  else if (childBottom > parentBottom) {
+    el.scrollTop = childBottom - parent.height
+  }
 }

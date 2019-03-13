@@ -82,6 +82,9 @@ export default {
   &.light {
     input {
       color: $black;
+      &::placeholder {
+        color: #ddd;
+      }
     }
   }
 
