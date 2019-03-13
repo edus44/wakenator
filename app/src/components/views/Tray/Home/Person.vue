@@ -1,16 +1,16 @@
 <template>
   <div
-    :class="{ hovered, waking }"
+    :class="{ selected, waking }"
     class="person"
-    @mouseover="!waking ? (hovered = true) : null"
-    @mouseleave="hovered = false"
+    @mouseover="!waking ? setSelected(true) : null"
+    @mouseleave="setSelected(false)"
     @click="wake"
   >
     <div class="name">{{ person.name }}</div>
     <div class="host">{{ person.user }}@{{ person.host }}</div>
 
     <Rough
-      v-if="hovered"
+      v-if="selected"
       :width="372"
       :height="50"
       :interval="200"
@@ -40,9 +40,12 @@ export default {
       type: Object,
       required: true,
     },
+    selected: {
+      type: Boolean,
+      required: true,
+    },
   },
   data: () => ({
-    hovered: false,
     waking: false,
   }),
   methods: {
@@ -50,9 +53,12 @@ export default {
     wake() {
       if (this.waking) return
       this.waking = true
-      this.hovered = false
+      this.setSelected(false)
       this.wakePerson(this.person)
       setTimeout(() => (this.waking = false), 4000)
+    },
+    setSelected(selected) {
+      this.$emit('update', selected)
     },
   },
 }
@@ -66,7 +72,7 @@ export default {
   margin: 4px 0;
   position: relative;
 
-  &.hovered {
+  &.selected {
     font-weight: bold;
     cursor: pointer;
   }

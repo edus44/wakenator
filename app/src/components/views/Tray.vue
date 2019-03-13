@@ -34,7 +34,7 @@ export default {
     },
   },
   mounted() {
-    this.ps = new PerfectScrollbar(this.$refs.content, {})
+    this.ps = new PerfectScrollbar(this.$refs.content, { suppressScrollX: true })
     this.$root.$on('refresh-scrollbar', () => this.refreshScrollbar())
     if (!this.validConfig) {
       this.$store.commit('root/changeView', 'config')
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     refreshScrollbar() {
-      setTimeout(() => this.ps.update())
+      setTimeout(() => this.ps.update(), 400)
     },
   },
 }

@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ focused }" class="base-input">
+  <div :class="{ focused, light }" class="base-input">
     <label>{{ label }}</label>
     <span class="prepend">{{ prepend }}</span>
     <input
@@ -43,6 +43,10 @@ export default {
       type: String,
       default: '',
     },
+    light: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => ({
     focused: false,
@@ -54,7 +58,8 @@ export default {
   },
   methods: {
     renderLine(rc) {
-      const stroke = this.focused ? '#df4418' : 'white'
+      const stroke = this.light ? '#1d1b17' : this.focused ? '#df4418' : 'white'
+
       rc.line(10, 5, 240, 5, { stroke, roughness: 1 })
     },
     focus() {
@@ -73,6 +78,11 @@ export default {
 
   &.focused {
     color: $red;
+  }
+  &.light {
+    input {
+      color: $black;
+    }
   }
 
   label {

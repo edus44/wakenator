@@ -5,19 +5,20 @@
     </div>
     <template v-else>
       <Search @click.native="startSearching()" />
+      <div v-if="searching" class="search">
+        <BaseInput ref="search" v-model="query" :prepend="''" light :placeholder="'find someone'" />
+      </div>
       <transition-group name="list">
-        <BaseInput
-          v-if="searching"
-          key="_search"
-          ref="search"
-          v-model="query"
-          class="search"
-          :prepend="''"
-          :placeholder="'find someone'"
-        />
+        <div v-if="searching" key="_search" class="search__spacer" />
         <div v-if="!filteredPeople.length" key="_status" class="status">No luck</div>
         <template v-for="(person, idx) in filteredPeople">
-          <Person :key="person.uid" :person="person" />
+          <Person
+            :ref="'person' + idx"
+            :key="person.uid"
+            :person="person"
+            :selected="selected === idx"
+            @update="value => moveTo(value ? idx : -1)"
+          />
           <Rough
             v-if="idx < filteredPeople.length - 1"
             :key="person.uid + 'line'"
@@ -29,6 +30,9 @@
         </template>
       </transition-group>
     </template>
+    <GlobalEvents @keydown.down="moveDir(1)" />
+    <GlobalEvents @keydown.up="moveDir(-1)" />
+    <GlobalEvents @keydown.enter="select" />
   </div>
 </template>
 
@@ -40,13 +44,21 @@ import Search from './Search'
 
 import { mapGetters, mapState } from 'vuex'
 import finder from '@/lib/finder'
+import scrollChild from '@/lib/scrollChildDirective'
+import GlobalEvents from 'vue-global-events'
 
 export default {
-  components: { Person, Rough, BaseInput, Search },
+  components: { Person, Rough, BaseInput, Search, GlobalEvents },
+
+  directives: {
+    scrollChild,
+  },
   data: () => ({
     users: null,
     searching: false,
     query: '',
+    isKey: false,
+    selected: 0,
   }),
   computed: {
     ...mapState('user', ['uid', 'channel', 'connected']),
@@ -65,7 +77,7 @@ export default {
       }
     },
     people() {
-      const people =
+      let people =
         this.users &&
         Object.keys(this.users)
           .filter(uid => uid !== '.key' && uid !== this.uid && uid)
@@ -73,6 +85,14 @@ export default {
             uid,
             ...this.users[uid],
           }))
+      people = Array(25)
+        .fill(0)
+        .map((v, x) => ({
+          uid: x,
+          name: `user${x}`,
+          user: (Math.random() * 10000).toString(36),
+          host: `host${x}`,
+        }))
       finder.load(people)
 
       return people
@@ -89,21 +109,36 @@ export default {
         this.$bindAsObject('users', ref)
       },
     },
-    users() {
+    filteredPeople() {
       this.$root.$emit('refresh-scrollbar')
+    },
+    query() {
+      this.selected = 0
     },
   },
   methods: {
     startSearching() {
       if (this.searching) {
         this.searching = false
-        this.query = false
+        this.query = ''
       } else {
         this.searching = true
         this.$nextTick(() => {
           this.$refs.search.focus()
         })
       }
+    },
+    moveDir(dir) {
+      this.isKey = true
+      this.selected = Math.min(Math.max(this.selected + dir, 0), this.filteredPeople.length - 1)
+    },
+    moveTo(index) {
+      this.isKey = false
+      this.selected = index
+    },
+    select() {
+      this.$refs['person' + this.selected][0].wake()
+      this.selected = false
     },
   },
 }
@@ -126,6 +161,21 @@ export default {
     width: 100%;
     position: absolute;
     text-align: center;
+  }
+  .search {
+    position: fixed;
+    left: 74px;
+    width: 280px;
+    height: 64px;
+    padding-top: 6px;
+    z-index: 99;
+    top: 29px;
+    background-color: $red;
+    border-radius: 100px;
+  }
+  .search__spacer {
+    height: 100px;
+    width: 100%;
   }
 }
 </style>
