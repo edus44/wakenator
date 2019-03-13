@@ -12,7 +12,7 @@ const actions = {
   async checkLatestVersion({ commit }) {
     const latestVersion = await getLatestVersion()
     const showUpgrade = cmp(latestVersion, currentVersion) === 1
-    commit('setShowUpgrade', !showUpgrade)
+    commit('setShowUpgrade', showUpgrade)
   },
 }
 
