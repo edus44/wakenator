@@ -5,6 +5,7 @@ const { version } = require('../package')
 const { loadDevTool, getIndex, getAsset, getLatestVersion, getIp } = require('./utils')
 const debug = require('debug')('wk:tray')
 const { ipcMain, shell } = require('electron')
+debug('version', version)
 module.exports = { init }
 
 function init() {
@@ -85,7 +86,8 @@ async function menubarReady(menubar) {
 
   // Latest version RPC
   ipcMain.on('get-latest-version', async () => {
-    debug('gotit')
-    win.webContents.send('latest-version', await getLatestVersion())
+    const latestVersion = await getLatestVersion()
+    debug('latest-version', latestVersion)
+    win.webContents.send('latest-version', latestVersion)
   })
 }
