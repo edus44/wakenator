@@ -31,3 +31,16 @@ button,
 input {
   font-family: 'Gloria Hallelujah', cursive;
 }
+
+.list-move {
+  transition: transform 0.3s;
+}
+
+.list-enter-active,
+.list-leave-active {
+  transition: opacity 0.3s;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+}

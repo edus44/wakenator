@@ -3,16 +3,31 @@
     <div v-if="status" class="status">
       {{ status }}
     </div>
-    <template v-for="(person, idx) in people" v-else>
-      <Person :key="person.uid" :person="person" />
-      <Rough
-        v-if="idx < people.length - 1"
-        :key="person.uid + 'line'"
-        :width="200"
-        :height="10"
-        :render="rc => rc.line(10, 5, 190, 5, { stroke: 'white', roughness: 1 })"
-        class="line"
-      />
+    <template v-else>
+      <Search @click.native="startSearching()" />
+      <transition-group name="list">
+        <BaseInput
+          v-if="searching"
+          key="_search"
+          ref="search"
+          v-model="query"
+          class="search"
+          :prepend="''"
+          :placeholder="'find someone'"
+        />
+        <div v-if="!filteredPeople.length" key="_status" class="status">No luck</div>
+        <template v-for="(person, idx) in filteredPeople">
+          <Person :key="person.uid" :person="person" />
+          <Rough
+            v-if="idx < filteredPeople.length - 1"
+            :key="person.uid + 'line'"
+            :width="200"
+            :height="10"
+            :render="rc => rc.line(10, 5, 190, 5, { stroke: 'white', roughness: 1 })"
+            class="line"
+          />
+        </template>
+      </transition-group>
     </template>
   </div>
 </template>
@@ -20,11 +35,18 @@
 <script>
 import Person from './Person'
 import Rough from '@/components/ui/Rough'
+import BaseInput from '@/components/ui/BaseInput'
+import Search from './Search'
+
 import { mapGetters, mapState } from 'vuex'
+import finder from '@/lib/finder'
+
 export default {
-  components: { Person, Rough },
+  components: { Person, Rough, BaseInput, Search },
   data: () => ({
     users: null,
+    searching: false,
+    query: '',
   }),
   computed: {
     ...mapState('user', ['uid', 'channel', 'connected']),
@@ -35,8 +57,15 @@ export default {
       if (this.people && !this.people.length) return `Nobody at ${this.channel} channel`
       return ''
     },
+    filteredPeople() {
+      if (this.query) {
+        return finder.find(this.query)
+      } else {
+        return this.people
+      }
+    },
     people() {
-      return (
+      const people =
         this.users &&
         Object.keys(this.users)
           .filter(uid => uid !== '.key' && uid !== this.uid && uid)
@@ -44,7 +73,9 @@ export default {
             uid,
             ...this.users[uid],
           }))
-      )
+      finder.load(people)
+
+      return people
     },
   },
   watch: {
@@ -62,6 +93,19 @@ export default {
       this.$root.$emit('refresh-scrollbar')
     },
   },
+  methods: {
+    startSearching() {
+      if (this.searching) {
+        this.searching = false
+        this.query = false
+      } else {
+        this.searching = true
+        this.$nextTick(() => {
+          this.$refs.search.focus()
+        })
+      }
+    },
+  },
 }
 </script>
 
@@ -74,10 +118,14 @@ export default {
     display: block;
     margin: 0 auto;
   }
-  > .status {
+  .status {
     font-size: 20px;
     color: #555;
-    margin-top: 100px;
+    left: 0;
+    top: 120px;
+    width: 100%;
+    position: absolute;
+    text-align: center;
   }
 }
 </style>

@@ -10,6 +10,7 @@
   "dependencies": {
     "debug": "^4.1.1",
     "firebase": "^5.8.6",
+    "fuse.js": "^3.4.4",
     "lodash": "^4.17.11",
     "perfect-scrollbar": "^1.4.0",
     "roughjs": "^3.0.0",
