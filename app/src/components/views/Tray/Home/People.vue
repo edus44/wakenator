@@ -83,7 +83,7 @@ export default {
       }
     },
     people() {
-      let people =
+      const people =
         this.users &&
         Object.keys(this.users)
           .filter(uid => uid !== '.key' && uid !== this.uid && uid)
@@ -91,14 +91,6 @@ export default {
             uid,
             ...this.users[uid],
           }))
-      people = Array(25)
-        .fill(0)
-        .map((v, x) => ({
-          uid: x,
-          name: `user${x}`,
-          user: (Math.random() * 10000).toString(36),
-          host: `host${x}`,
-        }))
       finder.load(people)
 
       return people
@@ -145,6 +137,9 @@ export default {
       this.$nextTick(() => {
         this.$refs.search.focus()
       })
+      setTimeout(() => {
+        this.selected = -1
+      }, 10)
     },
     stopSearching(e) {
       this.searching = false
