@@ -9,6 +9,11 @@
             ".validate": "newData.child('name').isString()"
           }
         },
+        "meta": {
+          "$uid": {
+            ".write": "$uid === auth.uid"
+          }
+        },
         "wakes": {
           "$uid": {
             ".read": "$uid === auth.uid",

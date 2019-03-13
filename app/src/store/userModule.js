@@ -27,8 +27,12 @@ const actions = {
       const connected = snapshot.val()
       debug('on-connected', connected)
       commit('setConnected', connected)
-      user.enter()
+      if (connected) user.enter()
     })
+  },
+  async reset() {
+    await database.goOffline()
+    await database.goOnline()
   },
   async changeChannel({ commit, state }, channel) {
     if (channel === state.channel) return

@@ -19,9 +19,14 @@ export default {
   created() {
     this.$store.dispatch('user/init')
     this.$store.dispatch('root/checkLatestVersion')
+    setInterval(this.tick, 60 * 60 * 1000)
   },
   methods: {
     minimize,
+    tick() {
+      this.$store.dispatch('user/reset')
+      this.$store.dispatch('root/checkLatestVersion')
+    },
   },
 }
 </script>
