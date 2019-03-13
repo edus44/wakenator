@@ -1,58 +1,92 @@
 <template>
-  <BaseIcon
-    ref="icon"
-    :width="60"
-    :height="50"
-    :hover-interval="150"
-    :render="renderSearch"
-    class="search-icon"
-    :class="{ alt }"
-  />
+  <div>
+    <SearchIcon :alt="searching" @click.native="toggleSearching" />
+    <transition name="fade" appear>
+      <div v-if="searching">
+        <div class="search__box">
+          <BaseInput
+            ref="search"
+            :value="query"
+            light
+            small
+            :placeholder="'find someone'"
+            @input="v => $emit('update:query', v)"
+          />
+        </div>
+        <div class="search__spacer" />
+      </div>
+    </transition>
+
+    <GlobalEvents @keyup.escape="stopSearching" />
+    <GlobalEvents @keydown.ctrl.f="toggleSearching" />
+    <GlobalEvents @keydown.meta.f="toggleSearching" />
+  </div>
 </template>
 
 <script>
-import BaseIcon from '@/components/ui/BaseIcon'
+import BaseInput from '@/components/ui/BaseInput'
+import SearchIcon from './SearchIcon'
+
+import GlobalEvents from 'vue-global-events'
 
 export default {
-  components: { BaseIcon },
+  components: { BaseInput, SearchIcon, GlobalEvents },
   props: {
-    alt: { type: Boolean, required: true },
+    query: { type: String, required: true },
+    selected: { type: Number, required: true },
+    isKey: { type: Boolean, required: true },
   },
+  data: () => ({
+    searching: false,
+  }),
   watch: {
-    alt() {
-      this.$refs.icon.refresh()
+    searching(v) {
+      this.$store.commit('root/setSearching', v)
     },
   },
   methods: {
-    renderSearch(rc, hovered) {
-      if (this.alt) {
-        const stroke = hovered ? '#1d1b17' : 'white'
-        rc.line(10, 10, 35, 35, { stroke })
-        rc.line(35, 10, 10, 35, { stroke })
+    toggleSearching(e) {
+      if (this.searching) {
+        this.stopSearching(e)
       } else {
-        const stroke = hovered ? '#df4418' : 'white'
-        rc.circle(23, 21, 15, { stroke })
-        rc.line(29, 26, 39, 36, { stroke })
+        this.startSearching(e)
       }
+    },
+    startSearching(e) {
+      this.searching = true
+      this.$emit('update:isKey', true)
+      this.$emit('update:selected', 0)
+      this.$nextTick(() => {
+        this.$refs.search.focus()
+      })
+      setTimeout(() => {
+        this.$emit('update:selected', -1)
+      }, 10)
+    },
+    stopSearching(e) {
+      this.searching = false
+      this.$emit('update:query', '')
+      this.$emit('update:selected', -1)
     },
   },
 }
 </script>
 
 <style lang="scss">
-.search-icon {
+@import '~@/assets/style/constants.scss';
+
+.search__box {
   position: fixed;
-  top: 60px;
-  left: 10px;
-  z-index: 99;
-  cursor: pointer;
-  canvas {
-    display: block;
-  }
-  transition: 0.3s;
-  &.alt {
-    top: 38px;
-    left: 282px;
-  }
+  left: 90px;
+  height: 64px;
+  padding: 6px 50px 0 10px;
+  z-index: 98;
+  top: 29px;
+  background-color: $red;
+  border-radius: 20px;
+}
+.search__spacer {
+  height: 100px;
+  width: 100%;
 }
 </style>

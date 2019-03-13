@@ -43,14 +43,18 @@ export default {
 
 .upgrade {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 40px;
+  bottom: 20px;
+  left: 50%;
+  margin-left: -180px;
   z-index: 200;
   text-align: center;
+  background-color: $red;
+  border-radius: 10px;
+  padding: 2px 0;
+  width: 360px;
+  color: $black;
   a {
-    color: $red;
+    color: white;
     cursor: pointer;
     &:hover {
       text-decoration: underline;

@@ -4,19 +4,8 @@
       {{ status }}
     </div>
     <template v-else>
-      <Search :alt="searching" @click.native="toggleSearching" />
-      <div v-if="searching" class="search">
-        <BaseInput
-          ref="search"
-          v-model="query"
-          :prepend="''"
-          light
-          small
-          :placeholder="'find someone'"
-        />
-      </div>
+      <Search :query.sync="query" :selected.sync="selected" :is-key.sync="isKey" />
       <transition-group name="list">
-        <div v-if="searching" key="_search" class="search__spacer" />
         <div v-if="!filteredPeople.length" key="_status" class="status">No luck</div>
         <template v-for="(person, idx) in filteredPeople">
           <Person
@@ -40,16 +29,12 @@
     <GlobalEvents @keydown.down="moveDir(1)" />
     <GlobalEvents @keydown.up="moveDir(-1)" />
     <GlobalEvents @keydown.enter="select" />
-    <GlobalEvents @keyup.escape="stopSearching" />
-    <GlobalEvents @keydown.ctrl.f="toggleSearching" />
-    <GlobalEvents @keydown.meta.f="toggleSearching" />
   </div>
 </template>
 
 <script>
 import Person from './Person'
 import Rough from '@/components/ui/Rough'
-import BaseInput from '@/components/ui/BaseInput'
 import Search from './Search'
 
 import { mapGetters, mapState } from 'vuex'
@@ -58,10 +43,9 @@ import scrollChild from '@/lib/scrollChildDirective'
 import GlobalEvents from 'vue-global-events'
 
 export default {
-  components: { Person, Rough, BaseInput, Search, GlobalEvents },
+  components: { Person, Rough, Search, GlobalEvents },
   data: () => ({
     users: null,
-    searching: false,
     query: '',
     isKey: false,
     selected: -1,
@@ -118,34 +102,8 @@ export default {
     selected() {
       this.updateScroll()
     },
-    searching(v) {
-      this.$store.commit('root/setSearching', v)
-    },
   },
   methods: {
-    toggleSearching(e) {
-      if (this.searching) {
-        this.stopSearching(e)
-      } else {
-        this.startSearching(e)
-      }
-    },
-    startSearching(e) {
-      this.searching = true
-      this.isKey = true
-      this.selected = 0
-      this.$nextTick(() => {
-        this.$refs.search.focus()
-      })
-      setTimeout(() => {
-        this.selected = -1
-      }, 10)
-    },
-    stopSearching(e) {
-      this.searching = false
-      this.query = ''
-      this.selected = -1
-    },
     moveDir(dir) {
       this.isKey = true
       this.selected = Math.min(Math.max(this.selected + dir, 0), this.filteredPeople.length - 1)
@@ -156,7 +114,7 @@ export default {
     },
     select() {
       this.$refs['person' + this.selected][0].wake()
-      this.selected = false
+      this.selected = -1
     },
     updateScroll() {
       if (this.isKey) setTimeout(() => scrollChild(this.selected))
@@ -182,20 +140,6 @@ export default {
     width: 100%;
     position: absolute;
     text-align: center;
-  }
-  .search {
-    position: fixed;
-    left: 90px;
-    height: 64px;
-    padding: 6px 50px 0 10px;
-    z-index: 98;
-    top: 29px;
-    background-color: $red;
-    border-radius: 20px;
-  }
-  .search__spacer {
-    height: 100px;
-    width: 100%;
   }
 }
 </style>
