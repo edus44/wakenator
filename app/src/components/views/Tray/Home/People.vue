@@ -4,9 +4,16 @@
       {{ status }}
     </div>
     <template v-else>
-      <Search :active="searching" @click.native="toggleSearching" />
+      <Search :alt="searching" @click.native="toggleSearching" />
       <div v-if="searching" class="search">
-        <BaseInput ref="search" v-model="query" :prepend="''" light :placeholder="'find someone'" />
+        <BaseInput
+          ref="search"
+          v-model="query"
+          :prepend="''"
+          light
+          small
+          :placeholder="'find someone'"
+        />
       </div>
       <transition-group name="list">
         <div v-if="searching" key="_search" class="search__spacer" />
@@ -33,7 +40,7 @@
     <GlobalEvents @keydown.down="moveDir(1)" />
     <GlobalEvents @keydown.up="moveDir(-1)" />
     <GlobalEvents @keydown.enter="select" />
-    <GlobalEvents @keydown.escape="stopSearching" />
+    <GlobalEvents @keyup.escape="stopSearching" />
     <GlobalEvents @keydown.ctrl.f="toggleSearching" />
     <GlobalEvents @keydown.meta.f="toggleSearching" />
   </div>
@@ -119,6 +126,9 @@ export default {
     selected() {
       this.updateScroll()
     },
+    searching(v) {
+      this.$store.commit('root/setSearching', v)
+    },
   },
   methods: {
     toggleSearching(e) {
@@ -180,14 +190,13 @@ export default {
   }
   .search {
     position: fixed;
-    left: 74px;
-    width: 280px;
+    left: 90px;
     height: 64px;
-    padding-top: 6px;
-    z-index: 99;
+    padding: 6px 50px 0 10px;
+    z-index: 98;
     top: 29px;
     background-color: $red;
-    border-radius: 100px;
+    border-radius: 20px;
   }
   .search__spacer {
     height: 100px;

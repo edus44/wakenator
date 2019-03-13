@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ focused, light }" class="base-input">
+  <div :class="{ focused, light, small }" class="base-input">
     <label>{{ label }}</label>
     <span class="prepend">{{ prepend }}</span>
     <input
@@ -12,7 +12,7 @@
     />
     <Rough
       ref="line"
-      :width="250"
+      :width="small ? 180 : 250"
       :height="10"
       :interval="focused ? 200 : 0"
       :render="renderLine"
@@ -44,6 +44,10 @@ export default {
       default: '',
     },
     light: {
+      type: Boolean,
+      default: false,
+    },
+    small: {
       type: Boolean,
       default: false,
     },
@@ -85,6 +89,13 @@ export default {
       &::placeholder {
         color: #ddd;
       }
+    }
+  }
+  &.small {
+    font-size: 14px;
+    input {
+      width: 150px;
+      font-size: 18px;
     }
   }
 

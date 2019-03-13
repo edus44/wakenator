@@ -1,6 +1,6 @@
 <template>
   <div @mouseenter="hovered = true" @mouseleave="hovered = false">
-    <Rough v-bind="$attrs" :interval="hovered ? 150 : 0" :render="proxyRender" />
+    <Rough ref="rough" v-bind="$attrs" :interval="hovered ? 150 : 0" :render="proxyRender" />
   </div>
 </template>
 
@@ -25,6 +25,9 @@ export default {
   methods: {
     proxyRender(rc) {
       return this.render(rc, this.hovered)
+    },
+    refresh() {
+      this.$refs.rough.refresh()
     },
   },
 }

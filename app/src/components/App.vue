@@ -3,7 +3,7 @@
     <Upgrade />
     <Tray />
     <Wake />
-    <GlobalEvents @keyup.escape="minimize" />
+    <GlobalEvents @keydown.escape="minimize" />
   </div>
 </template>
 
@@ -22,7 +22,11 @@ export default {
     setInterval(this.tick, 60 * 60 * 1000)
   },
   methods: {
-    minimize,
+    minimize() {
+      if (!this.$store.state.root.searching) {
+        minimize()
+      }
+    },
     tick() {
       this.$store.dispatch('user/reset')
       this.$store.dispatch('root/checkLatestVersion')

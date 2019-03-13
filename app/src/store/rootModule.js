@@ -6,6 +6,7 @@ const currentVersion = process.env.VUE_APP_DESKTOP_VERSION
 const state = {
   view: 'home',
   showUpgrade: false,
+  searching: false,
 }
 
 const actions = {
@@ -22,6 +23,9 @@ const mutations = {
   },
   setShowUpgrade(state, showUpgrade) {
     state.showUpgrade = showUpgrade
+  },
+  setSearching(state, searching) {
+    state.searching = searching
   },
 }
 
