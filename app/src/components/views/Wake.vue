@@ -30,7 +30,6 @@
     <Close @click.native="hide" />
 
     <Message :person="waker" />
-    <GlobalEvents @keyup.escape="hide" />
   </div>
 </template>
 
@@ -38,14 +37,13 @@
 import Rough from '@/components/ui/Rough'
 import Close from './Wake/Close'
 import Message from './Wake/Message'
-import GlobalEvents from 'vue-global-events'
 import { maximize, minimize } from '@/lib/win'
 import { mapGetters } from 'vuex'
 
 const ipcRenderer = window.require && window.require('electron').ipcRenderer
 
 export default {
-  components: { Rough, Close, Message, GlobalEvents },
+  components: { Rough, Close, Message },
   data: () => ({
     width: 0,
     height: 0,

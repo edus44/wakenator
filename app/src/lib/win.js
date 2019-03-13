@@ -4,6 +4,18 @@ function send(...args) {
   ipcRenderer && ipcRenderer.send(...args)
 }
 
+function rpc(evName) {
+  if (!ipcRenderer) return ''
+  return new Promise(resolve => {
+    const timer = setTimeout(() => {}, 2000)
+    ipcRenderer.once(evName, (e, data) => {
+      clearTimeout(timer)
+      resolve(data)
+    })
+    ipcRenderer.send('get-' + evName)
+  })
+}
+
 export function maximize() {
   send('maximize')
 }
@@ -16,16 +28,9 @@ export function close() {
 export function openURL(url) {
   send('open-url', url)
 }
-export function getIp(url) {
-  if (!ipcRenderer) return ''
-  return new Promise(resolve => {
-    ipcRenderer.send('get-public-ip')
-    const timer = setTimeout(() => {
-      resolve('')
-    }, 2000)
-    ipcRenderer.once('public-ip', (e, ip) => {
-      clearTimeout(timer)
-      resolve(ip)
-    })
-  })
+export function getIp() {
+  return rpc('public-ip')
+}
+export function getLatestVersion() {
+  return rpc('latest-version')
 }

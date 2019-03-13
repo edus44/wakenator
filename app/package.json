@@ -13,6 +13,7 @@
     "lodash": "^4.17.11",
     "perfect-scrollbar": "^1.4.0",
     "roughjs": "^3.0.0",
+    "semver-compare": "^1.0.0",
     "vue": "^2.6.8",
     "vue-global-events": "^1.1.2",
     "vuefire": "^1.4.5",

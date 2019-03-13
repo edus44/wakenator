@@ -78,11 +78,14 @@ async function menubarReady(menubar) {
     shell.openExternal(url)
   })
 
-  setInterval(async () => {
-    win.webContents.send('latest-version', await getLatestVersion())
-  }, 5000)
-
-  ipcMain.on('get-public-ip', async e => {
+  // Public ip RPC
+  ipcMain.on('get-public-ip', async () => {
     win.webContents.send('public-ip', await getIp())
+  })
+
+  // Latest version RPC
+  ipcMain.on('get-latest-version', async () => {
+    debug('gotit')
+    win.webContents.send('latest-version', await getLatestVersion())
   })
 }
