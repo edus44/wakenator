@@ -3,10 +3,10 @@ import { getIp } from '@/lib/win'
 const debug = require('debug')('wk:channel')
 
 export default class User {
-  constructor(uid) {
+  constructor() {
     this.ref = null
     this.metaRef = null
-    this.uid = uid
+    this.uid = null
     this.name = ''
     this.channel = ''
   }
@@ -16,6 +16,9 @@ export default class User {
   async setName(name) {
     this.name = name.trim() || '-'
     return this.update()
+  }
+  async setUid(uid) {
+    this.uid = uid
   }
   getChannelRef() {
     return database.ref(`/channel/${this.channel}/list`)

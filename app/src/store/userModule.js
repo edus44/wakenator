@@ -17,8 +17,9 @@ const state = {
 
 const actions = {
   async init({ commit, state }) {
+    user = new User()
     const result = await auth.signInAnonymously()
-    user = new User(result.user.uid)
+    user.setUid(result.user.uid)
     await user.setName(state.name)
     await user.setChannel(state.channel)
     commit('setUid', result.user.uid)

@@ -7,7 +7,7 @@
       <Person :key="person.uid" :person="person" />
       <Rough
         v-if="idx < people.length - 1"
-        :key="person.name + 'line'"
+        :key="person.uid + 'line'"
         :width="200"
         :height="10"
         :render="rc => rc.line(10, 5, 190, 5, { stroke: 'white', roughness: 1 })"
@@ -39,7 +39,7 @@ export default {
       return (
         this.users &&
         Object.keys(this.users)
-          .filter(uid => uid !== '.key' && uid !== this.uid)
+          .filter(uid => uid !== '.key' && uid !== this.uid && uid)
           .map(uid => ({
             uid,
             ...this.users[uid],
