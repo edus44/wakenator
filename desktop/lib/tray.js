@@ -2,10 +2,9 @@
 
 const { Menubar } = require('./electron-menubar')
 const { version } = require('../package')
-const { loadDevTool, getIndex, getAsset } = require('./utils')
+const { loadDevTool, getIndex, getAsset, getLatestVersion, getIp } = require('./utils')
 const debug = require('debug')('wk:tray')
 const { ipcMain, shell } = require('electron')
-
 module.exports = { init }
 
 function init() {
@@ -75,7 +74,15 @@ async function menubarReady(menubar) {
     win.close()
   })
 
-  ipcMain.on('openURL', (e, url) => {
+  ipcMain.on('open-url', (e, url) => {
     shell.openExternal(url)
+  })
+
+  setInterval(async () => {
+    win.webContents.send('latest-version', await getLatestVersion())
+  }, 5000)
+
+  ipcMain.on('get-public-ip', async e => {
+    win.webContents.send('public-ip', await getIp())
   })
 }

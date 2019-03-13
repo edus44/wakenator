@@ -23,8 +23,10 @@
   "license": "GPLv3",
   "dependencies": {
     "auto-launch": "^5.0.5",
+    "axios": "^0.18.0",
     "debug": "^4.1.1",
-    "electron-menubar": "^1.0.2"
+    "electron-menubar": "^1.0.2",
+    "public-ip": "^3.0.0"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

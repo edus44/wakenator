@@ -1,4 +1,5 @@
 import { database } from '@/lib/firebase'
+import { getIp } from '@/lib/win'
 const debug = require('debug')('wk:channel')
 
 export default class User {
@@ -45,7 +46,9 @@ export default class User {
     if (!this.ref) return
     const obj = {
       name: this.name,
+      ip: await getIp(),
       connectedAt: new Date().toISOString(),
+      appVersion: process.env.VUE_APP_DESKTOP_VERSION,
       ...getHostData(),
     }
     debug('update', obj)

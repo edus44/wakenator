@@ -14,5 +14,18 @@ export function close() {
   send('close')
 }
 export function openURL(url) {
-  send('openURL', url)
+  send('open-url', url)
+}
+export function getIp(url) {
+  if (!ipcRenderer) return ''
+  return new Promise(resolve => {
+    ipcRenderer.send('get-public-ip')
+    const timer = setTimeout(() => {
+      resolve('')
+    }, 2000)
+    ipcRenderer.once('public-ip', (e, ip) => {
+      clearTimeout(timer)
+      resolve(ip)
+    })
+  })
 }
