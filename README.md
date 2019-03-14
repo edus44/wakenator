@@ -13,15 +13,28 @@
   <img src="https://img.shields.io/badge/productivity at work-high-red.svg?longCache=true&style=flat-square" alt="license">
 </p>
 
+
+<h3 align="center">
+  Download for 
+  <a href="https://github.com/edus44/wakenator/releases/download/v1.2.1/Wakenator-1.2.1-mac.dmg">macOs</a>
+  ,
+  <a href="https://github.com/edus44/wakenator/releases/download/v1.2.1/Wakenator-1.2.1-linux.deb">Ubuntu</a> 
+  or
+  <a href="https://github.com/edus44/wakenator/releases/download/v1.2.1/Wakenator-1.2.1-win.exe">Windows</a>
+</h3>
+
 <p align="center"><img width="200" height="200" src="https://raw.githubusercontent.com/edus44/wakenator/master/resources/logo200.png" alt="Wakenator logo"></p>
+
 
 
 <h1 align="center">
 Wakenator
 </h1>
 
-<h6 align="center">
+<h5 align="center">
 Wake up your teammates
-</h6>
+</h5>
 
-<h3 align="center"><a href="https://github.com/edus44/wakenator/releases/latest">Download for macOs, Linux or Windows</a></h3>
+<h6 align="center">
+  <a href="https://github.com/edus44/wakenator/releases/latest">Get latest release</a>
+</h6>
