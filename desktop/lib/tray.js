@@ -4,7 +4,7 @@ const { Menubar } = require('./electron-menubar')
 const { version } = require('../package')
 const { loadDevTool, getIndex, getAsset, getLatestVersion, getIp } = require('./utils')
 const debug = require('debug')('wk:tray')
-const { ipcMain, shell } = require('electron')
+const { ipcMain, shell, globalShortcut } = require('electron')
 debug('version', version)
 module.exports = { init }
 
@@ -90,4 +90,12 @@ async function menubarReady(menubar) {
     debug('latest-version', latestVersion)
     win.webContents.send('latest-version', latestVersion)
   })
+
+  const ret = globalShortcut.register('CommandOrControl+shift+alt+w', () => {
+    debug('global-shorcut', 'CommandOrControl+shift+alt+w is pressed')
+    menubar.show()
+  })
+  if (!ret) {
+    debug('global-shorcut', 'registration failed')
+  }
 }

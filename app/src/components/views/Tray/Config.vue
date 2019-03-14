@@ -18,7 +18,7 @@
         label="people channel"
         @input="v => (channel = cleanChannel(v))"
       />
-      <button class="back" type="submit">Back</button>
+      <button class="back" type="submit">OK</button>
     </form>
     <footer>
       <a @click="openURL('https://github.com/edus44/wakenator/releases/latest')">
@@ -89,8 +89,8 @@ export default {
   }
   > form .back {
     display: inline-block;
-    margin-top: 40px;
-    font-size: 20px;
+    margin-top: 20px;
+    font-size: 28px;
     cursor: pointer;
     background: none;
     border: none;
@@ -105,7 +105,7 @@ export default {
     font-weight: lighter;
     font-size: 12px;
     color: #666;
-    margin-top: 12px;
+    margin-top: 6px;
     a {
       color: #666;
       text-decoration: none;
