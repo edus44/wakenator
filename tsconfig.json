@@ -4,16 +4,13 @@
     "module": "NodeNext",
     "target": "ES2022",
 
-    "allowImportingTsExtensions": true,
     "noEmit": true,
-
-    "isolatedModules": true,
     "skipLibCheck": true,
 
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true
+
+    "allowJs": true,
+    "checkJs": true
   },
-  "include": ["src/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["src/*.js"]
 }

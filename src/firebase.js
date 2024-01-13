@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { ref, getDatabase, set, onDisconnect, remove } from 'firebase/database'
+import { ref, getDatabase, set, onDisconnect } from 'firebase/database'
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth'
 
 const app = initializeApp({

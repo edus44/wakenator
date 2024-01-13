@@ -2,16 +2,19 @@
   "name": "wakenator",
   "version": "2.0.0",
   "scripts": {
-    "ts": "tsc --noEmit",
+    "ts": "tsc",
     "pretty": "prettier --write packages",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint .",
+    "start": "electron .",
+    "dev": "nodemon --exec 'electron .'"
   },
+  "main": "src/main.js",
   "type": "module",
   "private": true,
   "dependencies": {
     "debug": "^4.3.4",
-    "firebase": "^10.7.1",
-    "tsx": "^4.7.0"
+    "electron": "^28.1.3",
+    "firebase": "^10.7.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.12",
@@ -26,8 +29,8 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.6.1",
     "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.2",
     "prettier": "^3.1.1",
-    "tsup": "^8.0.1",
     "typescript": "^5.3.3"
   },
   "prettier": {
