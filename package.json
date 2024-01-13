@@ -1,0 +1,42 @@
+{
+  "name": "wakenator",
+  "version": "2.0.0",
+  "scripts": {
+    "ts": "tsc --noEmit",
+    "pretty": "prettier --write packages",
+    "lint": "eslint . --ext .ts"
+  },
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "debug": "^4.3.4",
+    "firebase": "^10.7.1",
+    "tsx": "^4.7.0"
+  },
+  "devDependencies": {
+    "@types/debug": "^4.1.12",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^20.10.7",
+    "@typescript-eslint/eslint-plugin": "^6.18.0",
+    "@typescript-eslint/parser": "^6.18.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "prettier": "^3.1.1",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.3"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "quoteProps": "consistent",
+    "arrowParens": "avoid",
+    "htmlWhitespaceSensitivity": "ignore",
+    "trailingComma": "es5"
+  }
+}
