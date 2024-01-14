@@ -6,16 +6,15 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'standard',
-    'plugin:@typescript-eslint/eslint-recommended',
-    'plugin:@typescript-eslint/recommended',
+    'plugin:jsdoc/recommended-typescript-flavor',
     'prettier',
   ],
   rules: {
-    '@typescript-eslint/no-explicit-any': 0,
-    'lines-between-class-members': 0,
+    // 'eqeqeq': 0,
+    // 'no-console': 1,
+    // 'no-debugger': 1,
 
-    'eqeqeq': 0,
-    'no-console': 1,
-    'no-debugger': 1,
+    'jsdoc/require-returns': 0,
+    'jsdoc/require-param-description': 0,
   },
 }
