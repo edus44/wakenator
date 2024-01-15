@@ -11,25 +11,22 @@ const nonAlphaNumeric = /[^a-zA-Z0-9]/g
  * @param {string} configuration.name
  * @param {string} configuration.channel
  */
-export async function showConfiguration({ name, channel }) {
-  debug('start')
+export async function showConfiguration(configuration) {
+  debug('start', configuration)
   const newName = await prompt({
     title: 'Configure',
     body: 'Enter your name',
-    defaultText: name,
+    defaultText: configuration.name,
     buttonText: 'Next',
   })
   if (!newName) return debug('canceled')
 
-  debug('name', name)
-
   const newChannel = await prompt({
     title: 'Configure',
     body: 'Enter channel',
-    defaultText: channel,
+    defaultText: configuration.channel,
     buttonText: 'Finish',
   })
-  debug('channel', channel)
 
   if (!newChannel) return debug('canceled')
 
@@ -43,8 +40,10 @@ export async function showConfiguration({ name, channel }) {
  * @param {string} configuration.channel
  */
 export function cleanConfiguration({ name, channel }) {
-  return {
+  const configuration = {
     name: (name || '').replace(nonAlphaNumeric, ''),
     channel: (channel || '').replace(nonAlphaNumeric, '').toLocaleLowerCase(),
   }
+  debug('clean', configuration)
+  return configuration
 }
