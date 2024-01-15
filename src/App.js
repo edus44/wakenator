@@ -22,6 +22,9 @@ export class App {
   /** @type {Tray} */
   tray
 
+  /** @type {User} */
+  user
+
   constructor() {
     // Init Store
     this.store = new Store()
@@ -34,7 +37,7 @@ export class App {
 
     // Init User
     this.user = new User(this.store.get('name'), this.store.get('channel'))
-    this.user.on('people', () => this.updateTray())
+    this.user.on('refresh', () => this.updateTray())
 
     // Init Tray
     this.tray = new Tray(res('./menuTemplate.png'))
@@ -72,20 +75,28 @@ export class App {
       },
     ]
 
-    this.user.people.forEach((person, i) => {
-      menu.splice(i, 0, {
-        label: person.name,
-        icon: res('./wakeTemplate.png'),
-        accelerator: i <= 9 ? (i + 1).toString() : undefined,
-        click: () => {
-          this.user.wakePerson(person)
-        },
+    if (!this.user.connected) {
+      menu.unshift({
+        label: 'Connecting...',
+        enabled: false,
       })
-    })
-    if (!this.user.people.length) {
+    } else if (!this.user.people.length) {
       menu.unshift({
         label: 'Nobody around...',
         enabled: false,
+      })
+    } else {
+      this.user.people.forEach((person, i) => {
+        const woken = person.uid === this.user.wokenUid
+        menu.splice(i, 0, {
+          label: person.name,
+          icon: res(`./${woken ? 'woken' : 'wake'}Template.png`),
+          accelerator: !woken && i <= 9 ? (i + 1).toString() : undefined,
+          click: () => {
+            this.user.wakePerson(person)
+          },
+          enabled: !woken,
+        })
       })
     }
 
@@ -104,58 +115,3 @@ export class App {
     this.updateTray()
   }
 }
-
-// const contextMenu = Menu.buildFromTemplate([
-//   // { type: 'separator' },
-
-//   {
-//     label: 'Pepito',
-//     icon: res(__dirname, './res/wakeTemplate.png'),
-//     accelerator: '1',
-//   },
-//   {
-//     label: 'Alice',
-//     icon: res(__dirname, './res/wakeTemplate.png'),
-//     accelerator: '2',
-//   },
-//   {
-//     label: 'Bob',
-//     icon: res(__dirname, './res/wakeTemplate.png'),
-//     accelerator: '3',
-//   },
-//   // {
-//   //   label: 'Eduardo',
-//   //   icon: resolve(__dirname, './res/personTemplate.png'),
-//   //   enabled: false,
-//   // },
-//   { type: 'separator' },
-
-//   {
-//     label: 'You:  Eduardo',
-//     enabled: false,
-//   },
-//   {
-//     label: 'Channel:  applivery',
-//     enabled: false,
-//   },
-
-//   { type: 'separator' },
-//   {
-//     label: 'About Wakenator',
-
-//     click() {
-//       about()
-//     },
-//   },
-//   {
-//     label: 'Configure',
-//     accelerator: 'Command+,',
-//   },
-//   {
-//     label: 'Quit',
-//     role: 'quit',
-//     accelerator: 'Command+Q',
-//   },
-//   // { label: 'Item3', type: 'radio', checked: true },
-//   // { label: 'Item4', type: 'radio' },
-// ])

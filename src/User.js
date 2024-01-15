@@ -6,6 +6,7 @@ import os from 'node:os'
 import Debug from 'debug'
 import { app } from 'electron'
 import { EventEmitter } from 'node:events'
+import { showWake } from './wake/wake.js'
 
 /** @typedef {import('firebase/database').DatabaseReference} DatabaseReference */
 /** @typedef {import('firebase/database').Unsubscribe} Unsubscribe */
@@ -79,6 +80,9 @@ export class User extends EventEmitter {
   /** @type {Unsubscribe | undefined} */
   unsubscribeWakes
 
+  /** @type {string | undefined} */
+  wokenUid
+
   /**
    * @param {string} name
    * @param {string} channel
@@ -149,13 +153,8 @@ export class User extends EventEmitter {
     this.unsubscribeWakes = onChildAdded(this.wakesRef, snapshot => {
       const wake = snapshot.val()
       remove(snapshot.ref)
-      this.onWake(wake)
+      showWake(wake)
     })
-  }
-
-  /** @param {Wake} wake */
-  async onWake(wake) {
-    debug('wake', wake)
   }
 
   /** @param {ListItem[] | undefined} listItems */
@@ -172,7 +171,7 @@ export class User extends EventEmitter {
 
     debug('people', people)
     this.people = people
-    this.emit('people', people)
+    this.emit('refresh')
   }
 
   async leave() {
@@ -238,5 +237,12 @@ export class User extends EventEmitter {
       ts: new Date().toISOString(),
     }
     await set(push(personWakesRef), wake)
+
+    this.wokenUid = person.uid
+    this.emit('refresh')
+    setTimeout(() => {
+      this.wokenUid = undefined
+      this.emit('refresh')
+    }, 10000)
   }
 }
