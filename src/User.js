@@ -1,5 +1,5 @@
 import { signInAnonymously } from 'firebase/auth'
-import { onDisconnect, onValue, ref, remove, set, push } from 'firebase/database'
+import { onDisconnect, onValue, ref, remove, set, push, onChildAdded } from 'firebase/database'
 import { auth, db } from './lib/firebase.js'
 import { publicIpv4 } from 'public-ip'
 import os from 'node:os'
@@ -23,6 +23,15 @@ import { EventEmitter } from 'node:events'
  * @property {string} name
  * @property {string} user
  * @property {string} host
+ */
+
+/**
+ * @typedef {object} Wake
+ * @property {string} uid
+ * @property {string} name
+ * @property {string} user
+ * @property {string} host
+ * @property {string} ts
  */
 
 /**
@@ -66,7 +75,9 @@ export class User extends EventEmitter {
   channel
 
   /** @type {Unsubscribe | undefined} */
-  unsubscribeChannel
+  unsubscribeList
+  /** @type {Unsubscribe | undefined} */
+  unsubscribeWakes
 
   /**
    * @param {string} name
@@ -128,11 +139,23 @@ export class User extends EventEmitter {
 
     await this.update()
 
-    // Listen for channel changes
-    this.unsubscribeChannel = onValue(this.listRef, snapshot => {
+    // Listen for list changes
+    this.unsubscribeList = onValue(this.listRef, snapshot => {
       const listItems = snapshot.val()
       this.onListChange(listItems)
     })
+
+    // Listen for wakes
+    this.unsubscribeWakes = onChildAdded(this.wakesRef, snapshot => {
+      const wake = snapshot.val()
+      remove(snapshot.ref)
+      this.onWake(wake)
+    })
+  }
+
+  /** @param {Wake} wake */
+  async onWake(wake) {
+    debug('wake', wake)
   }
 
   /** @param {ListItem[] | undefined} listItems */
@@ -163,9 +186,13 @@ export class User extends EventEmitter {
       await remove(this.metaRef)
       this.metaRef = undefined
     }
-    if (this.unsubscribeChannel) {
-      this.unsubscribeChannel()
-      this.unsubscribeChannel = undefined
+    if (this.unsubscribeList) {
+      this.unsubscribeList()
+      this.unsubscribeList = undefined
+    }
+    if (this.unsubscribeWakes) {
+      this.unsubscribeWakes()
+      this.unsubscribeWakes = undefined
     }
   }
 
@@ -197,14 +224,19 @@ export class User extends EventEmitter {
 
   /** @param {Person} person */
   async wakePerson(person) {
+    if (!this.uid) return
     const personWakesRef = ref(db, `/channel/${this.channel}/wakes/${person.uid}`)
 
     debug('wake person', person)
-    await set(push(personWakesRef), {
+
+    /** @type {Wake} */
+    const wake = {
       uid: this.uid,
       name: this.name,
       host: os.hostname(),
       user: os.userInfo().username,
-    })
+      ts: new Date().toISOString(),
+    }
+    await set(push(personWakesRef), wake)
   }
 }
