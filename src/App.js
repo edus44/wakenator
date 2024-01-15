@@ -5,6 +5,7 @@ import os from 'node:os'
 import { showAbout } from './lib/dialogs.js'
 import { cleanConfiguration, showConfiguration } from './lib/configuration.js'
 import Store from 'electron-store'
+import { User } from './User.js'
 
 const debug = Debug('wk:app')
 
@@ -15,14 +16,10 @@ const debug = Debug('wk:app')
  */
 
 export class App {
-  /**
-   * @type {Store<StoreState>}
-   */
+  /** @type {Store<StoreState>} */
   store
 
-  /**
-   * @type {Tray}
-   */
+  /** @type {Tray} */
   tray
 
   constructor() {
@@ -38,13 +35,14 @@ export class App {
     // Init Tray
     this.tray = new Tray(res('./menuTemplate.png'))
     this.updateTray()
+
+    // Init User
+    this.user = new User(this.store.get('name'), this.store.get('channel'))
   }
 
   updateTray() {
     debug('updateTray')
-    /**
-     * @type {import('electron').MenuItemConstructorOptions[]}
-     */
+    /** @type {import('electron').MenuItemConstructorOptions[]} */
     const menu = [
       {
         label: `You:  ${this.store.get('name')}`,
@@ -75,13 +73,14 @@ export class App {
   }
 
   async configure() {
-    const conf = await showConfiguration({
+    const config = await showConfiguration({
       name: this.store.get('name'),
       channel: this.store.get('channel'),
     })
-    if (!conf) return
-    this.store.set('name', conf.name)
-    this.store.set('channel', conf.channel)
+    if (!config) return
+    this.store.set('name', config.name)
+    this.store.set('channel', config.channel)
+    this.user.setConfig(config.name, config.channel)
     this.updateTray()
   }
 }

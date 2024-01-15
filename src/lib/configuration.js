@@ -3,10 +3,9 @@ import { prompt } from './dialogs.js'
 
 const debug = Debug('wk:configuration')
 
-const nonAlphaNumeric = /[^a-zA-Z0-9]/g
+const nonAllowedChars = /[^a-zA-Z0-9-]/g
 
 /**
- *
  * @param {object} configuration
  * @param {string} configuration.name
  * @param {string} configuration.channel
@@ -34,15 +33,14 @@ export async function showConfiguration(configuration) {
 }
 
 /**
- *
  * @param {object} configuration
  * @param {string} configuration.name
  * @param {string} configuration.channel
  */
 export function cleanConfiguration({ name, channel }) {
   const configuration = {
-    name: (name || '').replace(nonAlphaNumeric, ''),
-    channel: (channel || '').replace(nonAlphaNumeric, '').toLocaleLowerCase(),
+    name: (name || '').replace(nonAllowedChars, ''),
+    channel: (channel || '').replace(nonAllowedChars, '').toLocaleLowerCase(),
   }
   debug('clean', configuration)
   return configuration

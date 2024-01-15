@@ -8,7 +8,7 @@ import { res } from './utils.js'
  * @param {string} options.body - The body of the prompt.
  * @param {string} [options.defaultText] - The default text of the prompt.
  * @param {string} [options.buttonText] - The text of the button.
- * @returns {Promise<string|undefined>} The user's input or null if the prompt was cancelled.
+ * @returns {Promise<string | undefined>} The user's input or null if the prompt was cancelled.
  */
 export function prompt({ title, body, defaultText = '', buttonText = 'OK' }) {
   return new Promise((resolve, reject) => {
@@ -30,9 +30,7 @@ export function prompt({ title, body, defaultText = '', buttonText = 'OK' }) {
   })
 }
 
-/**
- * Show about dialog
- */
+/** Show about dialog */
 export async function showAbout() {
   const result = await dialog.showMessageBox({
     message: 'Wakenator',
