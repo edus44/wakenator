@@ -1,16 +1,43 @@
 import { signInAnonymously } from 'firebase/auth'
-import { onDisconnect, onValue, ref, remove, set } from 'firebase/database'
+import { onDisconnect, onValue, ref, remove, set, push } from 'firebase/database'
 import { auth, db } from './lib/firebase.js'
 import { publicIpv4 } from 'public-ip'
 import os from 'node:os'
-/** @typedef {import('firebase/database').DatabaseReference} DatabaseReference */
-
 import Debug from 'debug'
 import { app } from 'electron'
+import { EventEmitter } from 'node:events'
+
+/** @typedef {import('firebase/database').DatabaseReference} DatabaseReference */
+/** @typedef {import('firebase/database').Unsubscribe} Unsubscribe */
+
+/**
+ * @typedef {object} ListItem
+ * @property {string} name
+ * @property {string} user
+ * @property {string} host
+ */
+
+/**
+ * @typedef {object} Person
+ * @property {string} uid
+ * @property {string} name
+ * @property {string} user
+ * @property {string} host
+ */
+
+/**
+ * @typedef {object} MetaItem
+ * @property {string} name
+ * @property {string} user
+ * @property {string} host
+ * @property {string} ip
+ * @property {string} ts
+ * @property {string} v
+ */
 
 const debug = Debug('wk:user')
 
-export class User {
+export class User extends EventEmitter {
   /** @type {string | undefined} */
   uid
 
@@ -18,16 +45,19 @@ export class User {
   connected = false
 
   /** @type {DatabaseReference | undefined} */
-  ref
+  selfRef
 
   /** @type {DatabaseReference | undefined} */
   metaRef
 
   /** @type {DatabaseReference | undefined} */
-  channelRef
+  listRef
 
   /** @type {DatabaseReference | undefined} */
   wakesRef
+
+  /** @type {Person[]} */
+  people = []
 
   /** @type {string} */
   name
@@ -35,11 +65,15 @@ export class User {
   /** @type {string} */
   channel
 
+  /** @type {Unsubscribe | undefined} */
+  unsubscribeChannel
+
   /**
    * @param {string} name
    * @param {string} channel
    */
   constructor(name, channel) {
+    super()
     this.name = name
     this.channel = channel
 
@@ -80,47 +114,97 @@ export class User {
   async enter() {
     debug('enter')
 
-    if (this.ref) {
-      await onDisconnect(this.ref).cancel()
-      await remove(this.ref)
+    await this.leave()
+
+    // Collect refs
+    this.selfRef = ref(db, `/channel/${this.channel}/list/${this.uid}`)
+    this.metaRef = ref(db, `/channel/${this.channel}/meta/${this.uid}`)
+    this.wakesRef = ref(db, `/channel/${this.channel}/wakes/${this.uid}`)
+    this.listRef = ref(db, `/channel/${this.channel}/list`)
+
+    // Clear user refs on disconnect
+    onDisconnect(this.selfRef).remove()
+    onDisconnect(this.metaRef).remove()
+
+    await this.update()
+
+    // Listen for channel changes
+    this.unsubscribeChannel = onValue(this.listRef, snapshot => {
+      const listItems = snapshot.val()
+      this.onListChange(listItems)
+    })
+  }
+
+  /** @param {ListItem[] | undefined} listItems */
+  async onListChange(listItems) {
+    const people = !listItems
+      ? []
+      : Object.entries(listItems)
+          .filter(([uid]) => uid && uid !== '.key' && uid !== this.uid)
+          .map(([uid, item]) => ({
+            uid,
+            ...item,
+          }))
+          .sort((a, b) => a.name.localeCompare(b.name))
+
+    debug('people', people)
+    this.people = people
+    this.emit('people', people)
+  }
+
+  async leave() {
+    if (this.selfRef) {
+      await onDisconnect(this.selfRef).cancel()
+      await remove(this.selfRef)
+      this.selfRef = undefined
     }
     if (this.metaRef) {
       await onDisconnect(this.metaRef).cancel()
       await remove(this.metaRef)
+      this.metaRef = undefined
     }
-
-    this.ref = ref(db, `/channel/${this.channel}/list/${this.uid}`)
-    this.metaRef = ref(db, `/channel/${this.channel}/meta/${this.uid}`)
-    this.wakesRef = ref(db, `/channel/${this.channel}/wakes/${this.uid}`)
-    this.channelRef = ref(db, `/channel/${this.channel}/list`)
-
-    onDisconnect(this.ref).remove()
-    onDisconnect(this.metaRef).remove()
-
-    await this.update()
+    if (this.unsubscribeChannel) {
+      this.unsubscribeChannel()
+      this.unsubscribeChannel = undefined
+    }
   }
 
   /** Updates the user's refs */
   async update() {
-    if (!this.ref || !this.metaRef) return
+    if (!this.selfRef || !this.metaRef) return
 
-    const user = {
+    /** @type {ListItem} */
+    const listItem = {
       name: this.name,
       host: os.hostname(),
       user: os.userInfo().username,
     }
 
-    debug('update', user)
-    await set(this.ref, user)
+    debug('update list', listItem)
+    await set(this.selfRef, listItem)
 
-    const meta = {
-      ...user,
+    /** @type {MetaItem} */
+    const metaItem = {
+      ...listItem,
       ip: await publicIpv4(),
       ts: new Date().toISOString(),
       v: app.getVersion(),
     }
 
-    debug('update meta', meta)
-    await set(this.metaRef, meta)
+    debug('update meta', metaItem)
+    await set(this.metaRef, metaItem)
+  }
+
+  /** @param {Person} person */
+  async wakePerson(person) {
+    const personWakesRef = ref(db, `/channel/${this.channel}/wakes/${person.uid}`)
+
+    debug('wake person', person)
+    await set(push(personWakesRef), {
+      uid: this.uid,
+      name: this.name,
+      host: os.hostname(),
+      user: os.userInfo().username,
+    })
   }
 }

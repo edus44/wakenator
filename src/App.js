@@ -32,18 +32,21 @@ export class App {
     this.store.set('name', config.name || os.userInfo().username)
     this.store.set('channel', config.channel || 'default')
 
+    // Init User
+    this.user = new User(this.store.get('name'), this.store.get('channel'))
+    this.user.on('people', () => this.updateTray())
+
     // Init Tray
     this.tray = new Tray(res('./menuTemplate.png'))
     this.updateTray()
-
-    // Init User
-    this.user = new User(this.store.get('name'), this.store.get('channel'))
   }
 
   updateTray() {
     debug('updateTray')
+
     /** @type {import('electron').MenuItemConstructorOptions[]} */
     const menu = [
+      { type: 'separator' },
       {
         label: `You:  ${this.store.get('name')}`,
         enabled: false,
@@ -68,6 +71,23 @@ export class App {
         accelerator: 'Command+Q',
       },
     ]
+
+    this.user.people.forEach((person, i) => {
+      menu.splice(i, 0, {
+        label: person.name,
+        icon: res('./wakeTemplate.png'),
+        accelerator: i <= 9 ? (i + 1).toString() : undefined,
+        click: () => {
+          this.user.wakePerson(person)
+        },
+      })
+    })
+    if (!this.user.people.length) {
+      menu.unshift({
+        label: 'Nobody around...',
+        enabled: false,
+      })
+    }
 
     this.tray.setContextMenu(Menu.buildFromTemplate(menu))
   }
