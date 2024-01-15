@@ -33,11 +33,11 @@ export function prompt({ title, body, defaultText = '', buttonText = 'OK' }) {
 /**
  * Show about dialog
  */
-export async function about() {
+export async function showAbout() {
   const result = await dialog.showMessageBox({
     message: 'Wakenator',
     detail: 'v' + app.getVersion(),
-    icon: res('./res/logo192.png'),
+    icon: res('./logo192.png'),
     buttons: ['OK', 'Visit Website'],
     cancelId: 0,
     defaultId: 0,

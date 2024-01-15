@@ -12,11 +12,5 @@
     "allowJs": true,
     "checkJs": true
   },
-  "include": [
-    "src/*.js",
-    "src/lib/debug.js",
-    "src/lib/dialogs.js",
-    "src/lib/state.js",
-    "src/lib/utils.js"
-  ]
+  "include": ["src/**/*.js"]
 }

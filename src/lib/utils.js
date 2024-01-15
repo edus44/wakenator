@@ -1,11 +1,11 @@
-import { resolve } from 'node:path'
+import { join } from 'node:path'
 
-const root = new URL('..', import.meta.url).pathname
+const __dirname = new URL('.', import.meta.url).pathname
 
 /**
  *
  * @param {string} path
  */
 export function res(path) {
-  return resolve(root, path)
+  return join(__dirname, '../res', path)
 }
