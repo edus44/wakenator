@@ -14,5 +14,7 @@ export function showWake(wake) {
   })
   win.visibleOnAllWorkspaces = true
 
-  win.loadFile(res('../wake/index.html'))
+  win.loadFile(res(`../wake/index.html`), {
+    query: { wake: JSON.stringify(wake) },
+  })
 }
