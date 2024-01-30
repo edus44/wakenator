@@ -6,16 +6,18 @@ const debug = Debug('wk:configuration')
 const nonAllowedChars = /[^a-zA-Z0-9-]/g
 
 /**
- * @param {object} configuration
- * @param {string} configuration.name
- * @param {string} configuration.channel
+ * @typedef {object} Configuration
+ * @property {string} name
+ * @property {string} channel
  */
-export async function showConfiguration(configuration) {
-  debug('start', configuration)
+
+/** @param {Configuration} configuration */
+export async function showConfiguration({ name, channel }) {
+  debug('start', { name, channel })
   const newName = await prompt({
     title: 'Configure',
     body: 'Enter your name',
-    defaultText: configuration.name,
+    defaultText: name,
     buttonText: 'Next',
   })
   if (!newName) return debug('canceled')
@@ -23,7 +25,7 @@ export async function showConfiguration(configuration) {
   const newChannel = await prompt({
     title: 'Configure',
     body: 'Enter channel',
-    defaultText: configuration.channel,
+    defaultText: channel,
     buttonText: 'Finish',
   })
 
@@ -32,11 +34,7 @@ export async function showConfiguration(configuration) {
   return cleanConfiguration({ name: newName, channel: newChannel })
 }
 
-/**
- * @param {object} configuration
- * @param {string} configuration.name
- * @param {string} configuration.channel
- */
+/** @param {Configuration} configuration */
 export function cleanConfiguration({ name, channel }) {
   const configuration = {
     name: (name || '').replace(nonAllowedChars, ''),

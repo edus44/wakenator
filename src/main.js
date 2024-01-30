@@ -1,7 +1,7 @@
 import './lib/debug.js'
 import Debug from 'debug'
 import { app } from 'electron'
-import { App } from './App.js'
+import { Program } from './Program.js'
 
 const debug = Debug('wk:main')
 
@@ -11,5 +11,10 @@ app.whenReady().then(() => {
   debug('ready')
 
   // eslint-disable-next-line no-new
-  new App()
+  new Program()
+})
+
+app.on('window-all-closed', () => {
+  debug('all-closed')
+  // e.preventDefault()
 })

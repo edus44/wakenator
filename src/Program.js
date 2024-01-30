@@ -5,9 +5,9 @@ import os from 'node:os'
 import { showAbout } from './lib/dialogs.js'
 import { cleanConfiguration, showConfiguration } from './lib/configuration.js'
 import Store from 'electron-store'
-import { User } from './User.js'
+import { Exchange } from './Exchange.js'
 
-const debug = Debug('wk:app')
+const debug = Debug('wk:program')
 
 /**
  * @typedef {object} StoreState
@@ -15,14 +15,14 @@ const debug = Debug('wk:app')
  * @property {string} channel
  */
 
-export class App {
+export class Program {
   /** @type {Store<StoreState>} */
   store
 
   /** @type {Tray} */
   tray
 
-  /** @type {User} */
+  /** @type {Exchange} */
   user
 
   constructor() {
@@ -36,12 +36,26 @@ export class App {
     this.store.set('channel', config.channel || 'default')
 
     // Init User
-    this.user = new User(this.store.get('name'), this.store.get('channel'))
+    this.user = new Exchange(this.store.get('name'), this.store.get('channel'))
     this.user.on('refresh', () => this.updateTray())
+    this.user.on('woken', () => this.animateTrayImage())
 
     // Init Tray
     this.tray = new Tray(res('./menuTemplate.png'))
+
     this.updateTray()
+  }
+
+  animateTrayImage() {
+    let i = 0
+    const interval = setInterval(() => {
+      if (i++ % 2) this.tray.setImage(res(`./wokenTemplate.png`))
+      else this.tray.setImage(res(`./wakeTemplate.png`))
+    }, 300)
+    setTimeout(() => {
+      clearInterval(interval)
+      this.tray.setImage(res('./menuTemplate.png'))
+    }, 10000)
   }
 
   updateTray() {

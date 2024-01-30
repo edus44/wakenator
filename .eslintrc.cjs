@@ -1,8 +1,4 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
   extends: [
     'eslint:recommended',
     'standard',
@@ -10,10 +6,6 @@ module.exports = {
     'prettier',
   ],
   rules: {
-    // 'eqeqeq': 0,
-    // 'no-console': 1,
-    // 'no-debugger': 1,
-
     'jsdoc/require-returns': 0,
     'jsdoc/require-param-description': 0,
     'jsdoc/require-property-description': 0,

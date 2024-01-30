@@ -10,14 +10,12 @@ import { showWake } from './wake/wake.js'
 
 /** @typedef {import('firebase/database').DatabaseReference} DatabaseReference */
 /** @typedef {import('firebase/database').Unsubscribe} Unsubscribe */
-
 /**
  * @typedef {object} ListItem
  * @property {string} name
  * @property {string} user
  * @property {string} host
  */
-
 /**
  * @typedef {object} Person
  * @property {string} uid
@@ -25,7 +23,6 @@ import { showWake } from './wake/wake.js'
  * @property {string} user
  * @property {string} host
  */
-
 /**
  * @typedef {object} Wake
  * @property {string} uid
@@ -34,7 +31,6 @@ import { showWake } from './wake/wake.js'
  * @property {string} host
  * @property {string} ts
  */
-
 /**
  * @typedef {object} MetaItem
  * @property {string} name
@@ -45,9 +41,9 @@ import { showWake } from './wake/wake.js'
  * @property {string} v
  */
 
-const debug = Debug('wk:user')
+const debug = Debug('wk:exchange')
 
-export class User extends EventEmitter {
+export class Exchange extends EventEmitter {
   /** @type {string | undefined} */
   uid
 
@@ -77,6 +73,7 @@ export class User extends EventEmitter {
 
   /** @type {Unsubscribe | undefined} */
   unsubscribeList
+
   /** @type {Unsubscribe | undefined} */
   unsubscribeWakes
 
@@ -240,6 +237,7 @@ export class User extends EventEmitter {
 
     this.wokenUid = person.uid
     this.emit('refresh')
+    this.emit('woken')
     setTimeout(() => {
       this.wokenUid = undefined
       this.emit('refresh')
