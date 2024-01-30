@@ -5,7 +5,8 @@ import { Program } from './Program.js'
 
 const debug = Debug('wk:main')
 
-app.dock.hide()
+app.dock.hide() // LSUIElement plist
+app.applicationMenu = null
 
 app.whenReady().then(() => {
   debug('ready')
@@ -14,7 +15,7 @@ app.whenReady().then(() => {
   new Program()
 })
 
+// Subscribed to this event to prevent closing the app when all windows are closed.
 app.on('window-all-closed', () => {
-  debug('all-closed')
-  // e.preventDefault()
+  debug('window-all-closed')
 })

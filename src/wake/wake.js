@@ -7,10 +7,18 @@ import Debug from 'debug'
 
 const debug = Debug('wk:wake')
 
+/** @type {BrowserWindow | undefined} */
+let lastWin
+
 /** @param {Wake} wake */
 export function showWake(wake) {
+  if (lastWin) {
+    debug('close last')
+    lastWin.close()
+  }
+
   debug('show', wake)
-  const win = new BrowserWindow({
+  const win = (lastWin = new BrowserWindow({
     width: 600,
     height: 600,
     frame: false,
@@ -18,15 +26,26 @@ export function showWake(wake) {
     transparent: true,
     hasShadow: false,
     skipTaskbar: true,
-  })
-  win.visibleOnAllWorkspaces = true
+    show: false,
+    // center: true,
+  }))
+  win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
+  win.removeMenu()
 
-  win.loadFile(res(`../wake/index.html`), {
+  win.webContents.openDevTools({
+    mode: 'detach',
+  })
+
+  win.loadFile(res(`../wake/content/index.html`), {
     query: { wake: JSON.stringify(wake) },
+  })
+  win.once('ready-to-show', () => {
+    debug('ready-to-show')
+    win.show()
   })
 
   /**
-   * Try
+   * Prevent that closing the window will close the app
    *
    * @param {Event} e
    */
@@ -35,6 +54,7 @@ export function showWake(wake) {
     e.preventDefault()
     win.off('close', onClose)
     win.close()
+    lastWin = undefined
   }
 
   win.on('close', onClose)
