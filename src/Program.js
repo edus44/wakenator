@@ -55,7 +55,7 @@ export class Program {
     setTimeout(() => {
       clearInterval(interval)
       this.tray.setImage(res('./menuTemplate.png'))
-    }, 10000)
+    }, 6000)
   }
 
   updateTray() {
@@ -102,13 +102,12 @@ export class Program {
     } else {
       this.user.people.forEach((person, i) => {
         const woken = person.uid === this.user.wokenUid
+
         menu.splice(i, 0, {
           label: person.name,
           icon: res(`./${woken ? 'woken' : 'wake'}Template.png`),
           accelerator: !woken && i <= 9 ? (i + 1).toString() : undefined,
-          click: () => {
-            this.user.wakePerson(person)
-          },
+          click: () => this.user.wakePerson(person),
           enabled: !woken,
         })
       })

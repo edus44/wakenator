@@ -1,4 +1,4 @@
-import { BrowserWindow } from 'electron'
+import { BrowserWindow, ipcMain } from 'electron'
 import { res } from '../lib/utils.js'
 import Debug from 'debug'
 
@@ -10,6 +10,10 @@ const debug = Debug('wk:wake')
 /** @type {BrowserWindow | undefined} */
 let lastWin
 
+ipcMain.on('close', () => {
+  lastWin?.close()
+})
+
 /** @param {Wake} wake */
 export function showWake(wake) {
   if (lastWin) {
@@ -19,22 +23,24 @@ export function showWake(wake) {
 
   debug('show', wake)
   const win = (lastWin = new BrowserWindow({
-    width: 600,
-    height: 600,
+    width: 1300,
+    height: 400,
     frame: false,
     alwaysOnTop: true,
     transparent: true,
     hasShadow: false,
     skipTaskbar: true,
     show: false,
+    webPreferences: {
+      contextIsolation: false,
+      nodeIntegration: true,
+    },
     // center: true,
   }))
   win.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
   win.removeMenu()
 
-  win.webContents.openDevTools({
-    mode: 'detach',
-  })
+  // win.webContents.openDevTools({ mode: 'detach', })
 
   win.loadFile(res(`../wake/content/index.html`), {
     query: { wake: JSON.stringify(wake) },

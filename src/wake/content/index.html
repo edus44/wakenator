@@ -4,33 +4,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wake</title>
     <link rel="stylesheet" href="index.css" />
-    <script src="index.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="band">
-      <div class="line l1"></div>
-      <div class="split">
-        <div class="line l2a"></div>
-        <div class="picture-spacer ps1">
-          <div class="picture"></div>
+      <div class="line-wrapper">
+        <div class="line l1"></div>
+        <div class="split">
+          <div class="line l2a"></div>
+          <div class="picture-spacer ps1">
+            <div id="picture"></div>
+          </div>
+          <div class="line l2b">
+            <div id="name"></div>
+          </div>
         </div>
-        <div class="line l2b">
-          <!-- <script>
-            document.write(window.location.href + '--')
-          </script> -->
+        <div class="split">
+          <div class="line l3a"></div>
+          <div class="picture-spacer ps2"></div>
+          <div class="line l3b">
+            <div id="message">needs you</div>
+          </div>
         </div>
+        <div class="split">
+          <div class="line l4a"></div>
+          <div class="picture-spacer ps3"></div>
+          <div class="line l4b">
+            <div id="host"></div>
+          </div>
+        </div>
+        <div class="line l5"></div>
+        <div id="circle">OK</div>
       </div>
-      <div class="split">
-        <div class="line l3a"></div>
-        <div class="picture-spacer ps2"></div>
-        <div class="line l3b">juanito</div>
-      </div>
-      <div class="split">
-        <div class="line l4a"></div>
-        <div class="picture-spacer ps3"></div>
-        <div class="line l4b"></div>
-      </div>
-      <div class="line l5"></div>
+      <img src="logo-white.svg" id="logo" />
     </div>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
