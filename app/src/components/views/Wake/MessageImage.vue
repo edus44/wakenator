@@ -38,10 +38,10 @@ export default {
   methods: {
     async loadImage() {
       const res = await fetch(
-        'http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=' + getTag()
+        'http://api.giphy.com/v1/gifs/random?api_key=4ApXtggHE6OgVhsuhvGyD4MQQHqRLW9t&tag=' + getTag()
       )
       const body = await res.json()
-      this.image = body.data.image_url
+      this.image = body.data.images.original.url
     },
   },
 }

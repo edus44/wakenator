@@ -18,7 +18,7 @@
           "$uid": {
             ".read": "$uid === auth.uid",
             "$id": {
-              ".write": "$uid === auth.uid || newData.child('uid').val() === auth.uid",
+              ".write": "$uid === auth.uid || newData.child('uid').val() === auth.uid",
               ".validate": "newData.child('name').isString()"
             }
           }
